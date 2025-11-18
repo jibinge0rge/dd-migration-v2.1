@@ -1,0 +1,36 @@
+{
+    "host": {
+      "exclude": [
+        "business_unit",
+        "location_country",
+        "department",
+        "environment"
+      ],
+      "include": [
+        "origin",
+        "client_region",
+        "cluster_bu",
+        "hardware_ownership",
+        "operational_state"
+      ]
+    },
+    "person": {
+      "exclude": [
+        "business_unit",
+        "location_country"
+      ],
+      "include": [
+        "origin",
+        "client_region",
+        "cluster_bu"
+      ]
+    },
+    "identity": {
+      "include": [
+        "employee_status",
+        "origin",
+        "client_region",
+        "cluster_bu"
+      ]
+    }
+}  

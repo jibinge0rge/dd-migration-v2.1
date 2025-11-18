@@ -1,0 +1,28 @@
+# Virtual environment
+env/
+venv/
+ENV/
+.venv/
+
+# Configs under Client and Product folders
+Client/
+Product/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
