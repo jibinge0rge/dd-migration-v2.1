@@ -306,6 +306,95 @@ def compare_and_remove_common_attributes(client_attrs: Dict[str, Any],
     return client_attrs
 
 
+def extract_entity_name(filename: str) -> str:
+    """
+    Extract entity name from filename.
+    Example: 'host__data_dictionary.json' -> 'host'
+    """
+    # Remove extension and split by '__'
+    name_without_ext = filename.replace('.json', '').replace('__data_dictionary', '')
+    return name_without_ext.lower()
+
+
+def load_groupby_config(base_dir: Path) -> Dict[str, Any]:
+    """Load groupby.json configuration file."""
+    groupby_file = base_dir / "groupby.json"
+    if groupby_file.exists():
+        return load_json(groupby_file)
+    return {}
+
+
+def apply_groupby_settings(attributes: Dict[str, Any], 
+                           entity_name: str, 
+                           groupby_config: Dict[str, Any],
+                           log_file: Path) -> Dict[str, Any]:
+    """
+    Apply groupby settings from groupby.json to attributes.
+    - Include list: set finding_evidence_groupby_enabled = true
+    - Exclude list: set finding_evidence_groupby_enabled = false
+    """
+    if entity_name not in groupby_config:
+        write_log(log_file, f"SCRIPT: No groupby config found for entity '{entity_name}'")
+        return attributes
+    
+    entity_config = groupby_config[entity_name]
+    include_list = entity_config.get('include', [])
+    exclude_list = entity_config.get('exclude', [])
+    
+    if not include_list and not exclude_list:
+        write_log(log_file, f"SCRIPT: No include/exclude lists for entity '{entity_name}'")
+        return attributes
+    
+    write_log(log_file, f"SCRIPT: Applying groupby settings for '{entity_name}'")
+    write_log(log_file, f"SCRIPT: Include list ({len(include_list)}): {', '.join(include_list)}")
+    write_log(log_file, f"SCRIPT: Exclude list ({len(exclude_list)}): {', '.join(exclude_list)}")
+    
+    created_count = 0
+    updated_count = 0
+    
+    # Process include list (set to true)
+    for attr_name in include_list:
+        if attr_name not in attributes:
+            # Create new attribute with only finding_evidence_groupby_enabled
+            attributes[attr_name] = {
+                "finding_evidence_groupby_enabled": True
+            }
+            created_count += 1
+            write_log(log_file, f"SCRIPT: Created attribute '{attr_name}' with finding_evidence_groupby_enabled=true")
+        else:
+            # Update existing attribute
+            current_value = attributes[attr_name].get('finding_evidence_groupby_enabled')
+            if current_value != True:
+                attributes[attr_name]['finding_evidence_groupby_enabled'] = True
+                updated_count += 1
+                write_log(log_file, f"SCRIPT: Updated '{attr_name}': finding_evidence_groupby_enabled=true (was {current_value})")
+            else:
+                write_log(log_file, f"SCRIPT: '{attr_name}' already has finding_evidence_groupby_enabled=true")
+    
+    # Process exclude list (set to false)
+    for attr_name in exclude_list:
+        if attr_name not in attributes:
+            # Create new attribute with only finding_evidence_groupby_enabled
+            attributes[attr_name] = {
+                "finding_evidence_groupby_enabled": False
+            }
+            created_count += 1
+            write_log(log_file, f"SCRIPT: Created attribute '{attr_name}' with finding_evidence_groupby_enabled=false")
+        else:
+            # Update existing attribute
+            current_value = attributes[attr_name].get('finding_evidence_groupby_enabled')
+            if current_value != False:
+                attributes[attr_name]['finding_evidence_groupby_enabled'] = False
+                updated_count += 1
+                write_log(log_file, f"SCRIPT: Updated '{attr_name}': finding_evidence_groupby_enabled=false (was {current_value})")
+            else:
+                write_log(log_file, f"SCRIPT: '{attr_name}' already has finding_evidence_groupby_enabled=false")
+    
+    write_log(log_file, f"SCRIPT: Groupby settings applied - Created: {created_count}, Updated: {updated_count}")
+    
+    return attributes
+
+
 def remove_vra_ccm_from_dashboard_identifier(attributes: Dict[str, Any]) -> int:
     """
     Remove 'VRA' and 'CCM' subkeys from dashboard_identifier in attributes.
@@ -425,6 +514,24 @@ def convert_file(client_file: Path, product_file: Path, output_file: Path, file_
                 client_file.name,
                 log_file
             )
+        
+        # Apply groupby settings from groupby.json
+        print("  Applying groupby settings...", end=" ", flush=True)
+        base_dir = Path(__file__).parent
+        groupby_config = load_groupby_config(base_dir)
+        entity_name = extract_entity_name(client_file.name)
+        
+        if groupby_config and entity_name in groupby_config:
+            output_data['attributes'] = apply_groupby_settings(
+                output_data['attributes'],
+                entity_name,
+                groupby_config,
+                log_file
+            )
+            print("OK")
+        else:
+            print("SKIPPED (No config found)")
+            write_log(log_file, f"SCRIPT: No groupby config for entity '{entity_name}'")
     
     # Save output file
     print(f"  Saving to: {output_file.name}...", end=" ", flush=True)
