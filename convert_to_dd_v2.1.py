@@ -10,8 +10,23 @@ Conversion script to create DD v2.1 files from Client dictionaries.
 import json
 import copy
 from pathlib import Path
-from typing import Dict, Any, Set
+from typing import Dict, Any, Set, List
 from datetime import datetime
+import time
+import os
+
+# Load environment variables from .env file
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # dotenv is optional, will use os.getenv directly
+
+try:
+    import google.generativeai as genai
+    GEMINI_AVAILABLE = True
+except ImportError:
+    GEMINI_AVAILABLE = False
 
 
 def write_log(log_file: Path, message: str):
@@ -423,6 +438,192 @@ def remove_vra_ccm_from_dashboard_identifier(attributes: Dict[str, Any]) -> int:
     return modified_count
 
 
+def load_product_categories(base_dir: Path) -> Dict[str, Any]:
+    """Load product_categories.json configuration file."""
+    categories_file = base_dir / "product_categories.json"
+    if categories_file.exists():
+        return load_json(categories_file)
+    return {}
+
+
+def get_best_category_with_gemini(attr_name: str, attr_data: Dict[str, Any], 
+                                   available_categories: List[str],
+                                   api_key: str) -> str:
+    """
+    Use Gemini AI to determine the best category for an attribute.
+    Uses attribute name, caption, and description to make the decision.
+    """
+    caption = attr_data.get('caption', '')
+    description = attr_data.get('description', '')
+    
+    # Build prompt
+    categories_str = '\n'.join([f"- {cat}" for cat in available_categories])
+    
+    prompt = f"""You are a data classification expert. Given an attribute from a data dictionary, determine the best category from the provided list.
+
+Attribute Name: {attr_name}
+Caption: {caption}
+Description: {description}
+
+Available Categories:
+{categories_str}
+
+Based on the attribute name, caption, and description, select the SINGLE most appropriate category from the list above. 
+Respond with ONLY the category name exactly as it appears in the list, nothing else."""
+
+    try:
+        # Configure Gemini
+        genai.configure(api_key=api_key)
+        model = genai.GenerativeModel('gemini-pro')
+        
+        # Generate response
+        response = model.generate_content(prompt)
+        category = response.text.strip()
+        
+        # Validate that the response is in the available categories
+        if category in available_categories:
+            return category
+        else:
+            # If response doesn't match exactly, try to find closest match
+            category_lower = category.lower()
+            for avail_cat in available_categories:
+                if avail_cat.lower() == category_lower:
+                    return avail_cat
+            
+            # If still no match, return first category as fallback
+            return available_categories[0] if available_categories else "General Information"
+            
+    except Exception as e:
+        # On error, return first category as fallback
+        return available_categories[0] if available_categories else "General Information"
+
+
+def add_category_to_client_only_attributes(attributes: Dict[str, Any],
+                                           product_attrs: Dict[str, Any],
+                                           entity_name: str,
+                                           categories_config: Dict[str, Any],
+                                           log_file: Path,
+                                           use_ai: bool = True) -> Dict[str, Any]:
+    """
+    Add 'category' field to attributes that exist only in Client (not in Product).
+    Uses Gemini AI to determine the best category from product_categories.json if use_ai is True.
+    Otherwise, sets category to empty string.
+    """
+    if not product_attrs:
+        write_log(log_file, "SCRIPT: No product attributes available, skipping category assignment")
+        return attributes
+    
+    # Find client-only attributes
+    product_attr_names = set(product_attrs.keys())
+    client_only_attrs = {name: attr for name, attr in attributes.items() 
+                        if name not in product_attr_names}
+    
+    if not client_only_attrs:
+        write_log(log_file, "SCRIPT: No client-only attributes found, skipping category assignment")
+        return attributes
+    
+    # Get available categories for this entity
+    if entity_name not in categories_config:
+        write_log(log_file, f"SCRIPT: No categories found for entity '{entity_name}', skipping category assignment")
+        return attributes
+    
+    available_categories = categories_config[entity_name]
+    if not available_categories:
+        write_log(log_file, f"SCRIPT: Empty categories list for entity '{entity_name}', skipping category assignment")
+        return attributes
+    
+    write_log(log_file, f"SCRIPT: Found {len(client_only_attrs)} client-only attribute(s) to categorize")
+    
+    if not use_ai:
+        # User chose not to use AI, set category to empty string
+        for attr_name, attr_data in client_only_attrs.items():
+            if 'category' not in attr_data:
+                attr_data['category'] = ""
+                write_log(log_file, f"SCRIPT: Set empty category for attribute '{attr_name}' (AI disabled)")
+        write_log(log_file, f"SCRIPT: Set empty category for {len(client_only_attrs)} client-only attribute(s)")
+        return attributes
+    
+    # Check if Gemini is available
+    if not GEMINI_AVAILABLE:
+        write_log(log_file, "SCRIPT: google-generativeai not installed, setting empty categories")
+        print("  WARNING: google-generativeai not installed, setting empty categories")
+        for attr_name, attr_data in client_only_attrs.items():
+            if 'category' not in attr_data:
+                attr_data['category'] = ""
+        return attributes
+    
+    # Get Gemini API key from environment
+    api_key = os.getenv('GEMINI_API_KEY')
+    if not api_key:
+        write_log(log_file, "SCRIPT: GEMINI_API_KEY environment variable not set, setting empty categories")
+        print("  WARNING: GEMINI_API_KEY not set, setting empty categories")
+        for attr_name, attr_data in client_only_attrs.items():
+            if 'category' not in attr_data:
+                attr_data['category'] = ""
+        return attributes
+    
+    categorized_count = 0
+    processed_count = 0
+    
+    # Filter out attributes that already have category
+    attrs_to_process = {name: attr for name, attr in client_only_attrs.items() 
+                       if 'category' not in attr}
+    total_attrs = len(attrs_to_process)
+    
+    if total_attrs == 0:
+        write_log(log_file, "SCRIPT: All client-only attributes already have categories")
+        return attributes
+    
+    for idx, (attr_name, attr_data) in enumerate(attrs_to_process.items(), 1):
+        # Skip if category already exists (shouldn't happen, but safety check)
+        if 'category' in attr_data:
+            write_log(log_file, f"SCRIPT: Attribute '{attr_name}' already has category '{attr_data['category']}', skipping")
+            continue
+        
+        # Rate limiting: delay after every 30 attributes
+        if processed_count > 0 and processed_count % 30 == 0:
+            print(f"\n  Rate limit: Waiting 60 seconds after processing {processed_count} attribute(s)...")
+            write_log(log_file, f"SCRIPT: Rate limit delay - waiting 60 seconds after {processed_count} attributes")
+            time.sleep(60)
+            print("  Resuming...\n")
+        
+        # Show progress
+        progress_pct = (idx / total_attrs) * 100
+        progress_bar_length = 40
+        filled_length = int(progress_bar_length * idx // total_attrs)
+        bar = '█' * filled_length + '░' * (progress_bar_length - filled_length)
+        print(f"\r  [{bar}] {idx}/{total_attrs} ({progress_pct:.1f}%) - Processing: {attr_name[:50]}", end='', flush=True)
+        
+        # Get best category using Gemini AI
+        try:
+            category = get_best_category_with_gemini(
+                attr_name, 
+                attr_data, 
+                available_categories,
+                api_key
+            )
+            
+            # Add category field
+            attr_data['category'] = category
+            categorized_count += 1
+            processed_count += 1
+            write_log(log_file, f"SCRIPT: Added category '{category}' to attribute '{attr_name}'")
+            
+        except Exception as e:
+            write_log(log_file, f"SCRIPT: Error categorizing '{attr_name}': {e}")
+            # Use fallback category
+            attr_data['category'] = available_categories[0]
+            categorized_count += 1
+            processed_count += 1
+            write_log(log_file, f"SCRIPT: Added fallback category '{available_categories[0]}' to attribute '{attr_name}'")
+    
+    # Clear progress line and show completion
+    print(f"\r  [{'█' * progress_bar_length}] {total_attrs}/{total_attrs} (100.0%) - Completed!{' ' * 50}")
+    
+    write_log(log_file, f"SCRIPT: Added category to {categorized_count} client-only attribute(s)")
+    return attributes
+
+
 def convert_file(client_file: Path, product_file: Path, output_file: Path, file_num: int, total_files: int):
     """Convert a single file by removing common parent keys (except attributes)."""
     # Create log file path (same name as output file but with .log extension)
@@ -532,6 +733,54 @@ def convert_file(client_file: Path, product_file: Path, output_file: Path, file_
         else:
             print("SKIPPED (No config found)")
             write_log(log_file, f"SCRIPT: No groupby config for entity '{entity_name}'")
+        
+        # Add category to client-only attributes using Gemini AI
+        if product_data and 'attributes' in product_data:
+            # Find client-only attributes
+            product_attr_names = set(product_data['attributes'].keys())
+            client_only_count = sum(1 for name in output_data['attributes'].keys() 
+                                  if name not in product_attr_names)
+            
+            if client_only_count > 0:
+                print(f"\n  Found {client_only_count} client-only attribute(s)")
+                write_log(log_file, f"SCRIPT: Found {client_only_count} client-only attribute(s)")
+                
+                # Ask user if they want to use AI for category assignment
+                while True:
+                    try:
+                        response = input("  Use AI to assign categories to client-only attributes? (y/n): ").strip().lower()
+                        if response in ['y', 'n']:
+                            use_ai = (response == 'y')
+                            write_log(log_file, f"USER: Use AI for category assignment? Response: {response}")
+                            break
+                        else:
+                            print("  Invalid choice. Please enter 'y' or 'n'.")
+                    except KeyboardInterrupt:
+                        print("\n  Cancelled. Setting empty categories.")
+                        write_log(log_file, "USER: Cancelled - Setting empty categories")
+                        use_ai = False
+                        break
+                
+                print("  Adding category to client-only attributes...")
+                categories_config = load_product_categories(base_dir)
+                
+                if categories_config and entity_name in categories_config:
+                    output_data['attributes'] = add_category_to_client_only_attributes(
+                        output_data['attributes'],
+                        product_data['attributes'],
+                        entity_name,
+                        categories_config,
+                        log_file,
+                        use_ai
+                    )
+                    print("  OK")
+                else:
+                    print("SKIPPED (No categories config found)")
+                    write_log(log_file, f"SCRIPT: No categories config for entity '{entity_name}'")
+            else:
+                write_log(log_file, "SCRIPT: No client-only attributes found, skipping category assignment")
+        else:
+            write_log(log_file, "SCRIPT: No product file available for category assignment")
     
     # Save output file
     print(f"  Saving to: {output_file.name}...", end=" ", flush=True)
