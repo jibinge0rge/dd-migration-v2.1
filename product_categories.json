@@ -1,0 +1,44 @@
+{
+    "host": [
+        "Asset Identification",
+        "Cloud Infrastructure",
+        "Cloud Resource Identification",
+        "Data Quality Metrics",
+        "Device Management",
+        "General Information",
+        "Hardware Information",
+        "Identity and Access Management",
+        "Inventory Management",
+        "Lifecycle and Activity",
+        "Network",
+        "Network and Connectivity",
+        "Operating System and Software",
+        "Performance Monitoring",
+        "Resource Location and Availability",
+        "Scaling and Elasticity",
+        "Security and Compliance",
+        "User and Access"
+    ],
+    "identity": [
+        "Authentication Details",
+        "Data Quality Metrics",
+        "Directory Identity Details",
+        "General Information",
+        "Login and Access History"
+    ],
+    "person": [
+        "Data Quality Metrics",
+        "Employment Details",
+        "General Information",
+        "Job Details",
+        "Organisational Details",
+        "Personal Information"
+    ],
+    "vulnerability": [
+        "Data Quality Metrics",
+        "General Information",
+        "Risk and Mitigation",
+        "Severity and Impact Metrics"
+    ]
+}
+
