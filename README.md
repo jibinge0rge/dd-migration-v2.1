@@ -16,7 +16,8 @@ A Python tool for converting and migrating data dictionary configurations from C
 ## Requirements
 
 - Python 3.6 or higher
-- Standard library only (no external dependencies)
+- Standard library only (no external dependencies for conversion script)
+- Streamlit (for comparison web app - optional)
 
 ## Project Structure
 
@@ -30,6 +31,8 @@ Dictionary/
 ├── Product/                         # Product configuration files
 │   └── *__data_dictionary.json      # Product data dictionary files
 ├── convert_to_dd_v2.1.py            # Main conversion script
+├── compare_configs.py                # Streamlit web app for comparing configs
+├── requirements.txt                  # Python dependencies
 └── README.md                        # This file
 ```
 
@@ -103,6 +106,38 @@ Automatically removes `VRA` and `CCM` subkeys from `dashboard_identifier` in all
 4. Check output in Client/DD v2.1/
 5. Review log files for detailed audit trail
 ```
+
+## Web Application (Streamlit)
+
+A web-based comparison tool is available to visually compare Client and Product configurations.
+
+### Running the Streamlit App
+
+```bash
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the app
+streamlit run compare_configs.py
+```
+
+### Features
+
+- **Visual Comparison**: Side-by-side view of Client and Product attributes
+- **Common Attributes Only**: Shows only attributes that exist in both configs
+- **Difference Highlighting**: Clearly marks exact matches vs. differences
+- **Detailed Diff View**: Shows exact key-by-key differences
+- **Search Functionality**: Search for specific attributes
+- **Filtering Options**: View all, exact matches only, or different attributes only
+- **Interactive Interface**: Expandable sections for each attribute
+
+### Usage
+
+1. Select a data dictionary file from the dropdown
+2. View summary statistics (total common, exact matches, differences)
+3. Filter by match type or search for specific attributes
+4. Expand any attribute to see detailed comparison
+5. Review key-by-key differences in tabular format
 
 ## Output
 
