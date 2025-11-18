@@ -247,15 +247,20 @@ def main():
     st.markdown("---")
     st.subheader(f"📋 Common Attributes ({len(filtered_attrs)})")
     
-    # Search box
-    search_term = st.text_input("🔍 Search attribute name:", key="search")
+    # Attribute selection dropdown
+    attr_names = sorted(filtered_attrs.keys())
+    selected_attr = st.selectbox(
+        "🔍 Select attribute name:",
+        ["All"] + attr_names,
+        key="attr_selector"
+    )
     
-    # Filter by search term
-    if search_term:
-        filtered_attrs = {k: v for k, v in filtered_attrs.items() if search_term.lower() in k.lower()}
+    # Filter by selected attribute
+    if selected_attr and selected_attr != "All":
+        filtered_attrs = {selected_attr: filtered_attrs[selected_attr]}
     
     if not filtered_attrs:
-        st.info("No attributes match the search term.")
+        st.info("No attributes to display.")
         st.stop()
     
     # Display each attribute
