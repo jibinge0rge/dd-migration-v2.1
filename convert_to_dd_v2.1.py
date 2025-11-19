@@ -590,13 +590,16 @@ def add_category_to_client_only_attributes(attributes: Dict[str, Any],
         return attributes
     
     # Get available categories for this entity
-    if entity_name not in categories_config:
-        write_log(log_file, f"SCRIPT: No categories found for entity '{entity_name}', skipping category assignment")
+    # Convert entity_name to have first letter uppercase to match JSON keys (e.g., "host" -> "Host")
+    entity_name_capitalized = entity_name.capitalize()
+    
+    if entity_name_capitalized not in categories_config:
+        write_log(log_file, f"SCRIPT: No categories found for entity '{entity_name_capitalized}', skipping category assignment")
         return attributes
     
-    available_categories = categories_config[entity_name]
+    available_categories = categories_config[entity_name_capitalized]
     if not available_categories:
-        write_log(log_file, f"SCRIPT: Empty categories list for entity '{entity_name}', skipping category assignment")
+        write_log(log_file, f"SCRIPT: Empty categories list for entity '{entity_name_capitalized}', skipping category assignment")
         return attributes
     
     write_log(log_file, f"SCRIPT: Found {len(client_only_attrs)} client-only attribute(s) to categorize")
@@ -848,7 +851,10 @@ def convert_file(client_file: Path, product_file: Path, output_file: Path, file_
                 print("  Adding category to client-only attributes...")
                 categories_config = load_product_categories(base_dir)
                 
-                if categories_config and entity_name in categories_config:
+                # Convert entity_name to have first letter uppercase to match JSON keys (e.g., "host" -> "Host")
+                entity_name_capitalized = entity_name.capitalize()
+                
+                if categories_config and entity_name_capitalized in categories_config:
                     output_data['attributes'] = add_category_to_client_only_attributes(
                         output_data['attributes'],
                         product_data['attributes'],
@@ -860,7 +866,7 @@ def convert_file(client_file: Path, product_file: Path, output_file: Path, file_
                     print("  OK")
                 else:
                     print("SKIPPED (No categories config found)")
-                    write_log(log_file, f"SCRIPT: No categories config for entity '{entity_name}'")
+                    write_log(log_file, f"SCRIPT: No categories config for entity '{entity_name_capitalized}'")
             else:
                 write_log(log_file, "SCRIPT: No client-only attributes found, skipping category assignment")
         else:

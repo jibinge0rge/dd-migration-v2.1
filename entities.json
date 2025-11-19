@@ -1,0 +1,41 @@
+{
+    "Host": {
+      "origins": [
+        "CrowdStrike",
+        "iTOP",
+        "MS Azure AD",
+        "MS Intune",
+        "Qualys",
+        "Rapid7 InsightVM",
+        "Tanium",
+        "Tenable.io",
+        "Tenable.sc",
+        "Wiz"
+      ]
+    },
+    "Identity": {
+      "origins": [
+        "iTOP",
+        "MS Active Directory",
+        "MS Azure AD",
+        "BMS"
+      ]
+    },
+    "Person": {
+      "origins": [
+        "iTOP",
+        "MS Intune",
+        "BMS"
+      ]
+    },
+    "Vulnerability": {
+      "origins": [
+        "Qualys",
+        "Rapid7 InsightVM",
+        "Tanium",
+        "Tenable.io",
+        "Tenable.sc",
+        "Wiz"
+      ]
+    }
+}  

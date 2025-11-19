@@ -1,5 +1,5 @@
 {
-    "host": [
+    "Host": [
         {
             "category": "Asset Identification",
             "examples": ["Hostname", "Asset Name", "Device ID", "MAC Address"]
@@ -73,7 +73,7 @@
             "examples": ["Last Login", "Login Count", "Access Rights", "User Permissions"]
         }
     ],
-    "identity": [
+    "Identity": [
         {
             "category": "Authentication Details",
             "examples": ["Is MFA Enabled", "Authentication Method", "Password Last Changed", "SSO Status"]
@@ -95,7 +95,7 @@
             "examples": ["Last Login", "Login Frequency", "Failed Login Attempts", "Access Locations"]
         }
     ],
-    "person": [
+    "Person": [
         {
             "category": "Data Quality Metrics",
             "examples": ["Completeness Quality Score", "Accuracy Score", "Data Freshness"]
@@ -121,7 +121,7 @@
             "examples": ["Full Name", "Email Address", "Phone Number", "Office Location"]
         }
     ],
-    "vulnerability": [
+    "Vulnerability": [
         {
             "category": "Data Quality Metrics",
             "examples": ["Completeness Quality Score", "Accuracy Score", "Data Freshness"]
