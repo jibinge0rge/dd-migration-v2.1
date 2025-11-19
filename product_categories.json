@@ -1,44 +1,142 @@
 {
     "host": [
-        "Asset Identification",
-        "Cloud Infrastructure",
-        "Cloud Resource Identification",
-        "Data Quality Metrics",
-        "Device Management",
-        "General Information",
-        "Hardware Information",
-        "Identity and Access Management",
-        "Inventory Management",
-        "Lifecycle and Activity",
-        "Network",
-        "Network and Connectivity",
-        "Operating System and Software",
-        "Performance Monitoring",
-        "Resource Location and Availability",
-        "Scaling and Elasticity",
-        "Security and Compliance",
-        "User and Access"
+        {
+            "category": "Asset Identification",
+            "example": "Hostname"
+        },
+        {
+            "category": "Cloud Infrastructure",
+            "example": "Cloud Provider"
+        },
+        {
+            "category": "Cloud Resource Identification",
+            "example": "Instance ID"
+        },
+        {
+            "category": "Data Quality Metrics",
+            "example": "Completeness Quality Score"
+        },
+        {
+            "category": "Device Management",
+            "example": "MDM Compliance Status"
+        },
+        {
+            "category": "General Information",
+            "example": "Entity ID"
+        },
+        {
+            "category": "Hardware Information",
+            "example": "Serial Number"
+        },
+        {
+            "category": "Identity and Access Management",
+            "example": "Last Login User"
+        },
+        {
+            "category": "Inventory Management",
+            "example": "Asset Tag"
+        },
+        {
+            "category": "Lifecycle and Activity",
+            "example": "Last Active"
+        },
+        {
+            "category": "Network",
+            "example": "IP"
+        },
+        {
+            "category": "Network and Connectivity",
+            "example": "DNS Name"
+        },
+        {
+            "category": "Operating System and Software",
+            "example": "OS Name"
+        },
+        {
+            "category": "Performance Monitoring",
+            "example": "CPU Usage"
+        },
+        {
+            "category": "Resource Location and Availability",
+            "example": "Location Country"
+        },
+        {
+            "category": "Scaling and Elasticity",
+            "example": "Instance Type"
+        },
+        {
+            "category": "Security and Compliance",
+            "example": "EDR Agent Status"
+        },
+        {
+            "category": "User and Access",
+            "example": "Last Login"
+        }
     ],
     "identity": [
-        "Authentication Details",
-        "Data Quality Metrics",
-        "Directory Identity Details",
-        "General Information",
-        "Login and Access History"
+        {
+            "category": "Authentication Details",
+            "example": "Is MFA Enabled"
+        },
+        {
+            "category": "Data Quality Metrics",
+            "example": "Completeness Quality Score"
+        },
+        {
+            "category": "Directory Identity Details",
+            "example": "AAD ID"
+        },
+        {
+            "category": "General Information",
+            "example": "Entity ID"
+        },
+        {
+            "category": "Login and Access History",
+            "example": "Last Login"
+        }
     ],
     "person": [
-        "Data Quality Metrics",
-        "Employment Details",
-        "General Information",
-        "Job Details",
-        "Organisational Details",
-        "Personal Information"
+        {
+            "category": "Data Quality Metrics",
+            "example": "Completeness Quality Score"
+        },
+        {
+            "category": "Employment Details",
+            "example": "Employee ID"
+        },
+        {
+            "category": "General Information",
+            "example": "Entity ID"
+        },
+        {
+            "category": "Job Details",
+            "example": "Manager"
+        },
+        {
+            "category": "Organisational Details",
+            "example": "Department"
+        },
+        {
+            "category": "Personal Information",
+            "example": "Full Name"
+        }
     ],
     "vulnerability": [
-        "Data Quality Metrics",
-        "General Information",
-        "Risk and Mitigation",
-        "Severity and Impact Metrics"
+        {
+            "category": "Data Quality Metrics",
+            "example": "Completeness Quality Score"
+        },
+        {
+            "category": "General Information",
+            "example": "Entity ID"
+        },
+        {
+            "category": "Risk and Mitigation",
+            "example": "Remediation Recommendation"
+        },
+        {
+            "category": "Severity and Impact Metrics",
+            "example": "CVSSv4.0 Score"
+        }
     ]
 }
-
