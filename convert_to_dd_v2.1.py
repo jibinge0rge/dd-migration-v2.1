@@ -509,12 +509,13 @@ Respond with ONLY the category name exactly as it appears in the list, nothing e
 def save_uncategorized_attributes(attributes: Dict[str, Any],
                                   product_attrs: Dict[str, Any],
                                   entity_name: str,
-                                  output_file: Path,
+                                  client_file: Path,
                                   log_file: Path) -> None:
     """
     Save client-only attributes (that need AI categorization) organized by group key
     to a JSON file before AI processing.
     Structure: {entity_name: {group_key: [list of attribute names]}}
+    Saves to uncategorized folder inside client folder.
     """
     if not product_attrs:
         return
@@ -543,10 +544,15 @@ def save_uncategorized_attributes(attributes: Dict[str, Any],
         entity_name: grouped_attrs
     }
     
-    # Save to JSON file (same directory as output file, with _uncategorized_attributes.json suffix)
-    save_file = output_file.parent / f"{output_file.stem}_uncategorized_attributes.json"
+    # Create uncategorized folder inside client folder
+    client_folder = client_file.parent
+    uncategorized_folder = client_folder / "uncategorized"
+    uncategorized_folder.mkdir(parents=True, exist_ok=True)
+    
+    # Save to JSON file in uncategorized folder
+    save_file = uncategorized_folder / f"{client_file.stem}_uncategorized_attributes.json"
     save_json(save_file, result)
-    write_log(log_file, f"SCRIPT: Saved {len(uncategorized_attrs)} uncategorized attribute(s) to {save_file.name}")
+    write_log(log_file, f"SCRIPT: Saved {len(uncategorized_attrs)} uncategorized attribute(s) to {save_file}")
     write_log(log_file, f"SCRIPT: Grouped into {len(grouped_attrs)} group(s): {', '.join(grouped_attrs.keys())}")
 
 
@@ -679,8 +685,13 @@ def add_category_to_client_only_attributes(attributes: Dict[str, Any],
 
 def convert_file(client_file: Path, product_file: Path, output_file: Path, file_num: int, total_files: int):
     """Convert a single file by removing common parent keys (except attributes)."""
-    # Create log file path (same name as output file but with .log extension)
-    log_file = output_file.parent / f"{output_file.stem}.log"
+    # Create log folder inside client folder
+    client_folder = client_file.parent
+    log_folder = client_folder / "log"
+    log_folder.mkdir(parents=True, exist_ok=True)
+    
+    # Create log file path in log folder (same name as client file but with .log extension)
+    log_file = log_folder / f"{client_file.stem}.log"
     
     # Initialize log file (overwrite on each run)
     with open(log_file, 'w', encoding='utf-8') as f:
@@ -804,7 +815,7 @@ def convert_file(client_file: Path, product_file: Path, output_file: Path, file_
                     output_data['attributes'],
                     product_data['attributes'],
                     entity_name,
-                    output_file,
+                    client_file,
                     log_file
                 )
                 print("OK")
