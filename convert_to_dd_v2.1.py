@@ -447,17 +447,24 @@ def load_product_categories(base_dir: Path) -> Dict[str, Any]:
 
 
 def get_best_category_with_gemini(attr_name: str, attr_data: Dict[str, Any], 
-                                   available_categories: List[str],
+                                   available_categories: List[Dict[str, Any]],
                                    api_key: str) -> str:
     """
     Use Gemini AI to determine the best category for an attribute.
     Uses attribute name, caption, and description to make the decision.
+    available_categories should be a list of dicts with 'category' and 'example' keys.
     """
     caption = attr_data.get('caption', '')
     description = attr_data.get('description', '')
     
-    # Build prompt
-    categories_str = '\n'.join([f"- {cat}" for cat in available_categories])
+    # Extract category names for validation
+    category_names = [cat['category'] for cat in available_categories]
+    
+    # Build prompt with categories and examples
+    categories_str = '\n'.join([
+        f"- {cat['category']} (Example: {cat.get('example', 'N/A')})" 
+        for cat in available_categories
+    ])
     
     prompt = f"""You are a data classification expert. Given an attribute from a data dictionary, determine the best category from the provided list.
 
@@ -465,10 +472,11 @@ Attribute Name: {attr_name}
 Caption: {caption}
 Description: {description}
 
-Available Categories:
+Available Categories (with examples):
 {categories_str}
 
 Based on the attribute name, caption, and description, select the SINGLE most appropriate category from the list above. 
+Use the examples provided to better understand what each category represents.
 Respond with ONLY the category name exactly as it appears in the list, nothing else."""
 
     try:
@@ -481,21 +489,65 @@ Respond with ONLY the category name exactly as it appears in the list, nothing e
         category = response.text.strip()
         
         # Validate that the response is in the available categories
-        if category in available_categories:
+        if category in category_names:
             return category
         else:
             # If response doesn't match exactly, try to find closest match
             category_lower = category.lower()
-            for avail_cat in available_categories:
-                if avail_cat.lower() == category_lower:
-                    return avail_cat
+            for cat_name in category_names:
+                if cat_name.lower() == category_lower:
+                    return cat_name
             
             # If still no match, return first category as fallback
-            return available_categories[0] if available_categories else "General Information"
+            return category_names[0] if category_names else "General Information"
             
     except Exception as e:
         # On error, return first category as fallback
-        return available_categories[0] if available_categories else "General Information"
+        return category_names[0] if category_names else "General Information"
+
+
+def save_uncategorized_attributes(attributes: Dict[str, Any],
+                                  product_attrs: Dict[str, Any],
+                                  entity_name: str,
+                                  output_file: Path,
+                                  log_file: Path) -> None:
+    """
+    Save client-only attributes (that need AI categorization) organized by group key
+    to a JSON file before AI processing.
+    Structure: {entity_name: {group_key: [list of attribute names]}}
+    """
+    if not product_attrs:
+        return
+    
+    # Find client-only attributes that don't have a category yet
+    product_attr_names = set(product_attrs.keys())
+    uncategorized_attrs = {name: attr for name, attr in attributes.items() 
+                           if name not in product_attr_names and 'category' not in attr}
+    
+    if not uncategorized_attrs:
+        return
+    
+    # Organize by group key
+    grouped_attrs: Dict[str, List[str]] = {}
+    
+    for attr_name, attr_data in uncategorized_attrs.items():
+        # Get group key from attribute, default to "entity_specific"
+        group_key = attr_data.get('group', 'entity_specific')
+        
+        if group_key not in grouped_attrs:
+            grouped_attrs[group_key] = []
+        grouped_attrs[group_key].append(attr_name)
+    
+    # Create the structure: {entity_name: {group_key: [attributes]}}
+    result = {
+        entity_name: grouped_attrs
+    }
+    
+    # Save to JSON file (same directory as output file, with _uncategorized_attributes.json suffix)
+    save_file = output_file.parent / f"{output_file.stem}_uncategorized_attributes.json"
+    save_json(save_file, result)
+    write_log(log_file, f"SCRIPT: Saved {len(uncategorized_attrs)} uncategorized attribute(s) to {save_file.name}")
+    write_log(log_file, f"SCRIPT: Grouped into {len(grouped_attrs)} group(s): {', '.join(grouped_attrs.keys())}")
 
 
 def add_category_to_client_only_attributes(attributes: Dict[str, Any],
@@ -612,10 +664,11 @@ def add_category_to_client_only_attributes(attributes: Dict[str, Any],
         except Exception as e:
             write_log(log_file, f"SCRIPT: Error categorizing '{attr_name}': {e}")
             # Use fallback category
-            attr_data['category'] = available_categories[0]
+            fallback_category = available_categories[0]['category'] if available_categories else "General Information"
+            attr_data['category'] = fallback_category
             categorized_count += 1
             processed_count += 1
-            write_log(log_file, f"SCRIPT: Added fallback category '{available_categories[0]}' to attribute '{attr_name}'")
+            write_log(log_file, f"SCRIPT: Added fallback category '{fallback_category}' to attribute '{attr_name}'")
     
     # Clear progress line and show completion
     print(f"\r  [{'█' * progress_bar_length}] {total_attrs}/{total_attrs} (100.0%) - Completed!{' ' * 50}")
@@ -744,6 +797,17 @@ def convert_file(client_file: Path, product_file: Path, output_file: Path, file_
             if client_only_count > 0:
                 print(f"\n  Found {client_only_count} client-only attribute(s)")
                 write_log(log_file, f"SCRIPT: Found {client_only_count} client-only attribute(s)")
+                
+                # Save uncategorized attributes organized by group key before AI processing
+                print("  Saving uncategorized attributes...", end=" ", flush=True)
+                save_uncategorized_attributes(
+                    output_data['attributes'],
+                    product_data['attributes'],
+                    entity_name,
+                    output_file,
+                    log_file
+                )
+                print("OK")
                 
                 # Ask user if they want to use AI for category assignment
                 while True:
