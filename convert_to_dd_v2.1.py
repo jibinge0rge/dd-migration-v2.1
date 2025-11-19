@@ -452,7 +452,8 @@ def get_best_category_with_gemini(attr_name: str, attr_data: Dict[str, Any],
     """
     Use Gemini AI to determine the best category for an attribute.
     Uses attribute name, caption, and description to make the decision.
-    available_categories should be a list of dicts with 'category' and 'example' keys.
+    available_categories should be a list of dicts with 'category' and 'examples' keys.
+    'examples' should be a list of strings.
     """
     caption = attr_data.get('caption', '')
     description = attr_data.get('description', '')
@@ -461,10 +462,18 @@ def get_best_category_with_gemini(attr_name: str, attr_data: Dict[str, Any],
     category_names = [cat['category'] for cat in available_categories]
     
     # Build prompt with categories and examples
-    categories_str = '\n'.join([
-        f"- {cat['category']} (Example: {cat.get('example', 'N/A')})" 
-        for cat in available_categories
-    ])
+    categories_list = []
+    for cat in available_categories:
+        category_name = cat['category']
+        examples = cat.get('examples', [])
+        if examples and isinstance(examples, list):
+            # Format examples as comma-separated list
+            examples_str = ', '.join(examples)
+            categories_list.append(f"- {category_name} (Examples: {examples_str})")
+        else:
+            categories_list.append(f"- {category_name}")
+    
+    categories_str = '\n'.join(categories_list)
     
     prompt = f"""You are a data classification expert. Given an attribute from a data dictionary, determine the best category from the provided list.
 

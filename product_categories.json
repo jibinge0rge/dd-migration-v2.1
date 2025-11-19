@@ -2,141 +2,141 @@
     "host": [
         {
             "category": "Asset Identification",
-            "example": "Hostname"
+            "examples": ["Hostname", "Asset Name", "Device ID", "MAC Address"]
         },
         {
             "category": "Cloud Infrastructure",
-            "example": "Cloud Provider"
+            "examples": ["Cloud Provider", "Cloud Account", "Subscription ID", "Resource Group"]
         },
         {
             "category": "Cloud Resource Identification",
-            "example": "Instance ID"
+            "examples": ["Instance ID", "Virtual Machine ID", "Container ID", "Service Instance"]
         },
         {
             "category": "Data Quality Metrics",
-            "example": "Completeness Quality Score"
+            "examples": ["Completeness Quality Score", "Accuracy Score", "Data Freshness"]
         },
         {
             "category": "Device Management",
-            "example": "MDM Compliance Status"
+            "examples": ["MDM Compliance Status", "Device Enrollment Status", "Management Platform"]
         },
         {
             "category": "General Information",
-            "example": "Entity ID"
+            "examples": ["Entity ID", "Unique Identifier", "Primary Key"]
         },
         {
             "category": "Hardware Information",
-            "example": "Serial Number"
+            "examples": ["Serial Number", "Manufacturer", "Model", "Hardware Type"]
         },
         {
             "category": "Identity and Access Management",
-            "example": "Last Login User"
+            "examples": ["Last Login User", "Privileged Access Status", "IAM Role", "Access Level"]
         },
         {
             "category": "Inventory Management",
-            "example": "Asset Tag"
+            "examples": ["Asset Tag", "Inventory Number", "Purchase Date", "Warranty Status"]
         },
         {
             "category": "Lifecycle and Activity",
-            "example": "Last Active"
+            "examples": ["Last Active", "First Seen", "Last Seen", "Deployment Date"]
         },
         {
             "category": "Network",
-            "example": "IP"
+            "examples": ["IP", "IP Address", "Subnet", "Network Segment"]
         },
         {
             "category": "Network and Connectivity",
-            "example": "DNS Name"
+            "examples": ["DNS Name", "FQDN", "Domain Name", "Network Interface"]
         },
         {
             "category": "Operating System and Software",
-            "example": "OS Name"
+            "examples": ["OS Name", "OS Version", "Kernel Version", "Installed Software"]
         },
         {
             "category": "Performance Monitoring",
-            "example": "CPU Usage"
+            "examples": ["CPU Usage", "Memory Usage", "Disk I/O", "Network Throughput"]
         },
         {
             "category": "Resource Location and Availability",
-            "example": "Location Country"
+            "examples": ["Location Country", "Data Center", "Availability Zone", "Region"]
         },
         {
             "category": "Scaling and Elasticity",
-            "example": "Instance Type"
+            "examples": ["Instance Type", "CPU Count", "Memory Size", "Auto-scaling Status"]
         },
         {
             "category": "Security and Compliance",
-            "example": "EDR Agent Status"
+            "examples": ["EDR Agent Status", "Antivirus Status", "Compliance Status", "Security Score"]
         },
         {
             "category": "User and Access",
-            "example": "Last Login"
+            "examples": ["Last Login", "Login Count", "Access Rights", "User Permissions"]
         }
     ],
     "identity": [
         {
             "category": "Authentication Details",
-            "example": "Is MFA Enabled"
+            "examples": ["Is MFA Enabled", "Authentication Method", "Password Last Changed", "SSO Status"]
         },
         {
             "category": "Data Quality Metrics",
-            "example": "Completeness Quality Score"
+            "examples": ["Completeness Quality Score", "Accuracy Score", "Data Freshness"]
         },
         {
             "category": "Directory Identity Details",
-            "example": "AAD ID"
+            "examples": ["AAD ID", "Active Directory ID", "LDAP DN", "Directory UID"]
         },
         {
             "category": "General Information",
-            "example": "Entity ID"
+            "examples": ["Entity ID", "Unique Identifier", "Primary Key"]
         },
         {
             "category": "Login and Access History",
-            "example": "Last Login"
+            "examples": ["Last Login", "Login Frequency", "Failed Login Attempts", "Access Locations"]
         }
     ],
     "person": [
         {
             "category": "Data Quality Metrics",
-            "example": "Completeness Quality Score"
+            "examples": ["Completeness Quality Score", "Accuracy Score", "Data Freshness"]
         },
         {
             "category": "Employment Details",
-            "example": "Employee ID"
+            "examples": ["Employee ID", "Hire Date", "Employment Status", "Employee Type"]
         },
         {
             "category": "General Information",
-            "example": "Entity ID"
+            "examples": ["Entity ID", "Unique Identifier", "Primary Key"]
         },
         {
             "category": "Job Details",
-            "example": "Manager"
+            "examples": ["Manager", "Job Title", "Job Level", "Job Function"]
         },
         {
             "category": "Organisational Details",
-            "example": "Department"
+            "examples": ["Department", "Division", "Business Unit", "Cost Center"]
         },
         {
             "category": "Personal Information",
-            "example": "Full Name"
+            "examples": ["Full Name", "Email Address", "Phone Number", "Office Location"]
         }
     ],
     "vulnerability": [
         {
             "category": "Data Quality Metrics",
-            "example": "Completeness Quality Score"
+            "examples": ["Completeness Quality Score", "Accuracy Score", "Data Freshness"]
         },
         {
             "category": "General Information",
-            "example": "Entity ID"
+            "examples": ["Entity ID", "Unique Identifier", "Primary Key"]
         },
         {
             "category": "Risk and Mitigation",
-            "example": "Remediation Recommendation"
+            "examples": ["Remediation Recommendation", "Risk Level", "Mitigation Status", "Patch Available"]
         },
         {
             "category": "Severity and Impact Metrics",
-            "example": "CVSSv4.0 Score"
+            "examples": ["CVSSv4.0 Score", "CVSSv3.1 Score", "Exploitability Score", "Impact Score"]
         }
     ]
 }
