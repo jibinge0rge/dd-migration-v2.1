@@ -1,41 +1,41 @@
 {
     "Host": {
-      "origins": [
-        "CrowdStrike",
-        "iTOP",
-        "MS Azure AD",
-        "MS Intune",
-        "Qualys",
-        "Rapid7 InsightVM",
-        "Tanium",
-        "Tenable.io",
-        "Tenable.sc",
-        "Wiz"
-      ]
+      "origins": {
+        "CrowdStrike": ["cs", "crowdstrike", "crowd_strike"],
+        "iTOP": ["itop"],
+        "MS Azure AD": ["azuread", "azure_ad", "ms_azure_ad", "aad"],
+        "MS Intune": ["intune", "ms_intune"],
+        "Qualys": ["qualys"],
+        "Rapid7 InsightVM": ["rapid7", "r7", "rapid7_insightvm", "insightvm"],
+        "Tanium": ["tanium"],
+        "Tenable.io": ["tenableio", "tenable_io", "tenable.io"],
+        "Tenable.sc": ["tenablesc", "tenable_sc", "tenable.sc"],
+        "Wiz": ["wiz"]
+      }
     },
     "Identity": {
-      "origins": [
-        "iTOP",
-        "MS Active Directory",
-        "MS Azure AD",
-        "BMS"
-      ]
+      "origins": {
+        "iTOP": ["itop"],
+        "MS Active Directory": ["ad", "ms_ad", "active_directory", "ms_active_directory"],
+        "MS Azure AD": ["azuread", "azure_ad", "ms_azure_ad", "aad"],
+        "BMS": ["bms"]
+      }
     },
     "Person": {
-      "origins": [
-        "iTOP",
-        "MS Intune",
-        "BMS"
-      ]
+      "origins": {
+        "iTOP": ["itop"],
+        "MS Intune": ["intune", "ms_intune"],
+        "BMS": ["bms"]
+      }
     },
     "Vulnerability": {
-      "origins": [
-        "Qualys",
-        "Rapid7 InsightVM",
-        "Tanium",
-        "Tenable.io",
-        "Tenable.sc",
-        "Wiz"
-      ]
+      "origins": {
+        "Qualys": ["qualys"],
+        "Rapid7 InsightVM": ["rapid7", "r7", "rapid7_insightvm", "insightvm"],
+        "Tanium": ["tanium"],
+        "Tenable.io": ["tenableio", "tenable_io", "tenable.io"],
+        "Tenable.sc": ["tenablesc", "tenable_sc", "tenable.sc"],
+        "Wiz": ["wiz"]
+      }
     }
 }  
