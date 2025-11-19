@@ -446,6 +446,60 @@ def load_product_categories(base_dir: Path) -> Dict[str, Any]:
     return {}
 
 
+def load_entities_config(base_dir: Path) -> Dict[str, Any]:
+    """Load entities.json configuration file."""
+    entities_file = base_dir / "entities.json"
+    if entities_file.exists():
+        return load_json(entities_file)
+    return {}
+
+
+def match_origin_from_attribute_name(attr_name: str, entity_name: str, entities_config: Dict[str, Any]) -> str:
+    """
+    Check if attribute name matches any origin from entities.json.
+    Looks for patterns like: {value}_, _{value}_, _{value}, or {value} at start.
+    Returns origin name if found, otherwise empty string.
+    Case-insensitive matching.
+    """
+    entity_name_capitalized = entity_name.capitalize()
+    
+    if entity_name_capitalized not in entities_config:
+        return ""
+    
+    entity_config = entities_config[entity_name_capitalized]
+    origins = entity_config.get('origins', {})
+    
+    if not origins:
+        return ""
+    
+    attr_name_lower = attr_name.lower()
+    
+    # Check each origin and its values
+    for origin_name, origin_values in origins.items():
+        for value in origin_values:
+            value_lower = value.lower()
+            
+            # Check various patterns: {value}_, _{value}_, _{value}, or starts with {value}
+            patterns = [
+                f"{value_lower}_",      # itop_
+                f"_{value_lower}_",     # _itop_
+                f"_{value_lower}",      # _itop
+            ]
+            
+            # Check if attribute starts with any pattern
+            for pattern in patterns:
+                if attr_name_lower.startswith(pattern):
+                    return origin_name
+            
+            # Also check if it starts with just the value (at the beginning)
+            if attr_name_lower.startswith(value_lower):
+                # Make sure it's not just a substring (check if next char is _ or end of string)
+                if len(attr_name_lower) == len(value_lower) or attr_name_lower[len(value_lower)] in ['_', '-']:
+                    return origin_name
+    
+    return ""
+
+
 def get_best_category_with_gemini(attr_name: str, attr_data: Dict[str, Any], 
                                    available_categories: List[Dict[str, Any]],
                                    api_key: str) -> str:
@@ -569,11 +623,13 @@ def add_category_to_client_only_attributes(attributes: Dict[str, Any],
                                            product_attrs: Dict[str, Any],
                                            entity_name: str,
                                            categories_config: Dict[str, Any],
+                                           entities_config: Dict[str, Any],
                                            log_file: Path,
                                            use_ai: bool = True) -> Dict[str, Any]:
     """
     Add 'category' field to attributes that exist only in Client (not in Product).
-    Uses Gemini AI to determine the best category from product_categories.json if use_ai is True.
+    For attributes with group "source_specific", first tries to match with origins from entities.json.
+    If not found, uses Gemini AI to determine the best category from product_categories.json if use_ai is True.
     Otherwise, sets category to empty string.
     """
     if not product_attrs:
@@ -634,6 +690,8 @@ def add_category_to_client_only_attributes(attributes: Dict[str, Any],
     
     categorized_count = 0
     processed_count = 0
+    origin_matched_count = 0
+    ai_categorized_count = 0
     
     # Filter out attributes that already have category
     attrs_to_process = {name: attr for name, attr in client_only_attrs.items() 
@@ -650,6 +708,32 @@ def add_category_to_client_only_attributes(attributes: Dict[str, Any],
             write_log(log_file, f"SCRIPT: Attribute '{attr_name}' already has category '{attr_data['category']}', skipping")
             continue
         
+        # Check if attribute has group "source_specific" (case-insensitive)
+        group_key = attr_data.get('group', '')
+        is_source_specific = (group_key.lower() == 'source_specific')
+        
+        if is_source_specific:
+            # Try to match with origins from entities.json
+            origin = match_origin_from_attribute_name(attr_name, entity_name, entities_config)
+            
+            if origin:
+                # Found a match in entities.json
+                category = f"{origin} Attributes"
+                attr_data['category'] = category
+                categorized_count += 1
+                origin_matched_count += 1
+                processed_count += 1
+                write_log(log_file, f"SCRIPT: Added category '{category}' to attribute '{attr_name}' (matched from entities.json)")
+                
+                # Show progress
+                progress_pct = (idx / total_attrs) * 100
+                progress_bar_length = 40
+                filled_length = int(progress_bar_length * idx // total_attrs)
+                bar = '█' * filled_length + '░' * (progress_bar_length - filled_length)
+                print(f"\r  [{bar}] {idx}/{total_attrs} ({progress_pct:.1f}%) - Processing: {attr_name[:50]}", end='', flush=True)
+                continue
+        
+        # No match in entities.json or not source-specific, use Gemini AI with product_categories.json
         # Rate limiting: delay after every 30 attributes
         if processed_count > 0 and processed_count % 30 == 0:
             print(f"\n  Rate limit: Waiting 60 seconds after processing {processed_count} attribute(s)...")
@@ -677,6 +761,7 @@ def add_category_to_client_only_attributes(attributes: Dict[str, Any],
             attr_data['category'] = category
             categorized_count += 1
             processed_count += 1
+            ai_categorized_count += 1
             write_log(log_file, f"SCRIPT: Added category '{category}' to attribute '{attr_name}'")
             
         except Exception as e:
@@ -686,12 +771,14 @@ def add_category_to_client_only_attributes(attributes: Dict[str, Any],
             attr_data['category'] = fallback_category
             categorized_count += 1
             processed_count += 1
+            ai_categorized_count += 1
             write_log(log_file, f"SCRIPT: Added fallback category '{fallback_category}' to attribute '{attr_name}'")
     
     # Clear progress line and show completion
     print(f"\r  [{'█' * progress_bar_length}] {total_attrs}/{total_attrs} (100.0%) - Completed!{' ' * 50}")
     
     write_log(log_file, f"SCRIPT: Added category to {categorized_count} client-only attribute(s)")
+    write_log(log_file, f"SCRIPT: {origin_matched_count} attribute(s) matched from entities.json, {ai_categorized_count} attribute(s) categorized using Gemini AI")
     return attributes
 
 
@@ -850,6 +937,7 @@ def convert_file(client_file: Path, product_file: Path, output_file: Path, file_
                 
                 print("  Adding category to client-only attributes...")
                 categories_config = load_product_categories(base_dir)
+                entities_config = load_entities_config(base_dir)
                 
                 # Convert entity_name to have first letter uppercase to match JSON keys (e.g., "host" -> "Host")
                 entity_name_capitalized = entity_name.capitalize()
@@ -860,6 +948,7 @@ def convert_file(client_file: Path, product_file: Path, output_file: Path, file_
                         product_data['attributes'],
                         entity_name,
                         categories_config,
+                        entities_config,
                         log_file,
                         use_ai
                     )
