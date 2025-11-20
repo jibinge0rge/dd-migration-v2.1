@@ -741,8 +741,27 @@ def add_category_to_client_only_attributes(attributes: Dict[str, Any],
             write_log(log_file, f"SCRIPT: Attribute '{attr_name}' already has category '{attr_data['category']}', skipping")
             continue
         
-        # Check if attribute has group "source_specific" (case-insensitive)
+        # Check if attribute has group "common" (case-insensitive)
         group_key = attr_data.get('group', '')
+        is_common = (group_key.lower() == 'common')
+        
+        if is_common:
+            # Set category to "General Information" for common attributes
+            category = "General Information"
+            attr_data['category'] = category
+            categorized_count += 1
+            processed_count += 1
+            write_log(log_file, f"SCRIPT: Added category '{category}' to attribute '{attr_name}' (group is 'common')")
+            
+            # Show progress
+            progress_pct = (idx / total_attrs) * 100
+            progress_bar_length = 40
+            filled_length = int(progress_bar_length * idx // total_attrs)
+            bar = '█' * filled_length + '░' * (progress_bar_length - filled_length)
+            print(f"\r  [{bar}] {idx}/{total_attrs} ({progress_pct:.1f}%) - Processing: {attr_name[:50]}", end='', flush=True)
+            continue
+        
+        # Check if attribute has group "source_specific" (case-insensitive)
         is_source_specific = (group_key.lower() == 'source_specific')
         
         if is_source_specific:
