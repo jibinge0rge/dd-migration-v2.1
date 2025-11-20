@@ -500,6 +500,39 @@ def match_origin_from_attribute_name(attr_name: str, entity_name: str, entities_
     return ""
 
 
+def fix_crowdstrike_capitalization(attributes: Dict[str, Any], log_file: Path) -> int:
+    """
+    Fix capitalization of "Crowdstrike" to "CrowdStrike" in captions and descriptions.
+    Returns the number of attributes modified.
+    """
+    modified_count = 0
+    
+    for attr_name, attr_data in attributes.items():
+        modified = False
+        
+        # Fix in caption
+        if 'caption' in attr_data and isinstance(attr_data['caption'], str):
+            original_caption = attr_data['caption']
+            fixed_caption = original_caption.replace('Crowdstrike', 'CrowdStrike')
+            if fixed_caption != original_caption:
+                attr_data['caption'] = fixed_caption
+                modified = True
+        
+        # Fix in description
+        if 'description' in attr_data and isinstance(attr_data['description'], str):
+            original_description = attr_data['description']
+            fixed_description = original_description.replace('Crowdstrike', 'CrowdStrike')
+            if fixed_description != original_description:
+                attr_data['description'] = fixed_description
+                modified = True
+        
+        if modified:
+            modified_count += 1
+            write_log(log_file, f"SCRIPT: Fixed Crowdstrike capitalization in attribute '{attr_name}'")
+    
+    return modified_count
+
+
 def get_best_category_with_gemini(attr_name: str, attr_data: Dict[str, Any], 
                                    available_categories: List[Dict[str, Any]],
                                    api_key: str) -> str:
@@ -896,6 +929,15 @@ def convert_file(client_file: Path, product_file: Path, output_file: Path, file_
         else:
             print("SKIPPED (No config found)")
             write_log(log_file, f"SCRIPT: No groupby config for entity '{entity_name}'")
+        
+        # Fix Crowdstrike capitalization in captions and descriptions for all attributes
+        print("  Fixing Crowdstrike capitalization...", end=" ", flush=True)
+        fixed_count = fix_crowdstrike_capitalization(output_data['attributes'], log_file)
+        if fixed_count > 0:
+            print(f"OK (Fixed {fixed_count} attribute(s))")
+        else:
+            print("OK (No fixes needed)")
+        write_log(log_file, f"SCRIPT: Fixed Crowdstrike capitalization in {fixed_count} attribute(s)")
         
         # Add category to client-only attributes using Gemini AI
         if product_data and 'attributes' in product_data:
