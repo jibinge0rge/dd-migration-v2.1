@@ -139,11 +139,19 @@ def find_dict_differences(dict1: Dict[str, Any], dict2: Dict[str, Any], path: st
 def compare_and_remove_common_attributes(client_attrs: Dict[str, Any], 
                                          product_attrs: Dict[str, Any],
                                          file_name: str,
-                                         log_file: Path) -> Dict[str, Any]:
+                                         log_file: Path,
+                                         auto_mode: str = None,
+                                         auto_remove_exact: str = None,
+                                         auto_keep_different: str = None) -> Dict[str, Any]:
     """
     Compare common attributes between Client and Product.
     Ask for confirmation before removing exact matches.
     Returns the cleaned attributes dictionary.
+    
+    Args:
+        auto_mode: If '1' or '2', automatically use that mode without prompting
+        auto_remove_exact: If 'y' or 'n', automatically answer for exact matches
+        auto_keep_different: If 'y' or 'n', automatically answer for different attributes
     """
     if not product_attrs:
         return client_attrs
@@ -205,25 +213,34 @@ def compare_and_remove_common_attributes(client_attrs: Dict[str, Any],
     print(f"    1. Process each category as a whole (y/n for entire category)")
     print(f"    2. Process one by one (y/n for each attribute)")
     
-    while True:
-        try:
-            mode = input(f"\n  Select processing mode (1 or 2): ").strip()
-            if mode in ['1', '2']:
-                write_log(log_file, f"USER: Selected processing mode {mode} ({'whole category' if mode == '1' else 'one by one'})")
-                break
-            else:
-                print("  Invalid choice. Please enter 1 or 2.")
-        except KeyboardInterrupt:
-            print("\n  Cancelled. Keeping all attributes.")
-            write_log(log_file, "USER: Cancelled (KeyboardInterrupt) - Keeping all attributes")
-            return client_attrs
+    if auto_mode and auto_mode in ['1', '2']:
+        mode = auto_mode
+        print(f"\n  Auto-selected processing mode {mode} ({'whole category' if mode == '1' else 'one by one'})")
+        write_log(log_file, f"USER: Auto-selected processing mode {mode} ({'whole category' if mode == '1' else 'one by one'})")
+    else:
+        while True:
+            try:
+                mode = input(f"\n  Select processing mode (1 or 2): ").strip()
+                if mode in ['1', '2']:
+                    write_log(log_file, f"USER: Selected processing mode {mode} ({'whole category' if mode == '1' else 'one by one'})")
+                    break
+                else:
+                    print("  Invalid choice. Please enter 1 or 2.")
+            except KeyboardInterrupt:
+                print("\n  Cancelled. Keeping all attributes.")
+                write_log(log_file, "USER: Cancelled (KeyboardInterrupt) - Keeping all attributes")
+                return client_attrs
     
     # Process Category 1: Remove from Client (exact matches)
     if exact_matches:
         if mode == '1':
             # Process as whole
             print(f"\n  Category 1: REMOVE FROM CLIENT ({len(exact_matches)} attribute(s))")
-            response = input(f"  Remove all {len(exact_matches)} exact match(es) from Client? (y/n): ").strip().lower()
+            if auto_remove_exact and auto_remove_exact.lower() in ['y', 'n']:
+                response = auto_remove_exact.lower()
+                print(f"  Auto-answer: Remove all {len(exact_matches)} exact match(es) from Client? (y/n): {response}")
+            else:
+                response = input(f"  Remove all {len(exact_matches)} exact match(es) from Client? (y/n): ").strip().lower()
             write_log(log_file, f"USER: Category 1 - Remove all {len(exact_matches)}? Response: {response}")
             
             if response == 'y':
@@ -273,7 +290,11 @@ def compare_and_remove_common_attributes(client_attrs: Dict[str, Any],
             if len(different_attrs) > 3:
                 print(f"\n    ... and {len(different_attrs) - 3} more attribute(s)")
             
-            response = input(f"\n  Keep all {len(different_attrs)} different attribute(s) in Client? (y/n): ").strip().lower()
+            if auto_keep_different and auto_keep_different.lower() in ['y', 'n']:
+                response = auto_keep_different.lower()
+                print(f"\n  Auto-answer: Keep all {len(different_attrs)} different attribute(s) in Client? (y/n): {response}")
+            else:
+                response = input(f"\n  Keep all {len(different_attrs)} different attribute(s) in Client? (y/n): ").strip().lower()
             write_log(log_file, f"USER: Category 2 - Keep all {len(different_attrs)}? Response: {response}")
             
             if response == 'y':
@@ -452,6 +473,84 @@ def load_entities_config(base_dir: Path) -> Dict[str, Any]:
     if entities_file.exists():
         return load_json(entities_file)
     return {}
+
+
+def load_rollupfields_config(base_dir: Path) -> List[str]:
+    """Load rollupfields.json configuration file and return list of rollup field names."""
+    rollupfields_file = base_dir / "rollupfields.json"
+    if rollupfields_file.exists():
+        config = load_json(rollupfields_file)
+        return config.get('rollupfields', [])
+    return []
+
+
+def ensure_rollupfields_data_structure(client_attrs: Dict[str, Any],
+                                       product_attrs: Dict[str, Any],
+                                       rollupfields_list: List[str],
+                                       log_file: Path) -> Dict[str, Any]:
+    """
+    Ensure that attributes in rollupfields list have "data_structure": "list" set.
+    
+    Logic:
+    - If attribute is in product only: Add to client with only {"data_structure": "list"}
+    - If attribute is in client only: Ensure it has "data_structure": "list"
+    - If attribute is in both: If product doesn't have it, ensure client has it
+    
+    Returns the updated client attributes dictionary.
+    """
+    if not rollupfields_list:
+        return client_attrs
+    
+    client_attr_names = set(client_attrs.keys())
+    product_attr_names = set(product_attrs.keys()) if product_attrs else set()
+    
+    added_count = 0
+    updated_count = 0
+    added_attrs = []
+    updated_attrs = []
+    
+    for attr_name in rollupfields_list:
+        in_client = attr_name in client_attr_names
+        in_product = attr_name in product_attr_names
+        
+        if in_product and not in_client:
+            # Product only: Add to client with only {"data_structure": "list"}
+            client_attrs[attr_name] = {"data_structure": "list"}
+            added_count += 1
+            added_attrs.append(attr_name)
+            write_log(log_file, f"SCRIPT: Added rollupfield '{attr_name}' to client with data_structure='list' (product only)")
+        
+        elif in_client and not in_product:
+            # Client only: Ensure it has "data_structure": "list"
+            if client_attrs[attr_name].get('data_structure') != 'list':
+                client_attrs[attr_name]['data_structure'] = 'list'
+                updated_count += 1
+                updated_attrs.append(attr_name)
+                write_log(log_file, f"SCRIPT: Updated rollupfield '{attr_name}' to have data_structure='list' (client only)")
+        
+        elif in_client and in_product:
+            # Both: If product doesn't have it, ensure client has it
+            product_has_list = product_attrs[attr_name].get('data_structure') == 'list'
+            client_has_list = client_attrs[attr_name].get('data_structure') == 'list'
+            
+            if not product_has_list and not client_has_list:
+                # Product doesn't have it, so ensure client has it
+                client_attrs[attr_name]['data_structure'] = 'list'
+                updated_count += 1
+                updated_attrs.append(attr_name)
+                write_log(log_file, f"SCRIPT: Updated rollupfield '{attr_name}' to have data_structure='list' (product missing, client updated)")
+            elif not product_has_list and client_has_list:
+                # Product doesn't have it, client already has it - no change needed
+                write_log(log_file, f"SCRIPT: Rollupfield '{attr_name}' already has data_structure='list' in client (product missing)")
+    
+    if added_count > 0 or updated_count > 0:
+        write_log(log_file, f"SCRIPT: Rollupfields processing - Added: {added_count}, Updated: {updated_count}")
+        if added_attrs:
+            write_log(log_file, f"SCRIPT: Added rollupfields: {', '.join(added_attrs)}")
+        if updated_attrs:
+            write_log(log_file, f"SCRIPT: Updated rollupfields: {', '.join(updated_attrs)}")
+    
+    return client_attrs
 
 
 def match_origin_from_attribute_name(attr_name: str, entity_name: str, entities_config: Dict[str, Any]) -> str:
@@ -652,6 +751,71 @@ def save_uncategorized_attributes(attributes: Dict[str, Any],
     write_log(log_file, f"SCRIPT: Grouped into {len(grouped_attrs)} group(s): {', '.join(grouped_attrs.keys())}")
 
 
+def save_categorized_attributes(attributes: Dict[str, Any],
+                                product_attrs: Dict[str, Any],
+                                entity_name: str,
+                                client_file: Path,
+                                log_file: Path) -> None:
+    """
+    Save client-only attributes that have been categorized, organized by group key and category
+    to a JSON file after AI processing.
+    Structure: {entity_name: {group_key: {category: [list of attribute names]}}}
+    Saves to categorized folder inside client folder.
+    """
+    if not product_attrs:
+        return
+    
+    # Find client-only attributes that have a category
+    product_attr_names = set(product_attrs.keys())
+    categorized_attrs = {name: attr for name, attr in attributes.items() 
+                        if name not in product_attr_names and 'category' in attr and attr.get('category')}
+    
+    if not categorized_attrs:
+        return
+    
+    # Organize by group key, then by category
+    # Structure: {group_key: {category: [attribute_names]}}
+    grouped_by_category: Dict[str, Dict[str, List[str]]] = {}
+    
+    for attr_name, attr_data in categorized_attrs.items():
+        # Get group key from attribute, default to "entity_specific"
+        group_key = attr_data.get('group', 'entity_specific')
+        category = attr_data.get('category', '')
+        
+        if not category:
+            continue
+        
+        if group_key not in grouped_by_category:
+            grouped_by_category[group_key] = {}
+        
+        if category not in grouped_by_category[group_key]:
+            grouped_by_category[group_key][category] = []
+        
+        grouped_by_category[group_key][category].append(attr_name)
+    
+    # Create the structure: {entity_name: {group_key: {category: [attributes]}}}
+    result = {
+        entity_name: grouped_by_category
+    }
+    
+    # Create categorized folder inside client folder
+    client_folder = client_file.parent
+    categorized_folder = client_folder / "categorized"
+    categorized_folder.mkdir(parents=True, exist_ok=True)
+    
+    # Save to JSON file in categorized folder
+    save_file = categorized_folder / f"{client_file.stem}_categorized_attributes.json"
+    save_json(save_file, result)
+    
+    # Count total attributes and categories
+    total_attrs = len(categorized_attrs)
+    total_groups = len(grouped_by_category)
+    total_categories = sum(len(categories) for categories in grouped_by_category.values())
+    
+    write_log(log_file, f"SCRIPT: Saved {total_attrs} categorized attribute(s) to {save_file}")
+    write_log(log_file, f"SCRIPT: Grouped into {total_groups} group(s) with {total_categories} category/categories")
+
+
 def add_category_to_client_only_attributes(attributes: Dict[str, Any],
                                            product_attrs: Dict[str, Any],
                                            entity_name: str,
@@ -834,8 +998,17 @@ def add_category_to_client_only_attributes(attributes: Dict[str, Any],
     return attributes
 
 
-def convert_file(client_file: Path, product_file: Path, output_file: Path, file_num: int, total_files: int):
-    """Convert a single file by removing common parent keys (except attributes)."""
+def convert_file(client_file: Path, product_file: Path, output_file: Path, file_num: int, total_files: int,
+                 auto_mode: str = None, auto_remove_exact: str = None, auto_keep_different: str = None, auto_use_ai: str = None):
+    """
+    Convert a single file by removing common parent keys (except attributes).
+    
+    Args:
+        auto_mode: If '1' or '2', automatically use that processing mode
+        auto_remove_exact: If 'y' or 'n', automatically answer for exact matches
+        auto_keep_different: If 'y' or 'n', automatically answer for different attributes
+        auto_use_ai: If 'y' or 'n', automatically answer for AI category assignment
+    """
     # Create log folder inside client folder
     client_folder = client_file.parent
     log_folder = client_folder / "log"
@@ -928,8 +1101,28 @@ def convert_file(client_file: Path, product_file: Path, output_file: Path, file_
                 output_data['attributes'],
                 product_data['attributes'],
                 client_file.name,
+                log_file,
+                auto_mode=auto_mode,
+                auto_remove_exact=auto_remove_exact,
+                auto_keep_different=auto_keep_different
+            )
+        
+        # Ensure rollupfields have data_structure: "list"
+        print("  Ensuring rollupfields have data_structure='list'...", end=" ", flush=True)
+        base_dir = Path(__file__).parent
+        rollupfields_list = load_rollupfields_config(base_dir)
+        if rollupfields_list:
+            product_attrs = product_data['attributes'] if product_data and 'attributes' in product_data else {}
+            output_data['attributes'] = ensure_rollupfields_data_structure(
+                output_data['attributes'],
+                product_attrs,
+                rollupfields_list,
                 log_file
             )
+            print("OK")
+        else:
+            print("SKIPPED (No rollupfields config found)")
+            write_log(log_file, "SCRIPT: No rollupfields config found")
         
         # Apply groupby settings from groupby.json
         print("  Applying groupby settings...", end=" ", flush=True)
@@ -981,20 +1174,26 @@ def convert_file(client_file: Path, product_file: Path, output_file: Path, file_
                 print("OK")
                 
                 # Ask user if they want to use AI for category assignment
-                while True:
-                    try:
-                        response = input("  Use AI to assign categories to client-only attributes? (y/n): ").strip().lower()
-                        if response in ['y', 'n']:
-                            use_ai = (response == 'y')
-                            write_log(log_file, f"USER: Use AI for category assignment? Response: {response}")
+                if auto_use_ai and auto_use_ai.lower() in ['y', 'n']:
+                    response = auto_use_ai.lower()
+                    use_ai = (response == 'y')
+                    print(f"  Auto-answer: Use AI to assign categories to client-only attributes? (y/n): {response}")
+                    write_log(log_file, f"USER: Auto-answer - Use AI for category assignment? Response: {response}")
+                else:
+                    while True:
+                        try:
+                            response = input("  Use AI to assign categories to client-only attributes? (y/n): ").strip().lower()
+                            if response in ['y', 'n']:
+                                use_ai = (response == 'y')
+                                write_log(log_file, f"USER: Use AI for category assignment? Response: {response}")
+                                break
+                            else:
+                                print("  Invalid choice. Please enter 'y' or 'n'.")
+                        except KeyboardInterrupt:
+                            print("\n  Cancelled. Setting empty categories.")
+                            write_log(log_file, "USER: Cancelled - Setting empty categories")
+                            use_ai = False
                             break
-                        else:
-                            print("  Invalid choice. Please enter 'y' or 'n'.")
-                    except KeyboardInterrupt:
-                        print("\n  Cancelled. Setting empty categories.")
-                        write_log(log_file, "USER: Cancelled - Setting empty categories")
-                        use_ai = False
-                        break
                 
                 print("  Adding category to client-only attributes...")
                 categories_config = load_product_categories(base_dir)
@@ -1014,6 +1213,17 @@ def convert_file(client_file: Path, product_file: Path, output_file: Path, file_
                         use_ai
                     )
                     print("  OK")
+                    
+                    # Save categorized attributes organized by group key and category after AI processing
+                    print("  Saving categorized attributes...", end=" ", flush=True)
+                    save_categorized_attributes(
+                        output_data['attributes'],
+                        product_data['attributes'],
+                        entity_name,
+                        client_file,
+                        log_file
+                    )
+                    print("OK")
                 else:
                     print("SKIPPED (No categories config found)")
                     write_log(log_file, f"SCRIPT: No categories config for entity '{entity_name_capitalized}'")
@@ -1045,20 +1255,21 @@ def display_menu(client_files: list) -> int:
     print("1. Process all files")
     print("2. Process one file (select from list)")
     print("3. Exit")
+    print("4. Process all files with defaults (mode 1, remove exact, remove different, use AI)")
     print(f"{'='*70}")
     
     while True:
         try:
-            choice = input("\nEnter your choice (1-3): ").strip()
-            if choice in ['1', '2', '3']:
+            choice = input("\nEnter your choice (1-4): ").strip()
+            if choice in ['1', '2', '3', '4']:
                 return int(choice)
             else:
-                print("Invalid choice. Please enter 1, 2, or 3.")
+                print("Invalid choice. Please enter 1, 2, 3, or 4.")
         except KeyboardInterrupt:
             print("\n\nExiting...")
             return 3
         except Exception as e:
-            print(f"Invalid input. Please enter a number (1-3).")
+            print(f"Invalid input. Please enter a number (1-4).")
 
 
 def display_file_list(client_files: list) -> int:
@@ -1087,8 +1298,18 @@ def display_file_list(client_files: list) -> int:
 
 
 def process_files(client_files: list, product_dir: Path, output_dir: Path, 
-                  files_to_process: list = None):
-    """Process the selected files."""
+                  files_to_process: list = None,
+                  auto_mode: str = None, auto_remove_exact: str = None, 
+                  auto_keep_different: str = None, auto_use_ai: str = None):
+    """
+    Process the selected files.
+    
+    Args:
+        auto_mode: If '1' or '2', automatically use that processing mode
+        auto_remove_exact: If 'y' or 'n', automatically answer for exact matches
+        auto_keep_different: If 'y' or 'n', automatically answer for different attributes
+        auto_use_ai: If 'y' or 'n', automatically answer for AI category assignment
+    """
     if files_to_process is None:
         files_to_process = client_files
     
@@ -1106,7 +1327,9 @@ def process_files(client_files: list, product_dir: Path, output_dir: Path,
         output_file = output_dir / client_file.name
         
         try:
-            convert_file(client_file, product_file, output_file, idx, total_files)
+            convert_file(client_file, product_file, output_file, idx, total_files,
+                        auto_mode=auto_mode, auto_remove_exact=auto_remove_exact,
+                        auto_keep_different=auto_keep_different, auto_use_ai=auto_use_ai)
             processed += 1
         except Exception as e:
             print(f"\n{'='*70}")
@@ -1171,6 +1394,19 @@ def main():
             # Exit
             print("\nExiting... Goodbye!")
             break
+        
+        elif choice == 4:
+            # Process all files with defaults
+            # Defaults: mode 1 (whole category), remove exact (y), remove different (n), use AI (y)
+            print("\n  Running with default options:")
+            print("    - Process each category as a whole: Yes (mode 1)")
+            print("    - Remove exact matches: Yes")
+            print("    - Keep different attributes: No (remove them)")
+            print("    - Use AI to assign categories: Yes")
+            process_files(client_files, product_dir, output_dir,
+                         auto_mode='1', auto_remove_exact='y', 
+                         auto_keep_different='n', auto_use_ai='y')
+            input("\nPress Enter to continue...")
 
 
 if __name__ == "__main__":
