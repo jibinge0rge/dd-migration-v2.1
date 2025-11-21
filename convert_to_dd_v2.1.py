@@ -28,6 +28,12 @@ try:
 except ImportError:
     GEMINI_AVAILABLE = False
 
+try:
+    from openai import OpenAI
+    OPENAI_AVAILABLE = True
+except ImportError:
+    OPENAI_AVAILABLE = False
+
 
 def write_log(log_file: Path, message: str):
     """Write a message to the log file."""
@@ -701,6 +707,83 @@ Respond with ONLY the category name exactly as it appears in the list, nothing e
         return category_names[0] if category_names else "General Information"
 
 
+def get_best_category_with_openai(attr_name: str, attr_data: Dict[str, Any], 
+                                   available_categories: List[Dict[str, Any]],
+                                   api_key: str) -> str:
+    """
+    Use OpenAI to determine the best category for an attribute.
+    Uses attribute name, caption, and description to make the decision.
+    available_categories should be a list of dicts with 'category' and 'examples' keys.
+    'examples' should be a list of strings.
+    """
+    caption = attr_data.get('caption', '')
+    description = attr_data.get('description', '')
+    
+    # Extract category names for validation
+    category_names = [cat['category'] for cat in available_categories]
+    
+    # Build prompt with categories and examples
+    categories_list = []
+    for cat in available_categories:
+        category_name = cat['category']
+        examples = cat.get('examples', [])
+        if examples and isinstance(examples, list):
+            # Format examples as comma-separated list
+            examples_str = ', '.join(examples)
+            categories_list.append(f"- {category_name} (Examples: {examples_str})")
+        else:
+            categories_list.append(f"- {category_name}")
+    
+    categories_str = '\n'.join(categories_list)
+    
+    prompt = f"""You are a data classification expert. Given an attribute from a data dictionary, determine the best category from the provided list.
+
+Attribute Name: {attr_name}
+Caption: {caption}
+Description: {description}
+
+Available Categories (with examples):
+{categories_str}
+
+Based on the attribute name, caption, and description, select the SINGLE most appropriate category from the list above. 
+Use the examples provided to better understand what each category represents.
+Respond with ONLY the category name exactly as it appears in the list, nothing else."""
+
+    try:
+        # Initialize OpenAI client
+        client = OpenAI(api_key=api_key)
+        
+        # Generate response
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "You are a data classification expert. Respond with only the category name, nothing else."},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.3,
+            max_tokens=50
+        )
+        
+        category = response.choices[0].message.content.strip()
+        
+        # Validate that the response is in the available categories
+        if category in category_names:
+            return category
+        else:
+            # If response doesn't match exactly, try to find closest match
+            category_lower = category.lower()
+            for cat_name in category_names:
+                if cat_name.lower() == category_lower:
+                    return cat_name
+            
+            # If still no match, return first category as fallback
+            return category_names[0] if category_names else "General Information"
+            
+    except Exception as e:
+        # On error, return first category as fallback
+        return category_names[0] if category_names else "General Information"
+
+
 def save_uncategorized_attributes(attributes: Dict[str, Any],
                                   product_attrs: Dict[str, Any],
                                   entity_name: str,
@@ -822,12 +905,16 @@ def add_category_to_client_only_attributes(attributes: Dict[str, Any],
                                            categories_config: Dict[str, Any],
                                            entities_config: Dict[str, Any],
                                            log_file: Path,
-                                           use_ai: bool = True) -> Dict[str, Any]:
+                                           use_ai: bool = True,
+                                           ai_provider: str = 'gemini') -> Dict[str, Any]:
     """
     Add 'category' field to attributes that exist only in Client (not in Product).
     For attributes with group "source_specific", first tries to match with origins from entities.json.
-    If not found, uses Gemini AI to determine the best category from product_categories.json if use_ai is True.
+    If not found, uses AI (OpenAI or Gemini) to determine the best category from product_categories.json if use_ai is True.
     Otherwise, sets category to empty string.
+    
+    Args:
+        ai_provider: 'openai' or 'gemini' - which AI provider to use
     """
     if not product_attrs:
         write_log(log_file, "SCRIPT: No product attributes available, skipping category assignment")
@@ -866,24 +953,47 @@ def add_category_to_client_only_attributes(attributes: Dict[str, Any],
         write_log(log_file, f"SCRIPT: Set empty category for {len(client_only_attrs)} client-only attribute(s)")
         return attributes
     
-    # Check if Gemini is available
-    if not GEMINI_AVAILABLE:
-        write_log(log_file, "SCRIPT: google-generativeai not installed, setting empty categories")
-        print("  WARNING: google-generativeai not installed, setting empty categories")
-        for attr_name, attr_data in client_only_attrs.items():
-            if 'category' not in attr_data:
-                attr_data['category'] = ""
-        return attributes
+    # Validate and check AI provider availability
+    ai_provider_lower = ai_provider.lower()
+    if ai_provider_lower not in ['openai', 'gemini']:
+        write_log(log_file, f"SCRIPT: Invalid AI provider '{ai_provider}', defaulting to 'gemini'")
+        ai_provider_lower = 'gemini'
     
-    # Get Gemini API key from environment
-    api_key = os.getenv('GEMINI_API_KEY')
-    if not api_key:
-        write_log(log_file, "SCRIPT: GEMINI_API_KEY environment variable not set, setting empty categories")
-        print("  WARNING: GEMINI_API_KEY not set, setting empty categories")
-        for attr_name, attr_data in client_only_attrs.items():
-            if 'category' not in attr_data:
-                attr_data['category'] = ""
-        return attributes
+    # Check provider availability
+    if ai_provider_lower == 'openai':
+        if not OPENAI_AVAILABLE:
+            write_log(log_file, "SCRIPT: openai not installed, setting empty categories")
+            print("  WARNING: openai not installed, setting empty categories")
+            for attr_name, attr_data in client_only_attrs.items():
+                if 'category' not in attr_data:
+                    attr_data['category'] = ""
+            return attributes
+        api_key = os.getenv('OPENAI_API_KEY')
+        if not api_key:
+            write_log(log_file, "SCRIPT: OPENAI_API_KEY environment variable not set, setting empty categories")
+            print("  WARNING: OPENAI_API_KEY not set, setting empty categories")
+            for attr_name, attr_data in client_only_attrs.items():
+                if 'category' not in attr_data:
+                    attr_data['category'] = ""
+            return attributes
+    else:  # gemini
+        if not GEMINI_AVAILABLE:
+            write_log(log_file, "SCRIPT: google-generativeai not installed, setting empty categories")
+            print("  WARNING: google-generativeai not installed, setting empty categories")
+            for attr_name, attr_data in client_only_attrs.items():
+                if 'category' not in attr_data:
+                    attr_data['category'] = ""
+            return attributes
+        api_key = os.getenv('GEMINI_API_KEY')
+        if not api_key:
+            write_log(log_file, "SCRIPT: GEMINI_API_KEY environment variable not set, setting empty categories")
+            print("  WARNING: GEMINI_API_KEY not set, setting empty categories")
+            for attr_name, attr_data in client_only_attrs.items():
+                if 'category' not in attr_data:
+                    attr_data['category'] = ""
+            return attributes
+    
+    write_log(log_file, f"SCRIPT: Using AI provider: {ai_provider_lower}")
     
     categorized_count = 0
     processed_count = 0
@@ -949,7 +1059,7 @@ def add_category_to_client_only_attributes(attributes: Dict[str, Any],
                 print(f"\r  [{bar}] {idx}/{total_attrs} ({progress_pct:.1f}%) - Processing: {attr_name[:50]}", end='', flush=True)
                 continue
         
-        # No match in entities.json or not source-specific, use Gemini AI with product_categories.json
+        # No match in entities.json or not source-specific, use AI with product_categories.json
         # Rate limiting: delay after every 30 attributes
         if processed_count > 0 and processed_count % 30 == 0:
             print(f"\n  Rate limit: Waiting 60 seconds after processing {processed_count} attribute(s)...")
@@ -964,14 +1074,22 @@ def add_category_to_client_only_attributes(attributes: Dict[str, Any],
         bar = '█' * filled_length + '░' * (progress_bar_length - filled_length)
         print(f"\r  [{bar}] {idx}/{total_attrs} ({progress_pct:.1f}%) - Processing: {attr_name[:50]}", end='', flush=True)
         
-        # Get best category using Gemini AI
+        # Get best category using selected AI provider
         try:
-            category = get_best_category_with_gemini(
-                attr_name, 
-                attr_data, 
-                available_categories,
-                api_key
-            )
+            if ai_provider_lower == 'openai':
+                category = get_best_category_with_openai(
+                    attr_name, 
+                    attr_data, 
+                    available_categories,
+                    api_key
+                )
+            else:  # gemini
+                category = get_best_category_with_gemini(
+                    attr_name, 
+                    attr_data, 
+                    available_categories,
+                    api_key
+                )
             
             # Add category field
             attr_data['category'] = category
@@ -994,12 +1112,13 @@ def add_category_to_client_only_attributes(attributes: Dict[str, Any],
     print(f"\r  [{'█' * progress_bar_length}] {total_attrs}/{total_attrs} (100.0%) - Completed!{' ' * 50}")
     
     write_log(log_file, f"SCRIPT: Added category to {categorized_count} client-only attribute(s)")
-    write_log(log_file, f"SCRIPT: {origin_matched_count} attribute(s) matched from entities.json, {ai_categorized_count} attribute(s) categorized using Gemini AI")
+    write_log(log_file, f"SCRIPT: {origin_matched_count} attribute(s) matched from entities.json, {ai_categorized_count} attribute(s) categorized using {ai_provider_lower.upper()} AI")
     return attributes
 
 
 def convert_file(client_file: Path, product_file: Path, output_file: Path, file_num: int, total_files: int,
-                 auto_mode: str = None, auto_remove_exact: str = None, auto_keep_different: str = None, auto_use_ai: str = None):
+                 auto_mode: str = None, auto_remove_exact: str = None, auto_keep_different: str = None, 
+                 auto_use_ai: str = None, auto_ai_provider: str = None):
     """
     Convert a single file by removing common parent keys (except attributes).
     
@@ -1008,6 +1127,7 @@ def convert_file(client_file: Path, product_file: Path, output_file: Path, file_
         auto_remove_exact: If 'y' or 'n', automatically answer for exact matches
         auto_keep_different: If 'y' or 'n', automatically answer for different attributes
         auto_use_ai: If 'y' or 'n', automatically answer for AI category assignment
+        auto_ai_provider: If 'openai' or 'gemini', use this provider without asking
     """
     # Create log folder inside client folder
     client_folder = client_file.parent
@@ -1151,7 +1271,7 @@ def convert_file(client_file: Path, product_file: Path, output_file: Path, file_
             print("OK (No fixes needed)")
         write_log(log_file, f"SCRIPT: Fixed Crowdstrike capitalization in {fixed_count} attribute(s)")
         
-        # Add category to client-only attributes using Gemini AI
+        # Add category to client-only attributes using AI (OpenAI or Gemini)
         if product_data and 'attributes' in product_data:
             # Find client-only attributes
             product_attr_names = set(product_data['attributes'].keys())
@@ -1195,6 +1315,61 @@ def convert_file(client_file: Path, product_file: Path, output_file: Path, file_
                             use_ai = False
                             break
                 
+                # If AI is enabled, choose provider
+                # If auto_ai_provider is set (from process_files), use it without asking
+                # Otherwise, ask user to choose provider
+                ai_provider = 'gemini'  # default
+                if use_ai:
+                    # Check which providers are available
+                    available_providers = []
+                    if GEMINI_AVAILABLE and os.getenv('GEMINI_API_KEY'):
+                        available_providers.append('gemini')
+                    if OPENAI_AVAILABLE and os.getenv('OPENAI_API_KEY'):
+                        available_providers.append('openai')
+                    
+                    if len(available_providers) == 0:
+                        print("  WARNING: No AI providers available (missing API keys or packages), setting empty categories")
+                        write_log(log_file, "SCRIPT: No AI providers available, setting empty categories")
+                        use_ai = False
+                    elif auto_ai_provider and auto_ai_provider.lower() in ['openai', 'gemini']:
+                        # Provider was pre-selected (e.g., from process_files for multiple files)
+                        if auto_ai_provider.lower() in available_providers:
+                            ai_provider = auto_ai_provider.lower()
+                            write_log(log_file, f"SCRIPT: Using pre-selected AI provider: {ai_provider.upper()}")
+                        else:
+                            # Pre-selected provider not available, fall back to available one
+                            ai_provider = available_providers[0]
+                            print(f"  WARNING: Pre-selected provider {auto_ai_provider.upper()} not available, using {ai_provider.upper()}")
+                            write_log(log_file, f"SCRIPT: Pre-selected provider {auto_ai_provider.upper()} not available, using {ai_provider.upper()}")
+                    elif len(available_providers) == 1:
+                        # Only one provider available, use it automatically
+                        ai_provider = available_providers[0]
+                        print(f"  Using {ai_provider.upper()} (only available provider)")
+                        write_log(log_file, f"USER: Auto-selected {ai_provider.upper()} (only available provider)")
+                    else:
+                        # Multiple providers available - ask user to choose
+                        print(f"\n  Available AI providers:")
+                        for idx, provider in enumerate(available_providers, 1):
+                            print(f"    {idx}. {provider.upper()}")
+                        
+                        while True:
+                            try:
+                                provider_choice = input(f"  Select AI provider (1-{len(available_providers)}): ").strip()
+                                provider_num = int(provider_choice)
+                                if 1 <= provider_num <= len(available_providers):
+                                    ai_provider = available_providers[provider_num - 1]
+                                    write_log(log_file, f"USER: Selected AI provider: {ai_provider.upper()}")
+                                    break
+                                else:
+                                    print(f"  Invalid choice. Please enter a number between 1 and {len(available_providers)}.")
+                            except ValueError:
+                                print("  Invalid input. Please enter a number.")
+                            except KeyboardInterrupt:
+                                print("\n  Cancelled. Setting empty categories.")
+                                write_log(log_file, "USER: Cancelled - Setting empty categories")
+                                use_ai = False
+                                break
+                
                 print("  Adding category to client-only attributes...")
                 categories_config = load_product_categories(base_dir)
                 entities_config = load_entities_config(base_dir)
@@ -1210,7 +1385,8 @@ def convert_file(client_file: Path, product_file: Path, output_file: Path, file_
                         categories_config,
                         entities_config,
                         log_file,
-                        use_ai
+                        use_ai,
+                        ai_provider
                     )
                     print("  OK")
                     
@@ -1317,6 +1493,45 @@ def process_files(client_files: list, product_dir: Path, output_dir: Path,
     skipped = 0
     total_files = len(files_to_process)
     
+    # If processing multiple files with AI enabled, ask for provider selection once
+    auto_ai_provider = None
+    if total_files > 1 and auto_use_ai and auto_use_ai.lower() == 'y':
+        # Check which providers are available
+        available_providers = []
+        if GEMINI_AVAILABLE and os.getenv('GEMINI_API_KEY'):
+            available_providers.append('gemini')
+        if OPENAI_AVAILABLE and os.getenv('OPENAI_API_KEY'):
+            available_providers.append('openai')
+        
+        if len(available_providers) == 0:
+            print("  WARNING: No AI providers available (missing API keys or packages)")
+            print("  AI categorization will be skipped for all files")
+        elif len(available_providers) == 1:
+            # Only one provider available, use it automatically
+            auto_ai_provider = available_providers[0]
+            print(f"\n  Using {auto_ai_provider.upper()} for all files (only available provider)")
+        else:
+            # Multiple providers available - ask user to choose once
+            print(f"\n  Available AI providers:")
+            for idx, provider in enumerate(available_providers, 1):
+                print(f"    {idx}. {provider.upper()}")
+            
+            while True:
+                try:
+                    provider_choice = input(f"  Select AI provider for all files (1-{len(available_providers)}): ").strip()
+                    provider_num = int(provider_choice)
+                    if 1 <= provider_num <= len(available_providers):
+                        auto_ai_provider = available_providers[provider_num - 1]
+                        print(f"  Selected {auto_ai_provider.upper()} for all files")
+                        break
+                    else:
+                        print(f"  Invalid choice. Please enter a number between 1 and {len(available_providers)}.")
+                except ValueError:
+                    print("  Invalid input. Please enter a number.")
+                except KeyboardInterrupt:
+                    print("\n  Cancelled.")
+                    return
+    
     print(f"\nProcessing {total_files} file(s)...\n")
     
     for idx, client_file in enumerate(files_to_process, 1):
@@ -1329,7 +1544,8 @@ def process_files(client_files: list, product_dir: Path, output_dir: Path,
         try:
             convert_file(client_file, product_file, output_file, idx, total_files,
                         auto_mode=auto_mode, auto_remove_exact=auto_remove_exact,
-                        auto_keep_different=auto_keep_different, auto_use_ai=auto_use_ai)
+                        auto_keep_different=auto_keep_different, auto_use_ai=auto_use_ai,
+                        auto_ai_provider=auto_ai_provider)
             processed += 1
         except Exception as e:
             print(f"\n{'='*70}")
