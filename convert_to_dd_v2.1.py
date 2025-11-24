@@ -1209,12 +1209,12 @@ def convert_file(client_file: Path, product_file: Path, output_file: Path, file_
         write_log(log_file, f"SCRIPT: Removed {removed_count} common parent key(s): {', '.join(removed_keys)}")
     write_log(log_file, f"SCRIPT: Kept {kept_count} top-level key(s) in output")
     
-        # Remove VRA, CCM, and VRA Risk Index from dashboard_identifier in attributes
-        if 'attributes' in output_data:
-            print("  Removing VRA, CCM, and VRA Risk Index from dashboard_identifier...", end=" ", flush=True)
-            modified_attrs = remove_vra_ccm_from_dashboard_identifier(output_data['attributes'])
-            print(f"OK (Modified {modified_attrs} attribute(s))")
-            write_log(log_file, f"SCRIPT: Removed VRA/CCM/VRA Risk Index from dashboard_identifier in {modified_attrs} attribute(s)")
+    # Remove VRA, CCM, and VRA Risk Index from dashboard_identifier in attributes
+    if 'attributes' in output_data:
+        print("  Removing VRA, CCM, and VRA Risk Index from dashboard_identifier...", end=" ", flush=True)
+        modified_attrs = remove_vra_ccm_from_dashboard_identifier(output_data['attributes'])
+        print(f"OK (Modified {modified_attrs} attribute(s))")
+        write_log(log_file, f"SCRIPT: Removed VRA/CCM/VRA Risk Index from dashboard_identifier in {modified_attrs} attribute(s)")
         
         # Compare common attributes with Product
         if product_data and 'attributes' in product_data:
