@@ -439,7 +439,7 @@ def apply_groupby_settings(attributes: Dict[str, Any],
 
 def remove_vra_ccm_from_dashboard_identifier(attributes: Dict[str, Any]) -> int:
     """
-    Remove 'VRA' and 'CCM' subkeys from dashboard_identifier in attributes.
+    Remove 'VRA', 'CCM', and 'VRA Risk Index' subkeys from dashboard_identifier in attributes.
     Returns count of attributes modified.
     """
     modified_count = 0
@@ -448,18 +448,21 @@ def remove_vra_ccm_from_dashboard_identifier(attributes: Dict[str, Any]) -> int:
         if isinstance(attr_data, dict) and 'dashboard_identifier' in attr_data:
             dashboard_id = attr_data['dashboard_identifier']
             if isinstance(dashboard_id, dict):
-                # Check if VRA or CCM exist before removing
+                # Check if VRA, CCM, or VRA Risk Index exist before removing
                 has_vra = 'VRA' in dashboard_id
                 has_ccm = 'CCM' in dashboard_id
+                has_vra_risk_index = 'VRA Risk Index' in dashboard_id
                 
-                # Remove VRA and CCM if they exist
+                # Remove VRA, CCM, and VRA Risk Index if they exist
                 if has_vra:
                     del dashboard_id['VRA']
                 if has_ccm:
                     del dashboard_id['CCM']
+                if has_vra_risk_index:
+                    del dashboard_id['VRA Risk Index']
                 
                 # Count as modified if at least one was removed
-                if has_vra or has_ccm:
+                if has_vra or has_ccm or has_vra_risk_index:
                     modified_count += 1
     
     return modified_count
@@ -1206,12 +1209,12 @@ def convert_file(client_file: Path, product_file: Path, output_file: Path, file_
         write_log(log_file, f"SCRIPT: Removed {removed_count} common parent key(s): {', '.join(removed_keys)}")
     write_log(log_file, f"SCRIPT: Kept {kept_count} top-level key(s) in output")
     
-    # Remove VRA and CCM from dashboard_identifier in attributes
-    if 'attributes' in output_data:
-        print("  Removing VRA and CCM from dashboard_identifier...", end=" ", flush=True)
-        modified_attrs = remove_vra_ccm_from_dashboard_identifier(output_data['attributes'])
-        print(f"OK (Modified {modified_attrs} attribute(s))")
-        write_log(log_file, f"SCRIPT: Removed VRA/CCM from dashboard_identifier in {modified_attrs} attribute(s)")
+        # Remove VRA, CCM, and VRA Risk Index from dashboard_identifier in attributes
+        if 'attributes' in output_data:
+            print("  Removing VRA, CCM, and VRA Risk Index from dashboard_identifier...", end=" ", flush=True)
+            modified_attrs = remove_vra_ccm_from_dashboard_identifier(output_data['attributes'])
+            print(f"OK (Modified {modified_attrs} attribute(s))")
+            write_log(log_file, f"SCRIPT: Removed VRA/CCM/VRA Risk Index from dashboard_identifier in {modified_attrs} attribute(s)")
         
         # Compare common attributes with Product
         if product_data and 'attributes' in product_data:
