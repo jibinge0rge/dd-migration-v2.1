@@ -902,6 +902,17 @@ def save_categorized_attributes(attributes: Dict[str, Any],
     write_log(log_file, f"SCRIPT: Grouped into {total_groups} group(s) with {total_categories} category/categories")
 
 
+def is_temp_attribute(attr_name: str) -> bool:
+    """
+    Check if attribute name matches temp patterns: temp_, _temp_, or _temp.
+    Returns True if attribute is a temp attribute.
+    """
+    attr_name_lower = attr_name.lower()
+    return (attr_name_lower.startswith('temp_') or 
+            '_temp_' in attr_name_lower or 
+            attr_name_lower.endswith('_temp'))
+
+
 def add_category_to_client_only_attributes(attributes: Dict[str, Any],
                                            product_attrs: Dict[str, Any],
                                            entity_name: str,
@@ -915,6 +926,7 @@ def add_category_to_client_only_attributes(attributes: Dict[str, Any],
     For attributes with group "source_specific", first tries to match with origins from entities.json.
     If not found, uses AI (OpenAI or Gemini) to determine the best category from product_categories.json if use_ai is True.
     Otherwise, sets category to empty string.
+    Skips temp attributes (temp_, _temp_, _temp).
     
     Args:
         ai_provider: 'openai' or 'gemini' - which AI provider to use
@@ -948,12 +960,18 @@ def add_category_to_client_only_attributes(attributes: Dict[str, Any],
     write_log(log_file, f"SCRIPT: Found {len(client_only_attrs)} client-only attribute(s) to categorize")
     
     if not use_ai:
-        # User chose not to use AI, set category to empty string
+        # User chose not to use AI, set category to empty string (but skip temp attributes)
+        skipped_temp = 0
         for attr_name, attr_data in client_only_attrs.items():
             if 'category' not in attr_data:
+                # Skip temp attributes
+                if is_temp_attribute(attr_name):
+                    skipped_temp += 1
+                    write_log(log_file, f"SCRIPT: Skipping temp attribute '{attr_name}' (no category assigned)")
+                    continue
                 attr_data['category'] = ""
                 write_log(log_file, f"SCRIPT: Set empty category for attribute '{attr_name}' (AI disabled)")
-        write_log(log_file, f"SCRIPT: Set empty category for {len(client_only_attrs)} client-only attribute(s)")
+        write_log(log_file, f"SCRIPT: Set empty category for {len(client_only_attrs) - skipped_temp} client-only attribute(s), skipped {skipped_temp} temp attribute(s)")
         return attributes
     
     # Validate and check AI provider availability
@@ -969,6 +987,9 @@ def add_category_to_client_only_attributes(attributes: Dict[str, Any],
             print("  WARNING: openai not installed, setting empty categories")
             for attr_name, attr_data in client_only_attrs.items():
                 if 'category' not in attr_data:
+                    # Skip temp attributes
+                    if is_temp_attribute(attr_name):
+                        continue
                     attr_data['category'] = ""
             return attributes
         api_key = os.getenv('OPENAI_API_KEY')
@@ -977,6 +998,9 @@ def add_category_to_client_only_attributes(attributes: Dict[str, Any],
             print("  WARNING: OPENAI_API_KEY not set, setting empty categories")
             for attr_name, attr_data in client_only_attrs.items():
                 if 'category' not in attr_data:
+                    # Skip temp attributes
+                    if is_temp_attribute(attr_name):
+                        continue
                     attr_data['category'] = ""
             return attributes
     else:  # gemini
@@ -985,6 +1009,9 @@ def add_category_to_client_only_attributes(attributes: Dict[str, Any],
             print("  WARNING: google-generativeai not installed, setting empty categories")
             for attr_name, attr_data in client_only_attrs.items():
                 if 'category' not in attr_data:
+                    # Skip temp attributes
+                    if is_temp_attribute(attr_name):
+                        continue
                     attr_data['category'] = ""
             return attributes
         api_key = os.getenv('GEMINI_API_KEY')
@@ -993,6 +1020,9 @@ def add_category_to_client_only_attributes(attributes: Dict[str, Any],
             print("  WARNING: GEMINI_API_KEY not set, setting empty categories")
             for attr_name, attr_data in client_only_attrs.items():
                 if 'category' not in attr_data:
+                    # Skip temp attributes
+                    if is_temp_attribute(attr_name):
+                        continue
                     attr_data['category'] = ""
             return attributes
     
@@ -1016,6 +1046,17 @@ def add_category_to_client_only_attributes(attributes: Dict[str, Any],
         # Skip if category already exists (shouldn't happen, but safety check)
         if 'category' in attr_data:
             write_log(log_file, f"SCRIPT: Attribute '{attr_name}' already has category '{attr_data['category']}', skipping")
+            continue
+        
+        # Skip temp attributes (temp_, _temp_, _temp)
+        if is_temp_attribute(attr_name):
+            write_log(log_file, f"SCRIPT: Skipping temp attribute '{attr_name}' (no category assigned)")
+            # Show progress
+            progress_pct = (idx / total_attrs) * 100
+            progress_bar_length = 40
+            filled_length = int(progress_bar_length * idx // total_attrs)
+            bar = '█' * filled_length + '░' * (progress_bar_length - filled_length)
+            print(f"\r  [{bar}] {idx}/{total_attrs} ({progress_pct:.1f}%) - Skipping temp: {attr_name[:50]}", end='', flush=True)
             continue
         
         # Check if attribute has group "common" (case-insensitive)
