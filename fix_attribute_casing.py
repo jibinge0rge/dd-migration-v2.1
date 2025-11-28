@@ -167,13 +167,20 @@ def process_file(file_path: Path, file_num: int, total_files: int,
         ai_provider: 'openai' or 'gemini'
         api_key: API key for the selected provider
     """
-    # Create log folder inside the file's directory
+    # Create CasingFix output directory
     file_dir = file_path.parent
-    log_folder = file_dir / "log"
+    output_dir = file_dir / "CasingFix"
+    output_dir.mkdir(parents=True, exist_ok=True)
+    
+    # Create log folder inside CasingFix directory
+    log_folder = output_dir / "log"
     log_folder.mkdir(parents=True, exist_ok=True)
     
     # Create log file path in log folder
     log_file = log_folder / f"{file_path.stem}_casing_fix.log"
+    
+    # Create output file path in CasingFix directory
+    output_file = output_dir / file_path.name
     
     # Initialize log file (overwrite on each run)
     with open(log_file, 'w', encoding='utf-8') as f:
@@ -285,12 +292,12 @@ def process_file(file_path: Path, file_num: int, total_files: int,
     # Clear progress line and show completion
     print(f"\r  [{'█' * progress_bar_length}] {total_attrs}/{total_attrs} (100.0%) - Completed!{' ' * 50}")
     
-    # Save file if any changes were made
+    # Save file to CasingFix directory if any changes were made
     if caption_fixed_count > 0 or description_fixed_count > 0:
-        print(f"  Saving file...", end=" ", flush=True)
-        save_json(file_path, data)
+        print(f"  Saving file to CasingFix...", end=" ", flush=True)
+        save_json(output_file, data)
         print("OK")
-        write_log(log_file, f"SCRIPT: Saved file with changes")
+        write_log(log_file, f"SCRIPT: Saved file with changes to {output_file.name}")
     else:
         print("  No changes needed")
         write_log(log_file, f"SCRIPT: No changes needed")
@@ -300,6 +307,8 @@ def process_file(file_path: Path, file_num: int, total_files: int,
     print(f"    Captions fixed: {caption_fixed_count}")
     print(f"    Descriptions fixed: {description_fixed_count}")
     print(f"    Periods added: {description_period_fixed_count}")
+    if caption_fixed_count > 0 or description_fixed_count > 0:
+        print(f"    Output file: {output_file.name}")
     print(f"    Log file: {log_file.name}")
     
     write_log(log_file, f"SCRIPT: Summary - Captions fixed: {caption_fixed_count}, Descriptions fixed: {description_fixed_count}, Periods added: {description_period_fixed_count}")
@@ -323,7 +332,10 @@ def process_file(file_path: Path, file_num: int, total_files: int,
         f.write("\n" + "="*70 + "\n")
         f.write(f"Completed: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
     
-    print(f"  Successfully processed: {file_path.name}")
+    if caption_fixed_count > 0 or description_fixed_count > 0:
+        print(f"  Successfully processed: {file_path.name} -> {output_file.name}")
+    else:
+        print(f"  Successfully processed: {file_path.name} (no changes)")
 
 
 def display_menu(files: list) -> int:
