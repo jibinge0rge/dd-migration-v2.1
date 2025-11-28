@@ -31,7 +31,7 @@
         "cluster_bu": {
             "caption": "Cluster BU",
             "description": "Cluster or Business Unit Determined from lookup table.",
-            "group": "enrichment",
+            "group": "common",
             "examples": "",
             "type": "string",
             "enable_hiding": true,
