@@ -74,17 +74,24 @@ def fix_casing_with_gemini(text: str, field_type: str, api_key: str) -> str:
     Use Gemini AI to fix casing of text (caption or description).
     field_type should be 'caption' or 'description'.
     """
-    prompt = f"""You are a text editor expert. Fix the casing and grammar of the following {field_type} text.
+    prompt = f"""You are a text editor expert. Fix ONLY the letter casing (uppercase/lowercase) of the following {field_type} text.
     
 Original {field_type}: {text}
 
-Rules:
-- For captions: Use proper title case (e.g., "Internal IP Address", "OS Major Version")
-- For descriptions: Use proper sentence case (e.g., "The internal IPv4 address of the host.")
-- Maintain technical terms and acronyms correctly (e.g., "IP", "OS", "IPv4", "API")
-- Keep the meaning and content exactly the same, only fix casing and grammar
+CRITICAL RULES - YOU MUST FOLLOW THESE EXACTLY:
+1. DO NOT add, remove, or change any words
+2. DO NOT change word order
+3. DO NOT change punctuation (except keep existing punctuation)
+4. ONLY change letter casing (uppercase to lowercase or vice versa)
+5. Keep all words exactly as they are, only adjust their case
+6. For captions: Use proper title case (capitalize first letter of each major word)
+7. For descriptions: Use proper sentence case (capitalize first letter only)
+8. Maintain technical terms and acronyms as they appear (e.g., "IP", "OS", "IPv4", "API")
 
-Respond with ONLY the corrected {field_type} text, nothing else. Do not include quotes or any other text."""
+Example: "is cloud resource" -> "Is Cloud Resource" (caption)
+Example: "the internal ip address" -> "The internal IP address" (description)
+
+Respond with ONLY the corrected {field_type} text with proper casing, nothing else. Do not include quotes or any other text."""
 
     try:
         # Configure Gemini
@@ -101,6 +108,26 @@ Respond with ONLY the corrected {field_type} text, nothing else. Do not include 
         elif fixed_text.startswith("'") and fixed_text.endswith("'"):
             fixed_text = fixed_text[1:-1]
         
+        # Validate: Ensure all original words are present in same order (case-insensitive)
+        # This prevents AI from removing, adding, or reordering words
+        def normalize_word(w):
+            """Normalize word for comparison (remove punctuation, lowercase)"""
+            return w.lower().strip('.,!?;:()[]{}"\'')
+        
+        original_words = [normalize_word(w) for w in text.split() if w.strip()]
+        fixed_words = [normalize_word(w) for w in fixed_text.split() if w.strip()]
+        
+        # Check if word count matches
+        if len(original_words) != len(fixed_words):
+            # Word count differs - content was changed
+            return text
+        
+        # Check if words match in order (allowing only casing differences)
+        for orig_word, fixed_word in zip(original_words, fixed_words):
+            if orig_word != fixed_word:
+                # Word doesn't match - content was changed (not just casing)
+                return text
+        
         return fixed_text
         
     except Exception as e:
@@ -113,17 +140,24 @@ def fix_casing_with_openai(text: str, field_type: str, api_key: str) -> str:
     Use OpenAI to fix casing of text (caption or description).
     field_type should be 'caption' or 'description'.
     """
-    prompt = f"""You are a text editor expert. Fix the casing and grammar of the following {field_type} text.
+    prompt = f"""You are a text editor expert. Fix ONLY the letter casing (uppercase/lowercase) of the following {field_type} text.
     
 Original {field_type}: {text}
 
-Rules:
-- For captions: Use proper title case (e.g., "Internal IP Address", "OS Major Version")
-- For descriptions: Use proper sentence case (e.g., "The internal IPv4 address of the host.")
-- Maintain technical terms and acronyms correctly (e.g., "IP", "OS", "IPv4", "API")
-- Keep the meaning and content exactly the same, only fix casing and grammar
+CRITICAL RULES - YOU MUST FOLLOW THESE EXACTLY:
+1. DO NOT add, remove, or change any words
+2. DO NOT change word order
+3. DO NOT change punctuation (except keep existing punctuation)
+4. ONLY change letter casing (uppercase to lowercase or vice versa)
+5. Keep all words exactly as they are, only adjust their case
+6. For captions: Use proper title case (capitalize first letter of each major word)
+7. For descriptions: Use proper sentence case (capitalize first letter only)
+8. Maintain technical terms and acronyms as they appear (e.g., "IP", "OS", "IPv4", "API")
 
-Respond with ONLY the corrected {field_type} text, nothing else. Do not include quotes or any other text."""
+Example: "is cloud resource" -> "Is Cloud Resource" (caption)
+Example: "the internal ip address" -> "The internal IP address" (description)
+
+Respond with ONLY the corrected {field_type} text with proper casing, nothing else. Do not include quotes or any other text."""
 
     try:
         # Initialize OpenAI client
@@ -133,10 +167,10 @@ Respond with ONLY the corrected {field_type} text, nothing else. Do not include 
         response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
-                {"role": "system", "content": f"You are a text editor expert. Respond with only the corrected {field_type} text, nothing else."},
+                {"role": "system", "content": f"You are a text editor expert. Fix ONLY letter casing. Do NOT add, remove, or change any words. Keep all words exactly as they are, only adjust their case. Respond with only the corrected {field_type} text, nothing else."},
                 {"role": "user", "content": prompt}
             ],
-            temperature=0.3,
+            temperature=0.1,
             max_tokens=200
         )
         
@@ -147,6 +181,26 @@ Respond with ONLY the corrected {field_type} text, nothing else. Do not include 
             fixed_text = fixed_text[1:-1]
         elif fixed_text.startswith("'") and fixed_text.endswith("'"):
             fixed_text = fixed_text[1:-1]
+        
+        # Validate: Ensure all original words are present in same order (case-insensitive)
+        # This prevents AI from removing, adding, or reordering words
+        def normalize_word(w):
+            """Normalize word for comparison (remove punctuation, lowercase)"""
+            return w.lower().strip('.,!?;:()[]{}"\'')
+        
+        original_words = [normalize_word(w) for w in text.split() if w.strip()]
+        fixed_words = [normalize_word(w) for w in fixed_text.split() if w.strip()]
+        
+        # Check if word count matches
+        if len(original_words) != len(fixed_words):
+            # Word count differs - content was changed
+            return text
+        
+        # Check if words match in order (allowing only casing differences)
+        for orig_word, fixed_word in zip(original_words, fixed_words):
+            if orig_word != fixed_word:
+                # Word doesn't match - content was changed (not just casing)
+                return text
         
         return fixed_text
         
