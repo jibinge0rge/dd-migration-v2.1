@@ -1,0 +1,4582 @@
+{
+    "attributes": {
+        "client_region": {
+            "caption": "Region",
+            "description": "Region to which the hosts belongs.",
+            "group": "common",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": false,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "finding_evidence_groupby_enabled": true,
+            "category": "General Information"
+        },
+        "platform_type": {
+            "caption": "Platform Type",
+            "description": "Indicates whether the host is a physical machine or a virtual machine.",
+            "group": "entity_specific",
+            "examples": "Physical, Virtual",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Hardware Information"
+        },
+        "os_major_version": {
+            "caption": "OS Major Version",
+            "description": " Primary version number indicating major updates.",
+            "group": "entity_specific",
+            "examples": "10",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Operating System and Software"
+        },
+        "os_minor_version": {
+            "caption": "OS Minor Version",
+            "description": "Numerical value for incremental OS changes.",
+            "group": "entity_specific",
+            "examples": "0",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Operating System and Software"
+        },
+        "kernel_version": {
+            "caption": "Kernel Version",
+            "description": "Version of the kernel.",
+            "group": "entity_specific",
+            "examples": "10.0.19044.1741",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Operating System and Software"
+        },
+        "internal_ip": {
+            "caption": "Internal IP",
+            "description": "Internal IPv4 Address of the Host.",
+            "group": "entity_specific",
+            "examples": "10.20.200.184",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Network"
+        },
+        "external_ip": {
+            "caption": "External IP",
+            "description": "External IPv4 Address of the Host.",
+            "group": "entity_specific",
+            "examples": "100.20.200.184",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Network"
+        },
+        "exposed_external_ip": {
+            "caption": "Exposed External IP",
+            "description": "The external IPv4 address, belonging to hosts, which also possess the likelihood of being publicly accessible.",
+            "group": "entity_specific",
+            "examples": "100.20.200.184",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Network"
+        },
+        "compliance_standard": {
+            "caption": "Compliance Standard",
+            "description": "Describes the compliance standard followed on the host.",
+            "group": "entity_specific",
+            "examples": "PCI, ISO",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Security and Compliance"
+        },
+        "hardware_ownership": {
+            "caption": "Hardware Ownership",
+            "description": "Owner of the hardware.",
+            "group": "entity_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "finding_evidence_groupby_enabled": true,
+            "category": "Hardware Information"
+        },
+        "vm_scan_method": {
+            "caption": "VM Scan Method",
+            "description": "Methods used to scan a host by products used for Vulnerability Management (VM).",
+            "group": "entity_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Security and Compliance"
+        },
+        "cmdb_product": {
+            "caption": "CMDB Product",
+            "description": "CMDB Products covering the host.",
+            "group": "entity_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Asset Identification"
+        },
+        "cloud_provider_url": {
+            "caption": "Cloud Provider URL",
+            "description": "Cloud Provider URL for that resource",
+            "group": "entity_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Cloud Infrastructure"
+        },
+        "cloud_resource_group_id": {
+            "caption": "Cloud Resource Group ID",
+            "description": "A logical collection or container used to manage and organize related resources, such as virtual machines, storage accounts, databases, etc.",
+            "group": "entity_specific",
+            "examples": "/subscriptions/0bea03ea-da80-4453-9d04-966769b0fa36/resourcegroups/azure_network_rg",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Cloud Resource Identification"
+        },
+        "cloud_resources_allocated": {
+            "caption": "Cloud Resources Allocated",
+            "description": "The resources used/allocacated to the host/cloud.",
+            "group": "entity_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Cloud Infrastructure"
+        },
+        "cloud_environments": {
+            "caption": "Environments",
+            "description": "Cloud Environments to which the resource belongs.",
+            "group": "entity_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Cloud Infrastructure"
+        },
+        "cloud_image": {
+            "caption": "Image",
+            "description": "Refers to the container image you want to run. This can be an image hosted on a container registry like Azure Container Registry (ACR) or a public/private registry like Docker Hub.",
+            "group": "entity_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Cloud Resource Identification"
+        },
+        "cloud_image_pull_policy": {
+            "caption": "Cloud Image Pull Policy",
+            "description": "Defines when Kubernetes should attempt to pull the image defined in a PodSpec (in Kubernetes). The policy can be one of the following:",
+            "group": "entity_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Cloud Infrastructure"
+        },
+        "cloud_region_location": {
+            "caption": "Cloud Region Location",
+            "description": "Cloud location to which the host belongs.",
+            "group": "entity_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Resource Location and Availability"
+        },
+        "cloud_created_at": {
+            "caption": "Created at in Cloud",
+            "description": "Date when the host was created in the cloud platform.",
+            "group": "entity_specific",
+            "examples": "",
+            "type": "timestamp",
+            "ui_visibility": false,
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Lifecycle and Activity"
+        },
+        "cloud_service_account_name": {
+            "caption": "Service Account Name",
+            "description": "An attribute within the Kubernetes Pod specification that specifies the Service Account associated with the Pod.",
+            "group": "entity_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Identity and Access Management"
+        },
+        "is_cloud_resource": {
+            "caption": "Is Cloud Resource",
+            "description": "Flag which says if a resource is cloud resource or not.",
+            "group": "entity_specific",
+            "examples": "True,False",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Cloud Infrastructure"
+        },
+        "organization": {
+            "caption": "Organization",
+            "description": "Organization to which the host belongs.",
+            "group": "entity_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Inventory Management"
+        },
+        "organization_unit": {
+            "caption": "Organization Unit",
+            "description": "Organization Unit to which the host belongs.",
+            "group": "entity_specific",
+            "examples": [
+                "Backoffice",
+                "Laptops",
+                "Computers",
+                "DOZ",
+                "Dubai"
+            ],
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Inventory Management"
+        },
+        "internet_exposed": {
+            "caption": "Internet Exposed",
+            "description": "Internet exposure status of the host. Derived from is internet accessible, tags, and open to internet.",
+            "group": "entity_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Network"
+        },
+        "host_sub_type": {
+            "caption": "Host Sub Type",
+            "description": "Classification of hosts within the broader classification of Type.",
+            "group": "entity_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "General Information"
+        },
+        "tags": {
+            "caption": "Tags",
+            "description": "",
+            "group": "entity_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "General Information"
+        },
+        "mdm_region": {
+            "caption": "MDM Region",
+            "description": "Region to which the hosts belongs according the MDM sources.",
+            "group": "entity_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Resource Location and Availability"
+        },
+        "mdm_is_managed": {
+            "caption": "MDM Managed",
+            "description": "Indicates whether the host is managed by MDM.",
+            "group": "entity_specific",
+            "examples": "True,False",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Device Management"
+        },
+        "mdm_app_id": {
+            "caption": "Mdm App ID",
+            "description": "MDM App ID of the device.",
+            "group": "entity_specific",
+            "examples": "34b143f8-d761-4f8d-721e-9ceb1846db5b",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Asset Identification"
+        },
+        "mdm_eas_status": {
+            "caption": "MDM EAS status",
+            "description": "Indicates the EAS Status of the host according to MDM.",
+            "group": "entity_specific",
+            "examples": "True,False",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Device Management"
+        },
+        "client": {
+            "caption": "Client",
+            "description": "Clients to which the host belongs.",
+            "group": "common",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "General Information"
+        },
+        "client_group": {
+            "caption": "Client Group",
+            "description": "Clients Group to which the host belongs.",
+            "group": "entity_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "General Information"
+        },
+        "client_status": {
+            "caption": "Client Status",
+            "description": "Status of the client to which the host belongs.",
+            "group": "entity_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Identity and Access Management"
+        },
+        "location_id": {
+            "caption": "Location ID",
+            "description": "The location ID corresponding to the location.",
+            "group": "entity_specific",
+            "examples": "",
+            "type": "integer",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Asset Identification"
+        },
+        "aad_display_name": {
+            "caption": "Azure AD Display Name",
+            "description": "Display Name of the host in Azure AD.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "MS Azure AD Attributes"
+        },
+        "aad_hostnames": {
+            "caption": "Azure AD Hostnames",
+            "description": "Azure AD Hostnames.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "MS Azure AD Attributes"
+        },
+        "aad_account_enabled": {
+            "caption": "Azure AD Account Enabled",
+            "description": "true if the account is enabled; otherwise, false. Required. Default is true.",
+            "group": "source_specific",
+            "examples": "True",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "MS Azure AD Attributes"
+        },
+        "aad_approximate_last_signin_date": {
+            "caption": "Azure AD Approximate Last Signin Date",
+            "description": "Approximate Last Signin date time seen in Azure AD.",
+            "group": "source_specific",
+            "examples": "2022-11-08T17:15:01Z",
+            "type": "timestamp",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "MS Azure AD Attributes"
+        },
+        "aad_compliance_expiration_date": {
+            "caption": "Azure AD Compliance Expiration Date",
+            "description": "Compliance Expirartion date time as seen in Azure AD.",
+            "group": "source_specific",
+            "examples": "2022-10-25T12:21:53Z",
+            "type": "timestamp",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "MS Azure AD Attributes"
+        },
+        "aad_on_premises_last_sync_date": {
+            "caption": "Azure AD On Premises Last Sync Date",
+            "description": "The last time at which the object was synced with the on-premises directory. The Timestamp type represents date and time information using ISO 8601 format and is always in UTC time.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "timestamp",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "MS Azure AD Attributes"
+        },
+        "aad_on_premises_sync_enabled": {
+            "caption": "Azure AD On Premises Sync Enabled",
+            "description": "true if this object is synced from an on-premises directory; false if this object was originally synced from an on-premises directory but is no longer synced; null if this object has never been synced from an on-premises directory (default). .",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "MS Azure AD Attributes"
+        },
+        "aad_profile_type": {
+            "caption": "Azure AD Profile Type",
+            "description": "The profile type of the device. Possible values: RegisteredDevice (default), SecureVM, Printer, Shared, IoT.",
+            "group": "source_specific",
+            "examples": "SecureVM",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "MS Azure AD Attributes"
+        },
+        "aad_system_labels": {
+            "caption": "Azure AD System Labels",
+            "description": "List of labels applied to the device by the system. .",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "MS Azure AD Attributes"
+        },
+        "aad_trust_type": {
+            "caption": "Azure AD Trust Type",
+            "description": "Type of trust for the joined device.",
+            "group": "source_specific",
+            "examples": "AzureAd",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "MS Azure AD Attributes"
+        },
+        "aad_device_metadata": {
+            "caption": "Azure AD Device Metadata",
+            "description": "For internal use only (Azure AD).",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "MS Azure AD Attributes"
+        },
+        "aad_device_version": {
+            "caption": "Azure AD Device Version",
+            "description": "For internal use only (Azure AD).",
+            "group": "source_specific",
+            "examples": "2",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "MS Azure AD Attributes"
+        },
+        "aad_physical_ids": {
+            "caption": "Azure AD Physical IDs",
+            "description": "For internal use only (Azure AD).",
+            "group": "source_specific",
+            "examples": [
+                "[AzureResourceId]:/subscriptions/0f2e3e90-6e2c-47c6-977a-c83s8a9b005e/resourceGroups/aks-poc/providers/Microsoft.Compute/virtualMachines/log-da1",
+                "[USER-GID]:17f369c9-8446-4eb5-912c-3484ebab0f6f:6825809398905308",
+                "[GID]:g:6825809398805308",
+                "[USER-HWID]:17f369c9-8446-4eb5-912c-3484ebab0f6f:68257009398905307",
+                "[HWID]:h:6825810398905307"
+            ],
+            "type": "string",
+            "data_structure": "list",
+            "ui_visibility": false,
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "MS Azure AD Attributes"
+        },
+        "aad_enrollment_profile_name": {
+            "caption": "Azure AD Enrollment Profile Name",
+            "description": "Enrollment profile applied to the device. For example, Apple Device Enrollment Profile, Device enrollment - Corporate device identifiers, or Windows Autopilot profile name. This property is set by Intune.",
+            "group": "source_specific",
+            "examples": "EMEA-GR Facebook, APAC-GoDaddy",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "MS Azure AD Attributes"
+        },
+        "aad_asset_group_id": {
+            "caption": "Azure AD Asset Group ID",
+            "description": "Azure AD Group ID to which the host belongs.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "MS Azure AD Attributes"
+        },
+        "aad_group_names": {
+            "caption": "Azure AD Group Names",
+            "description": "Azure AD Groups to which the host belongs.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "MS Azure AD Attributes"
+        },
+        "aad_operating_system": {
+            "caption": "Azure AD Operating System",
+            "description": "Operating System obtained from Azure AD.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "MS Azure AD Attributes"
+        },
+        "aad_device_region": {
+            "caption": "Azure AD Device Region",
+            "description": "Regions derived from Azure AD device category and hostnames.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "MS Azure AD Attributes"
+        },
+        "aad_device_group_region": {
+            "caption": "Azure AD Device Group Region",
+            "description": "Regions derived from Azure AD group name and enrollment profile name.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "MS Azure AD Attributes"
+        },
+        "tenablesc_dns_name": {
+            "caption": "Tenable.sc DNS Name",
+            "description": "DNS Name as seen in Tenable.sc.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tenable.sc Attributes"
+        },
+        "tenablesc_scan_job": {
+            "caption": "Tenable.sc Scan Job",
+            "description": "List of scans done on the host that detected a vulnerability.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tenable.sc Attributes"
+        },
+        "tenablesc_scan_type": {
+            "caption": "Tenable.sc Scan Type",
+            "description": "List of scan types done on the host that detected a vulnerability.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tenable.sc Attributes"
+        },
+        "tenablesc_ip": {
+            "caption": "Tenable.sc IP Address",
+            "description": "IP Address obtained via Tenable.sc.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tenable.sc Attributes"
+        },
+        "tenablesc_netbios_name": {
+            "caption": "Tenable.sc NetBios Name",
+            "description": "Represents the NetBIOS name of each host.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tenable.sc Attributes"
+        },
+        "tenablesc_netbios_workgroup": {
+            "caption": "Tenable.sc NetBios Workgroup",
+            "description": "Represents the NetBIOS work group name of each host.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tenable.sc Attributes"
+        },
+        "tenablesc_mac_address": {
+            "caption": "Tenable.sc MAC Address",
+            "description": "Represents the MAC address of each host.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tenable.sc Attributes"
+        },
+        "tenablesc_host_uuid": {
+            "caption": "Tenable.sc Host UUID",
+            "description": "Universally unique identifier (UUID) assigned to each host by Tenable.sc",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tenable.sc Attributes"
+        },
+        "tenablesc_created_date": {
+            "caption": "Tenable.sc Created Time",
+            "description": "Represents the timestamp when each host was created in Tenable.sc",
+            "group": "source_specific",
+            "examples": "",
+            "type": "timestamp",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tenable.sc Attributes"
+        },
+        "tenablesc_first_seen": {
+            "caption": "Tenable.sc First Seen",
+            "description": "Represents the timestamp when each host was first seen by Tenable.sc",
+            "group": "source_specific",
+            "examples": "",
+            "type": "timestamp",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tenable.sc Attributes"
+        },
+        "tenablesc_modified_date": {
+            "caption": "Tenable.sc Modified Time",
+            "description": "Represents the timestamp when each host was last modified in Tenable.sc",
+            "group": "source_specific",
+            "examples": "",
+            "type": "timestamp",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tenable.sc Attributes"
+        },
+        "tenablesc_acr_score": {
+            "caption": "Tenable.sc ACR Score",
+            "description": "Represents the Asset Exposure Score (ACR) of each host in Tenable.sc.Tenable assigns an ACR to each asset on your network to represent the asset's relative criticality as an integer from 1 to 10. A higher ACR indicates higher criticality.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "integer",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tenable.sc Attributes"
+        },
+        "tenablesc_acr_capability": {
+            "caption": "Tenable.sc ACR Capability",
+            "description": "Represents the capability of device associated with each host in ",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tenable.sc Attributes"
+        },
+        "tenablesc_hostname": {
+            "caption": "Tenable.sc Hostname",
+            "description": "Hostnames as per Tenable.sc",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tenable.sc Attributes"
+        },
+        "tenablesc_aes_score": {
+            "caption": "Tenable.sc AES Score",
+            "description": "Represents the Asset Exposure Score (AES) of each host in Tenable Security Center .Tenable calculates a dynamic AES for each asset on your network to represent the asset's relative exposure as an integer between 0 and 1000. A higher AES indicates higher exposure.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "integer",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tenable.sc Attributes"
+        },
+        "tenablesc_internet_exposure": {
+            "caption": "Tenable.sc Internet Exposure",
+            "description": "ACR Internet Exposure as per Tenable.sc",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tenable.sc Attributes"
+        },
+        "itop_power_state": {
+            "caption": "iTOP Power State",
+            "description": "Indicates whether a host is powered on or off.",
+            "group": "source_specific",
+            "examples": "poweredon, poweredoff, suspended",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_role": {
+            "caption": "iTOP Role",
+            "description": "Specifies the function or purpose of the host.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_tier_level": {
+            "caption": "iTOP Tier Level",
+            "description": "Refers to the level of importance or criticality of a host.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_device_condition": {
+            "caption": "iTOP Device Condition",
+            "description": "The current condition of the PC.",
+            "group": "source_specific",
+            "examples": "damaged, lost, operational, sold, in_transit, unknown, ready_for_delivery",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_waha_mode": {
+            "caption": "iTOP WAHA Mode",
+            "description": "Work At Home Agent mode.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_termination_date": {
+            "caption": "iTOP Termination Date",
+            "description": "Date and time on which the computer was terminated.",
+            "group": "source_specific",
+            "examples": "44977.58472222222",
+            "type": "timestamp",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_go_live_date": {
+            "caption": "iTOP Go Live Date",
+            "description": "Date and time when the PC was moved into production.",
+            "group": "source_specific",
+            "examples": "44977.58472222222",
+            "type": "timestamp",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_device_name": {
+            "caption": "iTOP Device Name",
+            "description": "Indicates the network device name or hostname for the user's PC.",
+            "group": "source_specific",
+            "examples": "INKCPKDE23ZQ",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_server_name": {
+            "caption": "iTOP Server Name",
+            "description": "Indicates Name of the server.",
+            "group": "source_specific",
+            "examples": "indpaicc",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_server_vm_name": {
+            "caption": "iTOP Server VM Name",
+            "description": "VM Name as per iTOP server.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_vmware_name": {
+            "caption": "iTOP VMWare Name",
+            "description": "Virtual machine name as per iTOP VM.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_host_class": {
+            "caption": "iTOP Server Class",
+            "description": "Type of Server.",
+            "group": "source_specific",
+            "examples": "server, Virtual machine",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_sam_account_name": {
+            "caption": "iTOP SAM Account Name",
+            "description": "The SAM Account Name as per iTOP.",
+            "examples": "",
+            "group": "source_specific",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_vuln_scan_policy": {
+            "caption": "iTOP Vulnerability Scan Policy",
+            "description": "The Vulnerability scan policy used.",
+            "group": "source_specific",
+            "examples": "PCI ISO 2022",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_last_report": {
+            "caption": "iTOP Last Report",
+            "description": "Date and time of the last report from the ITOP agent.",
+            "group": "source_specific",
+            "examples": "44974.02777777778",
+            "type": "timestamp",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_ccms_location_code": {
+            "caption": "iTOP CCMS Location Code",
+            "description": "Location code of the computer in the Customer Care Management System (CCMS). CCMS is  internally developed system where all call center activity is managed.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_it_location_code": {
+            "caption": "iTOP IT Location Code",
+            "description": "Location code of the computer in the IT inventory system.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_client": {
+            "caption": "Clients as per iTOP",
+            "description": "Clients to which the host belongs.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_hypervisor": {
+            "caption": "iTOP Hypervisor Full Name",
+            "description": "Hypervisor Full Name as seen in iTOP.",
+            "group": "source_specific",
+            "examples": "VMware ESXi 7.0.3 build-21053776",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_device_location": {
+            "caption": "iTOP Location",
+            "description": "Location of the entity.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_vmware_location": {
+            "caption": "iTOP Vmware Location",
+            "description": "Location as per iTOP VMWare.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_status": {
+            "caption": "iTOP Device Status",
+            "description": "Host Status as per iTOP.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_os_family": {
+            "caption": "iTOP OS Family",
+            "description": "OS Family as per iTOP.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_ownership": {
+            "caption": "iTOP Ownership",
+            "description": "Owner of the hardware as of iTOP.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_pc_country": {
+            "caption": "iTOP PC Country",
+            "description": "The country obtained from iTOP PC based on the organizational unit.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_server_country": {
+            "caption": "iTOP Server Country",
+            "description": "The country obtained from iTOP Server based on the organization.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_vmware_country": {
+            "caption": "iTOP VMWare Country",
+            "description": "The country obtained from iTOP VMware based on the organization.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "crowdstrike_last_report": {
+            "caption": "CrowdStrike Last Report",
+            "description": "Latest CrowdStrike report generated date.",
+            "group": "source_specific",
+            "examples": "44974.02846064815",
+            "type": "timestamp",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "CrowdStrike Attributes"
+        },
+        "crowdstrike_last_seen": {
+            "caption": "CrowdStrike Last Seen",
+            "description": "Last seen date from CrowdStrike.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "timestamp",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "CrowdStrike Attributes"
+        },
+        "crowdstrike_connection_mac_address": {
+            "caption": "CrowdStrike Mac Address",
+            "description": "MAC address used by the sensor to communicate with the cloud.",
+            "group": "source_specific",
+            "examples": "3c-f0-11-ae-49-26",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "CrowdStrike Attributes"
+        },
+        "crowdstrike_site_name": {
+            "caption": "CrowdStrike Site Name",
+            "description": "The site name of the device.",
+            "group": "source_specific",
+            "examples": "Prevalent",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "CrowdStrike Attributes"
+        },
+        "crowdstrike_containment_status": {
+            "caption": "CrowdStrike Containment status",
+            "description": "The containment status of the machine. Possible values are: \"normal\", \"containment_pending\", \"contained\", and \"lift_containment_pending\".",
+            "group": "source_specific",
+            "examples": "normal",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "CrowdStrike Attributes"
+        },
+        "crowdstrike_deployment_type": {
+            "caption": "CrowdStrike Deployment Type",
+            "description": "For Linux hosts, deployment method of the Falcon sensor for Linux or the Falcon Container sensor for Linux. Possible values are Standard or DaemonSet.",
+            "group": "source_specific",
+            "examples": "Standard",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "CrowdStrike Attributes"
+        },
+        "crowdstrike_detection_suppression_status": {
+            "caption": "CrowdStrike Detection Suppression Status",
+            "description": "Status or configuration of the suppression of security detections or alerts within the CrowdStrike Falcon platform.",
+            "group": "source_specific",
+            "examples": "unsuppressed",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "CrowdStrike Attributes"
+        },
+        "crowdstrike_zone_group": {
+            "caption": "CrowdStrike Zone Group",
+            "description": "geographical or logical groupings of endpoints and networks.",
+            "group": "source_specific",
+            "examples": "P1Stage   \neu-west-2a",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "CrowdStrike Attributes"
+        },
+        "crowdstrike_hostname": {
+            "caption": "CrowdStrike Hostname",
+            "description": "Hostname as per crowdstrike.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "CrowdStrike Attributes"
+        },
+        "crowdstrike_service_provider": {
+            "caption": "CrowdStrike Service Provider",
+            "description": "Cloud provider of Host.",
+            "group": "source_specific",
+            "examples": "AWS_EC2, AZURE",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "CrowdStrike Attributes"
+        },
+        "crowdstrike_instance_id": {
+            "caption": "CrowdStrike Cloud Instance ID",
+            "description": "Cloud instance ID of Host as per croud strike.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "CrowdStrike Attributes"
+        },
+        "crowdstrike_service_provider_account_id": {
+            "caption": "CrowdStrike Service Provider Account ID",
+            "description": "Service provider account or subscription id of host as per CrowdStrike.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "CrowdStrike Attributes"
+        },
+        "crowdstrike_os_product_name": {
+            "caption": "CrowdStrike OS Product Name",
+            "description": "OS Product Name as per CrowdStrike.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "CrowdStrike Attributes"
+        },
+        "crowdstrike_os_platform_name": {
+            "caption": "CrowdStrike OS Platform Name",
+            "description": "OS Platform Name as per CrowdStrike.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "CrowdStrike Attributes"
+        },
+        "crowdstrike_operational_lifetime": {
+            "caption": "CrowdStrike Operational Lifetime",
+            "description": "The lifetime of Hosts from CrowdStrike.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "ui_visibility": false,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "CrowdStrike Attributes"
+        },
+        "crowdstrike_region": {
+            "caption": "CrowdStrike Region",
+            "description": "Region based on CrowdStrike Customer ID.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "CrowdStrike Attributes"
+        },
+        "crowdstrike_zta_sensor_signals": {
+            "caption": "CrowdStrike ZTA Sensor Signals",
+            "description": "The ZTA Sensor Signals and it's parameters.",
+            "group": "source_specific",
+            "examples": [
+                {
+                    "criteria": "Cloud ML - Cloud Anti-malware Detection: set to Aggressive or higher",
+                    "group_name": "Prevention",
+                    "meets_criteria": "no",
+                    "signal_id": "ml_cloud_antimalware_detection_mac",
+                    "signal_name": "Cloud ML - Cloud Anti-malware - Detection for macOS"
+                },
+                {
+                    "criteria": "Cloud ML - Cloud Anti-malware Prevention: set to Moderate or higher",
+                    "group_name": "Prevention",
+                    "meets_criteria": "no",
+                    "signal_id": "ml_cloud_antimalware_prevention_mac",
+                    "signal_name": "Cloud ML - Cloud Anti-malware - Prevention for macOS"
+                },
+                {
+                    "criteria": "Cloud ML - Adware & PUP Detection: set to Aggressive or higher",
+                    "group_name": "Prevention",
+                    "meets_criteria": "no",
+                    "signal_id": "ml_adware_detection_mac",
+                    "signal_name": "Cloud ML - Adware & PUP - Detection for macOS"
+                },
+                {
+                    "criteria": "Cloud ML - Adware & PUP Prevention: set to Moderate or higher",
+                    "group_name": "Prevention",
+                    "meets_criteria": "no",
+                    "signal_id": "ml_adware_prevention_mac",
+                    "signal_name": "Cloud ML - Adware & PUP - Prevention for macOS"
+                },
+                {
+                    "criteria": "Sensor ML - Anti-malware Detection: set to Aggressive or higher",
+                    "group_name": "Prevention",
+                    "meets_criteria": "no",
+                    "signal_id": "ml_sensor_antimalware_detection_mac",
+                    "signal_name": "Sensor ML Anti-malware | Detection for macOS"
+                },
+                {
+                    "criteria": "Sensor ML - Anti-malware Prevention: set to Moderate or higher",
+                    "group_name": "Prevention",
+                    "meets_criteria": "no",
+                    "signal_id": "ml_sensor_antimalware_prevention_mac",
+                    "signal_name": "Sensor ML Anti-malware | Prevention for macOS"
+                },
+                {
+                    "criteria": "Sensor ML - Adware & PUP Detection: set to Aggressive or higher",
+                    "group_name": "Prevention",
+                    "meets_criteria": "no",
+                    "signal_id": "ml_sensor_adware_and_pup_detection_mac",
+                    "signal_name": "Sensor ML Adware & PUP | Detection for macOS"
+                },
+                {
+                    "criteria": "Sensor ML - Adware & PUP Prevention: set to Moderate or higher",
+                    "group_name": "Prevention",
+                    "meets_criteria": "no",
+                    "signal_id": "ml_sensor_adware_and_pup_prevention_mac",
+                    "signal_name": "Sensor ML Adware & PUP | Prevention for macOS"
+                },
+                {
+                    "criteria": "Quarantine: enabled",
+                    "group_name": "Prevention",
+                    "meets_criteria": "no",
+                    "signal_id": "quarantine_mac",
+                    "signal_name": "Quarantine"
+                },
+                {
+                    "criteria": "Execution Blocking - Custom Blocking: enabled",
+                    "group_name": "Prevention",
+                    "meets_criteria": "no",
+                    "signal_id": "execution_blocking_custom_blocking_enabled_mac",
+                    "signal_name": "Execution Blocking - Custom Blocking for macOS"
+                },
+                {
+                    "criteria": "Execution Blocking - Intel Threats: enabled",
+                    "group_name": "Prevention",
+                    "meets_criteria": "no",
+                    "signal_id": "execution_blocking_intel_threats_enabled_mac",
+                    "signal_name": "Execution Blocking - Intelligence-Sourced Threats for macOS"
+                },
+                {
+                    "criteria": "Execution Blocking - Suspicious Processes: enabled",
+                    "group_name": "Prevention",
+                    "meets_criteria": "no",
+                    "signal_id": "execution_blocking_suspicious_processes_enabled_mac",
+                    "signal_name": "Execution Blocking - Suspicious Processes for macOS"
+                },
+                {
+                    "criteria": "Unauthorized Remote Access IOAs - XPCOM Shell: enabled",
+                    "group_name": "Prevention",
+                    "meets_criteria": "no",
+                    "signal_id": "unauthorized_remote_access_xpcom_mac",
+                    "signal_name": "Unauthorized Remote Access IOAs - XPCOM Shell"
+                },
+                {
+                    "criteria": "Unauthorized Remote Access IOAs - Chopper Webshell: enabled",
+                    "group_name": "Prevention",
+                    "meets_criteria": "no",
+                    "signal_id": "unauthorized_remote_access_chopper_mac",
+                    "signal_name": "Unauthorized Remote Access IOAs - Chopper Webshell"
+                },
+                {
+                    "criteria": "Unauthorized Remote Access IOAs - Empyre Backdoor: enabled",
+                    "group_name": "Prevention",
+                    "meets_criteria": "no",
+                    "signal_id": "unauthorized_remote_access_empyre_mac",
+                    "signal_name": "Unauthorized Remote Access IOAs - Empyre Backdoor"
+                },
+                {
+                    "criteria": "Credential Dumping IOAs - KcPassword Decoded: enabled",
+                    "group_name": "Prevention",
+                    "meets_criteria": "no",
+                    "signal_id": "crendential_dumping_kcpassword_mac",
+                    "signal_name": "Credential Dumping IOAs - KcPassword Decoded"
+                },
+                {
+                    "criteria": "Credential Dumping IOAs - Hash Collector: enabled",
+                    "group_name": "Prevention",
+                    "meets_criteria": "no",
+                    "signal_id": "crendential_dumping_hash_mac",
+                    "signal_name": "Credential Dumping IOAs - Hash Collector"
+                },
+                {
+                    "criteria": "Script-based Execution Monitoring for macOS: enabled",
+                    "group_name": "Prevention",
+                    "meets_criteria": "no",
+                    "signal_id": "script_based_execution_monitoring_mac",
+                    "signal_name": "Script-based Execution Monitoring for macOS"
+                },
+                {
+                    "criteria": "Real Time Response: enabled",
+                    "group_name": "Sensor",
+                    "meets_criteria": "no",
+                    "signal_id": "real_time_response_enabled_mac",
+                    "signal_name": "CrowdStrike - Real Time Response for macOS"
+                }
+            ],
+            "type": "string",
+            "data_structure": "list",
+            "ui_visibility": false,
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "CrowdStrike Attributes"
+        },
+        "crowdstrike_zta_os_signals": {
+            "caption": "CrowdStrike ZTA OS Signals",
+            "description": "The ZTA OS Signals and it's parameters.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "ui_visibility": false,
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "CrowdStrike Attributes"
+        },
+        "is_mobile": {
+            "caption": "Is Mobile",
+            "description": "Indicates id the device is mobile or not.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "ui_visibility": false,
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "General Information"
+        },
+        "wiz_is_kubernetes_node": {
+            "caption": "Is kubernetes Node as per Wiz",
+            "description": "Indicates whether the resource is a kubernetes node as per wiz",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_kubernetes_flavor": {
+            "caption": "Kubernetes Flavor as per Wiz",
+            "description": "The flavor of kubernetes used as per Wiz.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_kubernetes_env_from": {
+            "caption": "Kubernetes Env From as per Wiz",
+            "description": "The Field is used within Kubernetes PodSpec or ContainerSpec to define a source from which the container should inherit its environmental variables.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_subscription_id": {
+            "caption": "Wiz Subscription ID",
+            "description": "This is a unique identifier assigned by Wiz for a Subscription External ID",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_cloud_platform": {
+            "caption": "Wiz Cloud Platform",
+            "description": "",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_kubernetes_namespace_external_Id": {
+            "caption": "Kubernetes Namespace External ID",
+            "description": "The ID given to the cluster resources that are divided between multiple users, teams, or projects.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_kubernetes_node_external_Id": {
+            "caption": "Kubernetes Node External ID ",
+            "description": "It is a unique identifier assigned to each node in the kubernetes cluster.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_kubernetes_pod_external_Id": {
+            "caption": "Kubernetes Pod External ID",
+            "description": "Each pod is identified by its unique name within its namespace",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_kubernetes_cluster_external_Id": {
+            "caption": "Kubernetes Cluster External ID ",
+            "description": "A unique identifier associated with a Kubernetes cluster in certain contexts or systems that integrate with Kubernetes.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_kubernetes_cluster_name": {
+            "caption": "Kubernetes Cluster Name",
+            "description": "The name assigned to a Kubernetes cluster within the Kubernetes ecosystem.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_memory_gb": {
+            "caption": "Memory (in GB)",
+            "description": "The memory allocated to the resource (in GB)",
+            "group": "source_specific",
+            "examples": "",
+            "type": "integer",
+            "range_selection": true,
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_total_disks": {
+            "caption": "Total Disks",
+            "description": "Number of disks used/allottted to the resoure",
+            "group": "source_specific",
+            "examples": "",
+            "type": "integer",
+            "range_selection": true,
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_virtual_cpus": {
+            "caption": "Virtual CPUs",
+            "description": "Number of Virtual CPUs used/allottted to the resoure",
+            "group": "source_specific",
+            "examples": "",
+            "type": "integer",
+            "range_selection": true,
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_projects": {
+            "caption": "Wiz Projects",
+            "description": "The project information associated with the resource.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_environment_variables": {
+            "caption": "Environment Variables as Per Wiz",
+            "description": "environment variables used by containers",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_active_services": {
+            "caption": "Active Services as per Wiz",
+            "description": "Refers to active services running in the host.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_is_container_host": {
+            "caption": "Is Container Host as per Wiz",
+            "description": "Indicates that this resource is used to host containers in managed Kubernetes clusters.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_is_container_host_scanned": {
+            "caption": "Is Container Host scanned as per Wiz",
+            "description": "Indicated whether the container host was scanned by Wiz",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_is_container_cluster_connected": {
+            "caption": "Is Container Cluster Connected as per Wiz",
+            "description": "Indicates whether the cluster running the container is connected to Wiz for effective analysis of the container network and identity.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_is_scanned_from_non_os_disk": {
+            "caption": "Is Scanned from Non-OS Disk as per Wiz",
+            "description": "Indicates whether Wiz scanned the container from a non-os disk",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_is_default_security_context": {
+            "caption": "Is Default Security Context as per Wiz",
+            "description": "A Security Context defines privilege and access control settings for a Pod or a Container (e.g., privileged mode, read/write permissions to filesystem, etc.). If the flag is set, the Pod or Container security context wasn't altered by the user, so it fallbacks on the default configuration for the given environment.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_is_ephemeral": {
+            "caption": "Is Ephemeral as per Wiz",
+            "description": "This property indicates when a resource is ephemeral.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_is_serverless_container": {
+            "caption": "Is Serverless Container",
+            "description": "This property indicated whether this VM is a server less container.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_password_authentication_disabled": {
+            "caption": "Is Password Authentication Disabled as per Wiz",
+            "description": "Indicates whether the password authentication is disabled or not.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_has_admin_privileges": {
+            "caption": "Has Admin Privileges as per Wiz",
+            "description": "This property indicated whether this VM is has admin Privilage.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_has_high_privileges": {
+            "caption": "Has High Privileges as per Wiz",
+            "description": "This property indicated whether this VM has high privilage.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_has_sensitive_data": {
+            "caption": "Has Sensitive Data as per Wiz",
+            "description": "This property indicated whether this VM has sensitive data.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_number_of_addresses_open_for_http": {
+            "caption": "Number of Addresses Open for HTTP as per Wiz",
+            "description": "Number of external IP addresses that have access to the resource on non-standard ports, which includes all ports except 80 (HTTP), 443 (HTTPS), 22 (SSH), 3389 (RDP), 5985 (WINRM) and 5986 (WINRM).",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_number_of_addresses_open_for_https": {
+            "caption": "Number of Addresses Open for HTTPS as per Wiz",
+            "description": "Number of external IP addresses that have access to the resource on port 443.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_number_of_addresses_open_for_non_standard_ports": {
+            "caption": "Number of Addresses Open for Non Standard Ports as per Wiz",
+            "description": "Number of external IP addresses that have access to the resource on non standard ports.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_number_of_addresses_open_for_rdp": {
+            "caption": "Number of Addresses Open for RDP as per Wiz",
+            "description": "Number of external IP addresses that have access to the resource on port 3389 (RDP).",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_number_of_addresses_open_for_ssh": {
+            "caption": "Number of Addresses Open for SSH as per Wiz",
+            "description": "Number of external IP addresses that have access to the resource on port 22 (SSH).",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_number_of_addresses_open_for_winrm": {
+            "caption": "Number of Addresses Open for WINRM as per Wiz",
+            "description": "Number of external IP addresses that have access to the resource on port 5985/5986 (WINRM).",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_open_to_all_internet": {
+            "caption": "Open to All Internet as per Wiz",
+            "description": "Indicates whether this resource is accessible from the public internet.\nWiz effective exposure analysis is based on the Wiz graph network algorithm analyzing ports, protocols, IPs, security groups, peering, and configs to determine network reachability.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_resource_last_seen": {
+            "caption": "Wiz Resource Last Seen",
+            "description": "Date on which Wiz last scanned the machine.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "timestamp",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_created_at": {
+            "caption": "Created at in Cloud as per Wiz",
+            "description": "Date on which the resource was created in the cloud platform.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "timestamp",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_is_accessible_from_internet": {
+            "caption": "Internet Exposure as per Wiz",
+            "description": "Indicates whether this resource is accessible from at least one internet address.\nWiz effective exposure analysis is based on the Wiz graph network algorithm analyzing ports, protocols, IPs, security groups, peering, and configs to determine network reachability.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_cloud_provider": {
+            "caption": "Wiz Cloud Provider",
+            "description": "The cloud provider detail given in Wiz.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_security_context_privileged": {
+            "caption": "Is Security Context Privileged as per Wiz",
+            "description": "Indicates whether the host has privilege as per Wiz security context.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_security_context_runs_as_root": {
+            "caption": "Is Security Context Runs as Root as per Wiz",
+            "description": "Indicates whether the host runs as root as per Wiz security context.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_resource_type": {
+            "caption": "Wiz Resource Type",
+            "description": "Cloud resource type as per Wiz.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_region": {
+            "caption": "Wiz Region",
+            "description": "Region obtained via Wiz Projects.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_operational_lifetime": {
+            "caption": "Wiz Operational Lifetime",
+            "description": "The lifetime of Hosts from Wiz.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "ui_visibility": false,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "wiz_internet_exposed": {
+            "caption": "Wiz Internet Exposed",
+            "description": "Internet exposure as per Wiz.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Wiz Attributes"
+        },
+        "tenable_io_last_licensed_scan_date": {
+            "caption": "Tenable.io Last Licensed Scan Date",
+            "description": "The time and date of the last scan that identified the asset as licensed. Tenable.io categorizes an asset as licensed if a scan of that asset has returned results from a non-discovery plugin within the last 90 days.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "timestamp",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tenable.io Attributes"
+        },
+        "tenable_io_source_name": {
+            "caption": "Tenable.io Source Name",
+            "description": "The sources of the scans that identified the asset. An asset source is the entity that reported the asset details. Sources can include sensors, connectors, and API imports. If your request specifies multiple sources, Tenable.io returns all assets seen by any of the specified sources.\n\nThe items in the sources array must correspond to the names of the sources as defined in your organization's implementation of Tenable.io.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tenable.io Attributes"
+        },
+        "tenable_io_license_status": {
+            "caption": "Tenable.io License Status",
+            "description": "The Tenable.io License Status is determined by checking if there has been a scan within the last 90 days that identified the asset as licensed. If the last scan date is not null (indicating a recent scan), the status is set to 'true', otherwise 'false'.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tenable.io Attributes"
+        },
+        "tenableio_plugin_status": {
+            "caption": "Tenable.io Plugin Status",
+            "description": "Specifies whether the asset has Tenable.io plugin results associated with it.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tenable.io Attributes"
+        },
+        "tenable_io_active_services": {
+            "caption": "Tenable.io Active Services",
+            "description": "Services running on the asset determined by Tenable.io.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tenable.io Attributes"
+        },
+        "tenable_io_hostnames": {
+            "caption": "Tenable.io Hostnames",
+            "description": "The hostnames that Tenable.io scans have associated with the asset record.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tenable.io Attributes"
+        },
+        "tenable_io_agent_names": {
+            "caption": "Tenable.io Agent Names",
+            "description": "The names of any Nessus agents (Tenable.io Agents) that scanned and identified the asset.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tenable.io Attributes"
+        },
+        "tenable_io_netbios_names ": {
+            "caption": "Tenable.io NetBIOS Names",
+            "description": "The NetBIOS names that Tenable.io scans have associated with the asset record.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tenable.io Attributes"
+        },
+        "tenable_io_operating_systems": {
+            "caption": "Tenable.io Operating Systems",
+            "description": "The operating systems that Tenable.io scans have associated with the asset record.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tenable.io Attributes"
+        },
+        "tenable_io_created_at": {
+            "caption": "Tenable.io Created At",
+            "description": "The time and date when Tenable.io created the asset record.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "timestamp",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tenable.io Attributes"
+        },
+        "tenable_io_first_seen_date": {
+            "caption": "Tenable.io First Seen Date",
+            "description": "The time and date when a Tenable.io scan first identified the asset.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "timestamp",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tenable.io Attributes"
+        },
+        "tenable_io_first_scan_date": {
+            "caption": "Tenable.io First Scan Date",
+            "description": "The date of the first Tenable.io scan run against the asset.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "timestamp",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tenable.io Attributes"
+        },
+        "tenable_io_fqdns": {
+            "caption": "Tenable.io FQDNs",
+            "description": "The FQDNs that Tenable.io scans have associated with the asset record.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tenable.io Attributes"
+        },
+        "tenable_io_mac_address": {
+            "caption": "Tenable.io MAC Addresses",
+            "description": "The MAC addresses that Tenable.io scans have associated with the asset record.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tenable.io Attributes"
+        },
+        "itop_user_organization": {
+            "caption": "iTOP User Organization",
+            "description": "Organization to which the Person belongs as of iTOPO.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_user_location": {
+            "caption": "iTOP User Location",
+            "description": "Location of the entity.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "data_structure": "list",
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_user_status": {
+            "caption": "iTOP User Status",
+            "description": "The user status of the entity as of iTOP.",
+            "group": "source_specific",
+            "examples": "",
+            "data_structure": "list",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "crowdstrike_agent_version": {
+            "caption": "CrowdStrike Agent Version",
+            "description": "The Agent Version of the EDR installed on the Device.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "CrowdStrike Attributes"
+        },
+        "crowdstrike_latest_agent_version": {
+            "caption": "CrowdStrike Latest Agent Version",
+            "description": "Represents the latest available CrowdStrike agent version corresponding to the specific operating system.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "CrowdStrike Attributes"
+        },
+        "tenable_io_acr_score": {
+            "caption": "Tenable.io ACR Score",
+            "description": "The ACR score according to Tenable.io",
+            "group": "source_specific",
+            "examples": "",
+            "type": "integer",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tenable.io Attributes"
+        },
+        "tenable_io_exposure_score": {
+            "caption": "Tenable.io Exposure Score",
+            "description": "The ACR score according to Tenable.io",
+            "group": "source_specific",
+            "examples": "",
+            "type": "integer",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tenable.io Attributes"
+        },
+        "tanium_critical_patch_pending_restart": {
+            "caption": "Tanium Patches - Pending Restart (Critical)",
+            "description": "Patches with critical severity for which the restart is pending according to Tanium.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tanium Attributes"
+        },
+        "tanium_critical_patch_not_installed": {
+            "caption": "Tanium Patches - Not Installed (Critical)",
+            "description": "Patches with critical severity which are not installed according to Tanium.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tanium Attributes"
+        },
+        "tanium_important_patch_pending_restart": {
+            "caption": "Tanium Patches - Pending Restart (Important)",
+            "description": "Patches with important severity for which the restart is pending according to Tanium.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tanium Attributes"
+        },
+        "tanium_important_patch_not_installed": {
+            "caption": "Tanium Patches - Not Installed (Important)",
+            "description": "Patches with important severity which are not installed according to Tanium.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tanium Attributes"
+        },
+        "tanium_moderate_patch_pending_restart": {
+            "caption": "Tanium Patches - Pending Restart (Moderate)",
+            "description": "Patches with moderate severity for which the restart is pending according to Tanium.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tanium Attributes"
+        },
+        "tanium_moderate_patch_not_installed": {
+            "caption": "Tanium Patches - Not Installed (Moderate)",
+            "description": "Patches with moderate severity which are not installed according to Tanium.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tanium Attributes"
+        },
+        "tanium_low_patch_pending_restart": {
+            "caption": "Tanium Patches - Pending Restart (Low)",
+            "description": "Patches with low severity for which the restart is pending according to Tanium.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tanium Attributes"
+        },
+        "tanium_low_patch_not_installed": {
+            "caption": "Tanium Patches - Not Installed (Low)",
+            "description": "Patches with low severity which are not installed according to Tanium.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tanium Attributes"
+        },
+        "tanium_none_patch_pending_restart": {
+            "caption": "Tanium Patches - Pending Restart (None)",
+            "description": "Patches with none severity for which the restart is pending according to Tanium.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tanium Attributes"
+        },
+        "tanium_none_patch_not_installed": {
+            "caption": "Tanium Patches - Not Installed (None)",
+            "description": "Patches with none severity which are not installed according to Tanium.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tanium Attributes"
+        },
+        "tanium_country": {
+            "caption": "Tanium Country",
+            "description": "The country name derived from Tanium custom tags.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tanium Attributes"
+        },
+        "tanium_client": {
+            "caption": "Tanium Client",
+            "description": "The client names derived from Tanium custom tags.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tanium Attributes"
+        },
+        "rapid7_client": {
+            "caption": "Rapid7 Client",
+            "description": "The client names derived from Rapid7 tags.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Rapid7 InsightVM Attributes"
+        },
+        "tanium_business_unit": {
+            "caption": "Tanium Business Unit",
+            "description": "The business units derived from Tanium custom tags.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tanium Attributes"
+        },
+        "intune_device_category_display_name": {
+            "caption": "Intune Device Category Display Name",
+            "description": "The device category display name of the endpoint as of Tanium.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "MS Intune Attributes"
+        },
+        "intune_device_name": {
+            "caption": "Intune Device Name",
+            "description": "The device name of the endpoint as of Tanium.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "MS Intune Attributes"
+        },
+        "intune_onboarding_status": {
+            "caption": "Intune Onboarding status",
+            "description": "Determines whether the host asset is reachable from the Internet (External) or is only accessible from their internal network (Internal). In some cases, it may not be possible to determine this, in which case it would be assigned the value “Unknown”.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Network"
+        },
+        "intune_android_security_patch_level": {
+            "caption": "Intune Android Security Patch Level",
+            "description": "Android security patch level according to Intune.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Security and Compliance"
+        },
+        "rapid7_site_country_code": {
+            "caption": "Rapid7 Site Country Code",
+            "description": "The country code extracted from Rapid7 site name",
+            "group": "source_specific",
+            "type": "string",
+            "ui_visibility": true,
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "data_structure": "list",
+            "category": "Rapid7 InsightVM Attributes"
+        },
+        "rapid7_asset_group_country_code": {
+            "caption": "Rapid7 Asset Group Country Code",
+            "description": "The country code extracted from the Rapid7 asset group name.",
+            "group": "source_specific",
+            "type": "string",
+            "ui_visibility": true,
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Rapid7 InsightVM Attributes"
+        },
+        "asset_visibility": {
+            "caption": "Asset Visibility",
+            "description": "Determines whether the host asset is reachable from the Internet (External) or is only accessible from their internal network (Internal). In some cases, it may not be possible to determine this, in which case it would be assigned the value “Unknown”.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Network"
+        },
+        "asset_environment": {
+            "caption": "Asset Environment",
+            "description": "The environment in which the asset exists in. Depending on the client’s architecture, it may be necessary to extend the values that can be assigned.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Inventory Management"
+        },
+        "asset_purpose_rating": {
+            "caption": "Asset Purpose Rating",
+            "description": "Asset Purpose Rating is a numeric score ranging from 0 to 1 based on the purpose of the asset.",
+            "group": "enrichment",
+            "examples": "0.75",
+            "type": "double",
+            "step_interval": 0.01,
+            "range_selection": true,
+            "min": 0,
+            "max": 1,
+            "width": 10,
+            "enable_hiding": true,
+            "ui_visibility": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Data Quality Metrics"
+        },
+        "asset_exposure": {
+            "type": "double",
+            "category": "Inventory Management"
+        },
+        "zta_compliance": {
+            "caption": "ZTA RAG Compliance",
+            "description": "It refers to aligning an organization's security practices, policies, and infrastructure with the principles of Zero Trust Architecture.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Security and Compliance"
+        },
+        "host_meet_zta_compliance": {
+            "caption": "ZTA Compliant",
+            "description": "Indicates whether ZTA score is above 95.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Security and Compliance"
+        },
+        "is_in_vm_scope": {
+            "caption": "Is Host in VM Scan Scope",
+            "description": "Indicates whether the host is either located in the EMEA region or if it's a cloud-based resource",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Asset Identification"
+        },
+        "host_zta_reporting_status": {
+            "caption": "Host ZTA Reporting Status",
+            "description": "Indicates what the ZTA Reporting Status is.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "General Information"
+        },
+        "is_domain_joined": {
+            "caption": "Is Domain Joined",
+            "description": "Indicates whether the host is joined to domain or not.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Device Management"
+        },
+        "is_hostname_convention_compliant": {
+            "caption": "Is Hostname Convention Compliant",
+            "description": "Indicates whether the hostname conforms to the TP Global Naming Convention.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Data Quality Metrics"
+        },
+        "derived_region": {
+            "caption": "Derived Region",
+            "description": "Region determined from the iTOP IT Location Code, Hostname and directly from data sources, with priority given to the iTOP IT Location Code and Hostname. iTOP Location Code XX, TPS and NA are excluded.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Resource Location and Availability"
+        },
+        "derived_country": {
+            "caption": "Derived Country",
+            "description": "Country determined from the iTOP IT Location Code, Hostname and directly from data sources, with priority given to the iTOP IT Location Code and Hostname. iTOP Location Code XX, TPS and NA are excluded.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Resource Location and Availability"
+        },
+        "hostname_prefix_country": {
+            "caption": "Hostname Prefix Country",
+            "description": "Country inferred from first two letters of hostname if first five are alphabets and the string has no special characters or spaces.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Asset Identification"
+        },
+        "hostname_prefix_country_iso": {
+            "caption": "Hostname Prefix Country ISO",
+            "description": "Country ISO derived from the first two characters of the Display Label, provided the first five characters are alphabets with no special characters or spaces. This does not necessarily indicate a TP operating country.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Asset Identification"
+        },
+        "hostname_country": {
+            "caption": "Hostname Country",
+            "description": "Country determined from Hostname.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Resource Location and Availability"
+        },
+        "lookup_region": {
+            "caption": "Lookup Region",
+            "description": "Region Determined from lookup table.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Resource Location and Availability"
+        },
+        "strategic_region": {
+            "caption": "Strategic Region",
+            "description": "Startegic Region Determined from lookup table.",
+            "group": "common",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "General Information"
+        },
+        "cluster_bu": {
+            "caption": "Cluster BU",
+            "description": "Cluster or Business Unit Determined from lookup table.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "finding_evidence_groupby_enabled": true,
+            "category": "General Information"
+        },
+        "hostname_region": {
+            "caption": "Hostname Region",
+            "description": "Region determined from Hostname.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Resource Location and Availability"
+        },
+        "itop_country": {
+            "caption": "iTOP Country",
+            "description": "Country determined from the iTOP IT Location Code. iTOP Location Code XX, TPS and NA are excluded.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Resource Location and Availability"
+        },
+        "itop_region": {
+            "caption": "iTOP Region",
+            "description": "Region determined from the iTOP IT Location Code. iTOP Location Code XX, TPS and NA are excluded.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Resource Location and Availability"
+        },
+        "hostname_type": {
+            "caption": "Hostname Type",
+            "description": "Host type determined from Hostname.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Asset Identification"
+        },
+        "is_valid_hostname_country_code": {
+            "caption": "Hostname contains Country Code",
+            "description": "Indicates whether hostname contains valid country code.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Asset Identification"
+        },
+        "display_label_category": {
+            "caption": "Display Label Category",
+            "description": "Categorizing display labels as IP Addresses, MAC Addresses, Serial Numbers, Azure AD Device ID, Identifiers, and others.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": false,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Identity and Access Management"
+        },
+        "derived_type": {
+            "caption": "Derived Type",
+            "description": "Type determined from type, hostname_type and display label category.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "General Information"
+        },
+        "hostname_contains_type": {
+            "caption": "Hostname contains Type",
+            "description": "Indicates whether hostname contains host type.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Asset Identification"
+        },
+        "zero_life": {
+            "caption": "Zero Life",
+            "description": "Indicates whether the host is a zero life device.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Lifecycle and Activity"
+        },
+        "ad_group": {
+            "caption": "AD Groups",
+            "description": "The distinguishedName of any Active Directory groups the computer is explicitly a member of",
+            "group": "entity_specific",
+            "examples": "TestGroup",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Identity and Access Management"
+        },
+        "windows_account_name": {
+            "caption": "LAPS Policy Configuration - Windows : Account Name",
+            "description": "Windows Account Name of LAPS Policy Configuration",
+            "group": "entity_specific",
+            "examples": "yannis",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Identity and Access Management"
+        },
+        "windows_password_length": {
+            "caption": "LAPS Policy Configuration - Windows : Password Length",
+            "description": "Password Length ",
+            "group": "entity_specific",
+            "examples": "yannis",
+            "type": "integer",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Identity and Access Management"
+        },
+        "windows_password_age_day": {
+            "caption": "LAPS Policy Configuration - Windows : Password Age Day",
+            "description": "Password Age (Days)",
+            "group": "entity_specific",
+            "examples": "180",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Identity and Access Management"
+        },
+        "windows_password_complexity": {
+            "caption": "LAPS Policy Configuration - Windows : Password Complexity",
+            "description": "Password Complexity Status",
+            "group": "entity_specific",
+            "examples": "3.Capital letters + small letters + numbers + specials",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Security and Compliance"
+        },
+        "windows_password_last_set": {
+            "caption": "LAPS Policy Configuration - Windows : Password Last Set",
+            "description": "Last Password Change Date",
+            "group": "entity_specific",
+            "examples": "2024-02-11",
+            "type": "timestamp",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Identity and Access Management"
+        },
+        "tanium_custom_tags": {
+            "caption": "Tanium Custom Tags",
+            "description": "Any specified custom tags set for the machine.",
+            "group": "source_specific",
+            "examples": "FACEBOOK, EMEA_DE_ORANGE",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tanium Attributes"
+        },
+        "tanium_ad_short_domain": {
+            "caption": "Tanium AD Short Domain",
+            "description": "Provide region and country of the host",
+            "group": "source_specific",
+            "examples": "EMEA",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tanium Attributes"
+        },
+        "tanium_domain_role": {
+            "caption": "Tanium AD Domain Role",
+            "description": "Returns the Active Directory domain role.",
+            "group": "source_specific",
+            "examples": "Standalone Server, Standalone Workstation",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tanium Attributes"
+        },
+        "tanium_ad_groups": {
+            "caption": "Tanium AD Groups",
+            "description": "Tanium AD Groups",
+            "group": "source_specific",
+            "examples": "CN=TestGroup,OU=Sales,DC=MyDomain,DC=com",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tanium Attributes"
+        },
+        "aad_organizational_unit": {
+            "caption": "Tanium AD Organizational Unit",
+            "description": "AD Organizational Unit as in Tanium.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "MS Azure AD Attributes"
+        },
+        "enriched_country_active": {
+            "caption": "Enriched Country-Active",
+            "description": "The countries for which the location status is true.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Resource Location and Availability"
+        },
+        "enriched_country_inactive": {
+            "caption": "Enriched Country-Inactive",
+            "description": "The countries for which the location status is false.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Resource Location and Availability"
+        },
+        "crowdstrike_machine_domain_country": {
+            "caption": "CrowdStrike Machine Domain Country",
+            "description": "Country extracted from domain field in CrowdStrike.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "CrowdStrike Attributes"
+        },
+        "crowdstrike_site_name_country": {
+            "caption": "CrowdStrike Site Name Country",
+            "description": "Country extracted from site name field in CrowdStrike.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "CrowdStrike Attributes"
+        },
+        "crowdstrike_ou_country": {
+            "caption": "CrowdStrike OU Country",
+            "description": "Country extracted from organization unit field in CrowdStrike.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "CrowdStrike Attributes"
+        },
+        "crowdstrike_tags_country": {
+            "caption": "CrowdStrike Tags Country",
+            "description": "Country extracted from tags field in CrowdStrike.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "CrowdStrike Attributes"
+        },
+        "crowdstrike_zone_group_country": {
+            "caption": "CrowdStrike Zone Group Country",
+            "description": "Country extracted from Zone Group field in CrowdStrike.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "CrowdStrike Attributes"
+        },
+        "crowdstrike_tag_cc_country": {
+            "caption": "CrowdStrike Tag Cc Country",
+            "description": "Country derived from tags field in CrowdStrike using country codes present in tags field.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Resource Location and Availability"
+        },
+        "crowdstrike_site_cc_country": {
+            "caption": "CrowdStrike Site Cc Country",
+            "description": "Country derived from site field in CrowdStrike using country codes present in tags field.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Resource Location and Availability"
+        },
+        "itop_user_pc_country": {
+            "caption": "Itop User Pc Country",
+            "description": "Country extracted from user pc information in itop.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "data_structure": "list",
+            "category": "iTOP Attributes"
+        },
+        "itop_organization_cc_country": {
+            "caption": "Itop Organization Cc Country",
+            "description": "Country derived from itop organization name using country code.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Resource Location and Availability"
+        },
+        "rapid7_configurations_attributes": {
+            "caption": "Rapid7 Configurations Attributes",
+            "description": "Configurations Attributes as in Rapid7.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Rapid7 InsightVM Attributes"
+        },
+        "rapid7_country": {
+            "caption": "Rapid7 Country",
+            "description": "Country extracted from Rapid7 data.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "data_structure": "list",
+            "category": "Rapid7 InsightVM Attributes"
+        },
+        "rapid7_configurations_attributes_country": {
+            "caption": "Rapid7 Configurations Attributes Country",
+            "description": "Country extracted from configuration attributes in Rapid7.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "data_structure": "list",
+            "category": "Rapid7 InsightVM Attributes"
+        },
+        "rapid7_configurations_attributes_cc_country": {
+            "caption": "Rapid7 Configurations Attributes Cc Country",
+            "description": "Country derived from config attributes using country code.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "data_structure": "list",
+            "category": "Rapid7 InsightVM Attributes"
+        },
+        "rapid7_tag_cc_country": {
+            "caption": "Rapid7 Tag Cc Country",
+            "description": "Country derived from tags using country codes in Rapid7.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "data_structure": "list",
+            "category": "Rapid7 InsightVM Attributes"
+        },
+        "rapid7_tag_country": {
+            "caption": "Rapid7 Tag Country",
+            "description": "Country extracted from tag field in Rapid7.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "data_structure": "list",
+            "category": "Rapid7 InsightVM Attributes"
+        },
+        "tanium_code_countries": {
+            "caption": "Tanium Code Countries",
+            "description": "Country derived country codes extracted from Tanium Custom Tags.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tanium Attributes"
+        },
+        "tanium_ad_user_country": {
+            "caption": "Tanium Ad User Country",
+            "description": "Country extracted from AD user information in Tanium.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tanium Attributes"
+        },
+        "tanium_ad_groups_country": {
+            "caption": "Tanium Ad Groups Country",
+            "description": "Country extracted from AD group fields in Tanium.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tanium Attributes"
+        },
+        "tanium_ad_short_domain_country": {
+            "caption": "Tanium Ad Short Domain Country",
+            "description": "Country extracted from short domain fields in Tanium.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tanium Attributes"
+        },
+        "tanium_ad_org_unit_cc_country": {
+            "caption": "Tanium Ad Org Unit Cc Country",
+            "description": "Country derived from org unit using country code in Tanium.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tanium Attributes"
+        },
+        "tanium_ad_organizational_unit_country": {
+            "caption": "Tanium Ad Organizational Unit Country",
+            "description": "Country extracted from organizational unit in Tanium.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tanium Attributes"
+        },
+        "tenablesc_country": {
+            "caption": "Tenablesc Country",
+            "description": "Country extracted from tenablesc site name and hostname.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tenable.sc Attributes"
+        },
+        "cowdstrike_feed_country": {
+            "caption": "Cowdstrike Feed Country",
+            "description": "Country extracted from CrowdStrike feed.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "General Information"
+        },
+        "itop_feed_country": {
+            "caption": "Itop Feed Country",
+            "description": "Country extracted from itop feed.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "rapid7_feed_country": {
+            "caption": "Rapid7 Feed Country",
+            "description": "Country extracted from Rapid7 feed.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Rapid7 InsightVM Attributes"
+        },
+        "tanium_feed_country": {
+            "caption": "Tanium Feed Country",
+            "description": "Country extracted from Tanium feed.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tanium Attributes"
+        },
+        "tenablesc_feed_country": {
+            "caption": "Tenablesc Feed Country",
+            "description": "Country extracted from Tenablesc feed.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Tenable.sc Attributes"
+        },
+        "collected_country_crowdstrike": {
+            "caption": "Collected Country CrowdStrike",
+            "description": "Country collected from all available CrowdStrike data points.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Resource Location and Availability"
+        },
+        "collected_country": {
+            "caption": "Collected Country",
+            "description": "All countries collected from various sources.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Resource Location and Availability"
+        },
+        "collected_country_itop": {
+            "caption": "Collected Country Itop",
+            "description": "Collected countries from itop source.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Resource Location and Availability"
+        },
+        "collected_country_rapid7": {
+            "caption": "Collected Country Rapid7",
+            "description": "Collected countries from Rapid7 source.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Resource Location and Availability"
+        },
+        "collected_country_tanium": {
+            "caption": "Collected Country Tanium",
+            "description": "Collected countries from Tanium source.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Resource Location and Availability"
+        },
+        "collected_country_tenablesc": {
+            "caption": "Collected Country Tenablesc",
+            "description": "Collected countries from Tenablesc source.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "General Information"
+        },
+        "crowdstrike_frequent_country": {
+            "caption": "CrowdStrike Frequent Country",
+            "description": "Most frequent country values from CrowdStrike.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Resource Location and Availability"
+        },
+        "itop_frequent_country": {
+            "caption": "Itop Frequent Country",
+            "description": "Most frequent country values from iTOP.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Resource Location and Availability"
+        },
+        "rapid7_frequent_country": {
+            "caption": "Rapid7 Frequent Country",
+            "description": "Most frequent country values from Rapid7.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Resource Location and Availability"
+        },
+        "tanium_frequent_country": {
+            "caption": "Tanium Frequent Country",
+            "description": "Most frequent country values from Tanium.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Resource Location and Availability"
+        },
+        "tenablesc_frequent_country": {
+            "caption": "Tenablesc Frequent Country",
+            "description": "Most frequent country values from Tenablesc.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Resource Location and Availability"
+        },
+        "source_frequent_country": {
+            "caption": "Source Frequent Country",
+            "description": "Most frequent country value per source.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Resource Location and Availability"
+        },
+        "crowdstrike_ambiguity_flag": {
+            "caption": "CrowdStrike Ambiguity Flag",
+            "description": "Indicates country ambiguity for CrowdStrike.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "General Information"
+        },
+        "itop_ambiguity_flag": {
+            "caption": "Itop Ambiguity Flag",
+            "description": "Indicates country ambiguity for iTOP.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "General Information"
+        },
+        "rapid7_ambiguity_flag": {
+            "caption": "Rapid7 Ambiguity Flag",
+            "description": "Indicates country ambiguity for Rapid7.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "General Information"
+        },
+        "tanium_ambiguity_flag": {
+            "caption": "Tanium Ambiguity Flag",
+            "description": "Indicates country ambiguity for Tanium.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "General Information"
+        },
+        "tenablesc_ambiguity_flag": {
+            "caption": "Tenablesc Ambiguity Flag",
+            "description": "Indicates country ambiguity for Tenablesc.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "General Information"
+        },
+        "frequent_collected_country_all_sources": {
+            "caption": "Frequent Collected Country All Sources",
+            "description": "Most frequent country across all sources.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Resource Location and Availability"
+        },
+        "frequent_country": {
+            "caption": "Frequent Country",
+            "description": "Frequent country derived per record.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Resource Location and Availability"
+        },
+        "frequent_country_all_sources": {
+            "caption": "Frequent Country All Sources",
+            "description": "Frequent country across all sources.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Resource Location and Availability"
+        },
+        "frequent_country_ambiguity_flag": {
+            "caption": "Frequent Country Ambiguity Flag",
+            "description": "Ambiguity flag for frequent country.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "General Information"
+        },
+        "frequent_country_all_sources_ambiguity_flag": {
+            "caption": "Frequent Country All Sources Ambiguity Flag",
+            "description": "Ambiguity flag for all sources frequent country.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Data Quality Metrics"
+        },
+        "tld_country": {
+            "caption": "Tld Country",
+            "description": "Country derived from top-level domain.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Resource Location and Availability"
+        },
+        "collected_country_crowdstrike_datapoint": {
+            "caption": "Collected Country CrowdStrike Datapoint",
+            "description": "CrowdStrike datapoint-specific country.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "General Information"
+        },
+        "collected_country_itop_datapoint": {
+            "caption": "Collected Country Itop Datapoint",
+            "description": "iTOP datapoint-specific country.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Resource Location and Availability"
+        },
+        "collected_country_rapid7_datapoint": {
+            "caption": "Collected Country Rapid7 Datapoint",
+            "description": "Rapid7 datapoint-specific country.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "General Information"
+        },
+        "collected_country_tanium_datapoint": {
+            "caption": "Collected Country Tanium Datapoint",
+            "description": "Tanium datapoint-specific country.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "General Information"
+        },
+        "collected_country_tenablesc_datapoint": {
+            "caption": "Collected Country Tenablesc Datapoint",
+            "description": "Tenablesc datapoint-specific country.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "General Information"
+        },
+        "collected_country_datapoint": {
+            "caption": "Collected Country Datapoint",
+            "description": "All collected datapoint countries.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "General Information"
+        },
+        "flattened_collected_country_datapoint": {
+            "caption": "Flattened Collected Country Datapoint",
+            "description": "Flattened view of all collected country datapoints.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "General Information"
+        },
+        "collected_country_datapoint_source_group": {
+            "caption": "Collected Country Datapoint Source Group",
+            "description": "Grouped datapoint country values by source.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "General Information"
+        },
+        "source_country": {
+            "caption": "Source Country",
+            "description": "Source-specific country values.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "General Information"
+        },
+        "source_country_ambiguity_flag": {
+            "caption": "Source Country Ambiguity Flag",
+            "description": "Ambiguity in country values per source.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Data Quality Metrics"
+        },
+        "source_to_hostname_country_intersect_ambiguity_flag": {
+            "caption": "Source To Hostname Country Intersect Ambiguity Flag",
+            "description": "Ambiguity flag for intersection between source and hostname country.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Data Quality Metrics"
+        },
+        "final_country": {
+            "caption": "Country",
+            "description": "Country output of all different processes.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Resource Location and Availability"
+        },
+        "country_extraction_method": {
+            "caption": "Country Extraction Method",
+            "description": "Method by which country data is extracted",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "General Information"
+        },
+        "enriched_country": {
+            "caption": "Enriched Country",
+            "description": "The country list which has been enriched from other sources.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "General Information"
+        },
+        "encryption_compliance": {
+            "caption": "Encryption Compliance",
+            "description": "Evaluates whether the device is fully encrypted. Marks it Compliant when BitLocker or FileVault reports protection on and fully encrypted; otherwise marks it Non Compliant.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Security and Compliance"
+        },
+        "qualys_onboarding_status": {
+            "caption": "Qualys Onboarding Status",
+            "description": "Status of the asset's onboarding in Qualys.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Qualys Attributes"
+        },
+        "qualys_first_found_date": {
+            "caption": "Qualys First Found Date",
+            "description": "The date the asset was first found in Qualys.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "timestamp",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Qualys Attributes"
+        },
+        "qualys_tags_country": {
+            "caption": "Qualys Tags Country",
+            "description": "Country derived from Qualys tags.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Qualys Attributes"
+        },
+        "qualys_location_attr_country": {
+            "caption": "Qualys Location Attribute Country",
+            "description": "Country derived from Qualys location attribute.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Qualys Attributes"
+        },
+        "qualys_asset_tag_attr_country": {
+            "caption": "Qualys Asset Tag Attribute Country",
+            "description": "Country derived from Qualys asset tag attribute.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Qualys Attributes"
+        },
+        "qualys_tag_cc_country": {
+            "caption": "Qualys Tag CC Country",
+            "description": "Country code from Qualys tag CC.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Qualys Attributes"
+        },
+        "qualys_ip": {
+            "caption": "Qualys IP",
+            "description": "IP address of the asset as seen in Qualys.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Qualys Attributes"
+        },
+        "qualys_feed_country": {
+            "caption": "Qualys Feed Country",
+            "description": "Country derived from Qualys feed data.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Qualys Attributes"
+        },
+        "qualys_user_def_value1_text": {
+            "caption": "Qualys User Defined Value 1",
+            "description": "Custom user-defined text field 1 from Qualys.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Qualys Attributes"
+        },
+        "qualys_user_def_value2_text": {
+            "caption": "Qualys User Defined Value 2",
+            "description": "Custom user-defined text field 2 from Qualys.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Qualys Attributes"
+        },
+        "qualys_user_def_value3_text": {
+            "caption": "Qualys User Defined Value 3",
+            "description": "Custom user-defined text field 3 from Qualys.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Qualys Attributes"
+        },
+        "merged_rapid7_countries": {
+            "caption": "Rapid7 InsightVM Consolidated Countries",
+            "description": "Countries extracted from various fields of Rapid7 InsightVM.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "General Information"
+        },
+        "merged_tanium_tags_country": {
+            "caption": "Tanium Tags Consolidated Countries",
+            "description": "Countries extracted from Tanium Custom Tags.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Resource Location and Availability"
+        },
+        "merged_crowdstrike_countries": {
+            "caption": "CrowdStrike Consolidated Countries",
+            "description": "Countries extracted from various fields of CrowdStrike.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Resource Location and Availability"
+        },
+        "count_merged_rapid7_countries": {
+            "caption": "Count of Rapid7 InsightVM Consolidated Countries",
+            "description": "Indicates the count of unique countries extracted from various fields of Rapid7 InsightVM.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Inventory Management"
+        },
+        "count_merged_tanium_tags_country": {
+            "caption": "Count of Tanium Tags Consolidated Countries",
+            "description": "Indicates the count of unique countries extracted from Tanium Custom Tags.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Inventory Management"
+        },
+        "count_merged_crowdstrike_countries": {
+            "caption": "Count of CrowdStrike Consolidated Countries",
+            "description": "Indicates the count of unique countries extracted from various fields of CrowdStrike.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Inventory Management"
+        },
+        "count_rapid7_site_name": {
+            "caption": "Count of Rapid7 Site Name",
+            "description": "Indicates the count of unique Rapid7 InsightVM Site IDs.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Asset Identification"
+        },
+        "count_rapid7_site_id": {
+            "caption": "Count of Rapid7 Site ID",
+            "description": "Indicates the count of unique Rapid7 InsightVM Site Names.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Inventory Management"
+        },
+        "open_ports": {
+            "caption": "Open Ports",
+            "description": "List of open ports detected on the host.",
+            "group": "entity_specific",
+            "examples": "80,443",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Network"
+        },
+        "services": {
+            "caption": "Services",
+            "description": "List of service names detected running on the host.",
+            "group": "entity_specific",
+            "examples": "http,https",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "General Information"
+        },
+        "zta_score": {
+            "caption": "ZTA Score",
+            "description": "Normalized Zero Trust Assessment value, defaulting to 0 when no CrowdStrike score exists and otherwise scaling the score to a 0–1 range.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "integer",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Security and Compliance"
+        },
+        "asset_role": {
+            "data_structure": "list"
+        },
+        "ip": {
+            "data_structure": "list"
+        },
+        "mac_address": {
+            "data_structure": "list"
+        },
+        "mdm_mac_address": {
+            "data_structure": "list"
+        },
+        "mdm_product": {
+            "data_structure": "list"
+        },
+        "origin": {
+            "data_structure": "list",
+            "finding_evidence_groupby_enabled": true
+        },
+        "qualys_detection_method": {
+            "data_structure": "list"
+        },
+        "qualys_tags": {
+            "data_structure": "list"
+        },
+        "rapid7_asset_group_id": {
+            "data_structure": "list"
+        },
+        "rapid7_asset_group_name": {
+            "data_structure": "list"
+        },
+        "rapid7_asset_id": {
+            "data_structure": "list"
+        },
+        "rapid7_hostnames": {
+            "data_structure": "list"
+        },
+        "rapid7_scan_type": {
+            "data_structure": "list"
+        },
+        "rapid7_site_id": {
+            "data_structure": "list"
+        },
+        "rapid7_site_name": {
+            "data_structure": "list"
+        },
+        "rapid7_tag": {
+            "data_structure": "list"
+        },
+        "rapid7_tag_id": {
+            "data_structure": "list"
+        },
+        "tenable_io_ipv4_addresses": {
+            "data_structure": "list"
+        },
+        "tenable_io_ipv6_addresses": {
+            "data_structure": "list"
+        },
+        "vm_product": {
+            "data_structure": "list"
+        },
+        "vm_tracking_method": {
+            "data_structure": "list"
+        },
+        "operational_state": {
+            "finding_evidence_groupby_enabled": true
+        },
+        "business_unit": {
+            "finding_evidence_groupby_enabled": false
+        },
+        "location_country": {
+            "finding_evidence_groupby_enabled": false
+        },
+        "department": {
+            "finding_evidence_groupby_enabled": false
+        },
+        "environment": {
+            "finding_evidence_groupby_enabled": false
+        }
+    }
+}

@@ -1,0 +1,487 @@
+{
+    "attributes": {
+        "client_region": {
+            "caption": "Region",
+            "description": "Region to which the Identity belongs to.",
+            "group": "common",
+            "examples": "",
+            "ui_visibility": true,
+            "enable_hiding": false,
+            "type": "string",
+            "dashboard_identifier": {
+                "EI": {},
+                "Identity": {}
+            },
+            "finding_evidence_groupby_enabled": true,
+            "category": "General Information"
+        },
+        "strategic_region": {
+            "caption": "Strategic Region",
+            "description": "Startegic Region Determined from lookup table.",
+            "group": "common",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "General Information"
+        },
+        "cluster_bu": {
+            "caption": "Cluster BU",
+            "description": "Cluster or Business Unit Determined from lookup table.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "finding_evidence_groupby_enabled": true,
+            "category": "General Information"
+        },
+        "account_name": {
+            "caption": "Account Name",
+            "description": "The name/login used to access the system or service",
+            "examples": "",
+            "group": "entity_specific",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Identity": {}
+            },
+            "category": "Directory Identity Details"
+        },
+        "account_domain": {
+            "caption": "Account Domain",
+            "description": "Domain to which the account belongs.",
+            "examples": "",
+            "group": "entity_specific",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Identity": {}
+            },
+            "category": "Directory Identity Details"
+        },
+        "account_type": {
+            "caption": "Account Type",
+            "description": "The type of account used.",
+            "examples": "",
+            "group": "entity_specific",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Identity": {}
+            },
+            "category": "General Information"
+        },
+        "manager": {
+            "caption": "Manager",
+            "description": "Contains the distinguished name of the user who is the user's manager.",
+            "examples": "",
+            "group": "entity_specific",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Identity": {}
+            },
+            "category": "Directory Identity Details"
+        },
+        "sam_account_name": {
+            "caption": "SAM Account Name",
+            "description": "Logon name used to support clients and servers.",
+            "examples": "",
+            "group": "entity_specific",
+            "type": "string",
+            "enable_hiding": true,
+            "candidate_key": true,
+            "data_structure": "list",
+            "dashboard_identifier": {
+                "EI": {},
+                "Identity": {}
+            },
+            "category": "Directory Identity Details"
+        },
+        "ad_sam_account_name": {
+            "caption": "AD SAM Account Name",
+            "description": "The SAM Account Name as per Active Directory.",
+            "examples": "",
+            "group": "source_specific",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Identity": {}
+            },
+            "category": "MS Active Directory Attributes"
+        },
+        "ad_smartcard": {
+            "caption": "AD Smartcard",
+            "description": "Indicates if the entity has a smartcard associated with it.",
+            "examples": "",
+            "group": "source_specific",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Identity": {}
+            },
+            "category": "MS Active Directory Attributes"
+        },
+        "ad_roles": {
+            "caption": "AD Roles",
+            "description": "AD Roles assigned to the account.",
+            "examples": "",
+            "group": "source_specific",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Identity": {}
+            },
+            "category": "MS Active Directory Attributes"
+        },
+        "ad_user_principal_name": {
+            "caption": "AD User Principal Name",
+            "description": "Sign in name used by the users when they sign in (log in) to their accounts.",
+            "examples": "",
+            "group": "source_specific",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Identity": {}
+            },
+            "category": "MS Active Directory Attributes"
+        },
+        "itop_account_status": {
+            "caption": "iTOP Account Status",
+            "description": "The account status as per iTOP.",
+            "examples": "",
+            "group": "source_specific",
+            "type": "string",
+            "data_structure": "list",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Identity": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_account_password_expire": {
+            "caption": "iTOP Account Password Expire",
+            "description": "Whether the password will expire or not as per iTOP.",
+            "examples": "",
+            "group": "source_specific",
+            "type": "string",
+            "enable_hiding": true,
+            "ui_visibility": false,
+            "dashboard_identifier": {
+                "EI": {},
+                "Identity": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_account_created_at": {
+            "caption": "iTOP Acccount Created At",
+            "description": "When the account was created in iTOP.",
+            "examples": "",
+            "group": "source_specific",
+            "type": "timestamp",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Identity": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_account_last_synced": {
+            "caption": "iTOP Account Last Synced",
+            "description": "When the account was last synched in iTOP.",
+            "examples": "",
+            "group": "source_specific",
+            "type": "timestamp",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Identity": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_password_last_changed": {
+            "caption": "iTOP Password Last Changed",
+            "description": "When the account was last synched in iTOP.",
+            "examples": "",
+            "group": "source_specific",
+            "type": "timestamp",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Identity": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_account_description": {
+            "caption": "iTOP Account Description",
+            "description": "The account description as per iTOP",
+            "examples": "",
+            "group": "source_specific",
+            "type": "string",
+            "enable_hiding": true,
+            "data_structure": "list",
+            "dashboard_identifier": {
+                "EI": {},
+                "Identity": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_account_type": {
+            "caption": "iTOP Account Type",
+            "description": "The account type as per iTOP.",
+            "examples": "",
+            "group": "source_specific",
+            "type": "string",
+            "enable_hiding": true,
+            "data_structure": "list",
+            "dashboard_identifier": {
+                "EI": {},
+                "Identity": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_upn": {
+            "caption": "iTOP User Principal Name",
+            "description": "The User Principal Name (UPN) as per iTOP.",
+            "examples": "",
+            "group": "source_specific",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Identity": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_username": {
+            "caption": "iTOP Username",
+            "description": "The account Username as per iTOP.",
+            "examples": "",
+            "group": "source_specific",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Identity": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_sam_account_name": {
+            "caption": "iTOP SAM Account Name",
+            "description": "The SAM Account Name as per iTOP.",
+            "examples": "",
+            "group": "source_specific",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Identity": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_email": {
+            "caption": "iTOP Email",
+            "description": "The email ids associated with the account as per iTOP.",
+            "examples": "",
+            "group": "source_specific",
+            "type": "string",
+            "enable_hiding": true,
+            "data_structure": "list",
+            "dashboard_identifier": {
+                "EI": {},
+                "Identity": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "associated_person_count": {
+            "caption": "Count of Associated Person",
+            "description": "",
+            "examples": "",
+            "group": "enrichment",
+            "type": "integer",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Identity": {}
+            },
+            "category": "General Information"
+        },
+        "aad_user_type": {
+            "caption": "Azure AD User Type",
+            "description": "Indicates whether the identity is Guest or Member as of Azure AD.",
+            "examples": "",
+            "group": "source_specific",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Identity": {}
+            },
+            "category": "MS Azure AD Attributes"
+        },
+        "bms_strategic_region": {
+            "caption": "BMS Strategic Region",
+            "description": "The Strategic region of the identity as of BMS.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "ui_visibility": true,
+            "candidate_key": false,
+            "dashboard_identifier": {
+                "EI": {},
+                "Identity": {}
+            },
+            "category": "BMS Attributes"
+        },
+        "bms_region": {
+            "caption": "BMS Region",
+            "description": "The region of the identity as of BMS.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "ui_visibility": true,
+            "candidate_key": false,
+            "dashboard_identifier": {
+                "EI": {},
+                "Identity": {}
+            },
+            "category": "BMS Attributes"
+        },
+        "bms_modified_date": {
+            "caption": "BMS Modified Date",
+            "description": "The BMS Modified date of the identity.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "timestamp",
+            "enable_hiding": true,
+            "ui_visibility": true,
+            "candidate_key": false,
+            "dashboard_identifier": {
+                "EI": {},
+                "Identity": {}
+            },
+            "category": "BMS Attributes"
+        },
+        "bms_updated_date": {
+            "caption": "BMS Updated Date",
+            "description": "The BMS Updated date of the identity.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "timestamp",
+            "enable_hiding": true,
+            "ui_visibility": true,
+            "candidate_key": false,
+            "dashboard_identifier": {
+                "EI": {},
+                "Identity": {}
+            },
+            "category": "BMS Attributes"
+        },
+        "bms_insertion_date": {
+            "caption": "BMS Insertion Date",
+            "description": "The BMS Insertion date of the identity.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "timestamp",
+            "enable_hiding": true,
+            "ui_visibility": true,
+            "candidate_key": false,
+            "dashboard_identifier": {
+                "EI": {},
+                "Identity": {}
+            },
+            "category": "BMS Attributes"
+        },
+        "bms_user_principal_name": {
+            "caption": "BMS User Principal Name",
+            "description": "The User Principal Name of the identity as of BMS.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "ui_visibility": true,
+            "candidate_key": false,
+            "dashboard_identifier": {
+                "EI": {},
+                "Identity": {}
+            },
+            "category": "BMS Attributes"
+        },
+        "bms_sam_account_name": {
+            "caption": "BMS SAM Account Name",
+            "description": "The SAM Account Name of the identity as of BMS.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "ui_visibility": true,
+            "candidate_key": false,
+            "dashboard_identifier": {
+                "EI": {},
+                "Identity": {}
+            },
+            "category": "BMS Attributes"
+        },
+        "bms_email": {
+            "caption": "BMS Email",
+            "description": "The email of the identity as of BMS.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "ui_visibility": true,
+            "candidate_key": false,
+            "dashboard_identifier": {
+                "EI": {},
+                "Identity": {}
+            },
+            "category": "BMS Attributes"
+        },
+        "bms_country": {
+            "caption": "BMS Country",
+            "description": "The country of the identity as of BMS.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "ui_visibility": true,
+            "candidate_key": false,
+            "dashboard_identifier": {
+                "EI": {},
+                "Identity": {}
+            },
+            "category": "BMS Attributes"
+        },
+        "email_id": {
+            "data_structure": "list"
+        },
+        "origin": {
+            "data_structure": "list",
+            "finding_evidence_groupby_enabled": true
+        },
+        "employee_status": {
+            "finding_evidence_groupby_enabled": true,
+            "category": "Directory Identity Details"
+        }
+    }
+}

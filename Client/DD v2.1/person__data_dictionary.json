@@ -1,0 +1,527 @@
+{
+    "attributes": {
+        "client_region": {
+            "caption": "Region",
+            "description": "The region to which the host belongs.",
+            "group": "common",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": false,
+            "dashboard_identifier": {
+                "EI": {},
+                "Person": {}
+            },
+            "finding_evidence_groupby_enabled": true,
+            "category": "General Information"
+        },
+        "strategic_region": {
+            "caption": "Strategic Region",
+            "description": "Startegic Region Determined from lookup table.",
+            "group": "common",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "General Information"
+        },
+        "cluster_bu": {
+            "caption": "Cluster BU",
+            "description": "Cluster or Business Unit Determined from lookup table.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "finding_evidence_groupby_enabled": true,
+            "category": "Organisational Details"
+        },
+        "organization": {
+            "caption": "Organization Name",
+            "description": "Organization to which the Person belongs.",
+            "group": "entity_specific",
+            "examples": "",
+            "type": "string",
+            "dashboard_identifier": {
+                "EI": {},
+                "Person": {}
+            },
+            "data_structure": "list",
+            "category": "Organisational Details"
+        },
+        "organization_unit": {
+            "caption": "Organization Unit",
+            "description": "Organization Unit to which the Person belongs.",
+            "group": "entity_specific",
+            "examples": "",
+            "type": "string",
+            "dashboard_identifier": {
+                "EI": {},
+                "Person": {}
+            },
+            "data_structure": "list",
+            "category": "Organisational Details"
+        },
+        "project": {
+            "caption": "Project",
+            "description": "Projects to which the employee is associated with.",
+            "group": "entity_specific",
+            "examples": "",
+            "type": "string",
+            "dashboard_identifier": {
+                "EI": {},
+                "Person": {}
+            },
+            "category": "Organisational Details"
+        },
+        "employee_type": {
+            "caption": "Employee Type",
+            "description": "The employee type of person.",
+            "group": "entity_specific",
+            "examples": "Full-Time",
+            "type": "string",
+            "dashboard_identifier": {
+                "EI": {},
+                "Person": {}
+            },
+            "category": "Employment Details"
+        },
+        "loa_end_date": {
+            "caption": "Leave of Absence End Date",
+            "description": "Leave of Absence End Date.",
+            "group": "entity_specific",
+            "examples": "",
+            "type": "timestamp",
+            "dashboard_identifier": {
+                "EI": {},
+                "Person": {}
+            },
+            "category": "Employment Details"
+        },
+        "location": {
+            "caption": "Location",
+            "description": "Location of the employee.",
+            "group": "entity_specific",
+            "examples": "",
+            "type": "string",
+            "dashboard_identifier": {
+                "EI": {},
+                "Person": {}
+            },
+            "category": "Organisational Details"
+        },
+        "itop_person_id": {
+            "caption": "iTOP Person ID",
+            "description": "Person ID as in iTOP.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "integer",
+            "dashboard_identifier": {
+                "EI": {},
+                "Person": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_acc_created_date": {
+            "caption": "iTOP Account Created Date",
+            "description": "Account Created as in iTOP.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "timestamp",
+            "dashboard_identifier": {
+                "EI": {},
+                "Person": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_last_sync_date": {
+            "caption": "iTOP Last Synced Date",
+            "description": "Last Synced with TOP.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "timestamp",
+            "dashboard_identifier": {
+                "EI": {},
+                "Person": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_passw_last_changed_date": {
+            "caption": "iTOP Password Last Changed Date",
+            "description": "Password Last Changed as in iTOP.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "timestamp",
+            "dashboard_identifier": {
+                "EI": {},
+                "Person": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_person_function": {
+            "caption": "iTOP Person Function",
+            "description": "Person Function as in iTOP.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "dashboard_identifier": {
+                "EI": {},
+                "Person": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_org_name": {
+            "caption": "iTOP Organization Name",
+            "description": "Organization Name as in iTOP.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "dashboard_identifier": {
+                "EI": {},
+                "Person": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_person_status": {
+            "caption": "iTOP Person Status",
+            "description": "Person Status as in iTOP.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "dashboard_identifier": {
+                "EI": {},
+                "Person": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_location": {
+            "caption": "iTOP Location",
+            "description": "Location as in iTOP.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "dashboard_identifier": {
+                "EI": {},
+                "Person": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "itop_region": {
+            "caption": "iTOP Region",
+            "description": "Region as in iTOP.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "dashboard_identifier": {
+                "EI": {},
+                "Person": {}
+            },
+            "category": "iTOP Attributes"
+        },
+        "intune_user_display_name": {
+            "caption": "Intune User Display Name",
+            "description": "User Display Name as in Intune.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "dashboard_identifier": {
+                "EI": {},
+                "Person": {}
+            },
+            "category": "MS Intune Attributes"
+        },
+        "intune_enrolled_date": {
+            "caption": "Intune Enrolled Date",
+            "description": "Enrolled Date in Intune.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "timestamp",
+            "dashboard_identifier": {
+                "EI": {},
+                "Person": {}
+            },
+            "category": "MS Intune Attributes"
+        },
+        "intune_last_sync_date": {
+            "caption": "Intune Last Synched Date",
+            "description": "Intune Last Synched Date.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "timestamp",
+            "dashboard_identifier": {
+                "EI": {},
+                "Person": {}
+            },
+            "category": "MS Intune Attributes"
+        },
+        "bms_strategic_region": {
+            "caption": "BMS Strategic Region",
+            "description": "The Strategic region of the employee as of BMS.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "ui_visibility": true,
+            "candidate_key": false,
+            "dashboard_identifier": {
+                "EI": {},
+                "Person": {}
+            },
+            "category": "BMS Attributes"
+        },
+        "bms_region": {
+            "caption": "BMS Region",
+            "description": "The region of the employee as of BMS.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "ui_visibility": true,
+            "candidate_key": false,
+            "dashboard_identifier": {
+                "EI": {},
+                "Person": {}
+            },
+            "category": "BMS Attributes"
+        },
+        "bms_application_date": {
+            "caption": "BMS Application Date",
+            "description": "The BMS Application date of the employee.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "timestamp",
+            "enable_hiding": true,
+            "ui_visibility": true,
+            "candidate_key": false,
+            "dashboard_identifier": {
+                "EI": {},
+                "Person": {}
+            },
+            "category": "BMS Attributes"
+        },
+        "bms_hire_date": {
+            "caption": "BMS Hire Date",
+            "description": "The BMS Hire date of the employee.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "timestamp",
+            "enable_hiding": true,
+            "ui_visibility": true,
+            "candidate_key": false,
+            "dashboard_identifier": {
+                "EI": {},
+                "Person": {}
+            },
+            "category": "BMS Attributes"
+        },
+        "bms_insertion_date": {
+            "caption": "BMS Insertion Date",
+            "description": "The BMS Insertion date of the employee.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "timestamp",
+            "enable_hiding": true,
+            "ui_visibility": true,
+            "candidate_key": false,
+            "dashboard_identifier": {
+                "EI": {},
+                "Person": {}
+            },
+            "category": "BMS Attributes"
+        },
+        "bms_modified_date": {
+            "caption": "BMS Modified Date",
+            "description": "The BMS Modified date of the employee.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "timestamp",
+            "enable_hiding": true,
+            "ui_visibility": true,
+            "candidate_key": false,
+            "dashboard_identifier": {
+                "EI": {},
+                "Person": {}
+            },
+            "category": "BMS Attributes"
+        },
+        "bms_updated_date": {
+            "caption": "BMS Updated Date",
+            "description": "The BMS Updated date of the employee.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "timestamp",
+            "enable_hiding": true,
+            "ui_visibility": true,
+            "candidate_key": false,
+            "dashboard_identifier": {
+                "EI": {},
+                "Person": {}
+            },
+            "category": "BMS Attributes"
+        },
+        "bms_created_date": {
+            "caption": "BMS Created Date",
+            "description": "The BMS Created date of the employee.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "timestamp",
+            "enable_hiding": true,
+            "ui_visibility": true,
+            "candidate_key": false,
+            "dashboard_identifier": {
+                "EI": {},
+                "Person": {}
+            },
+            "category": "BMS Attributes"
+        },
+        "lookup_cluster_bu": {
+            "caption": "Cluster BU",
+            "description": "Cluster or Business Unit Determined from lookup table.",
+            "group": "enrichment",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "dashboard_identifier": {
+                "EI": {},
+                "Host": {}
+            },
+            "category": "Organisational Details"
+        },
+        "bms_country": {
+            "caption": "BMS Country",
+            "description": "The country of the employee as of BMS.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "ui_visibility": true,
+            "candidate_key": false,
+            "dashboard_identifier": {
+                "EI": {},
+                "Person": {}
+            },
+            "category": "BMS Attributes"
+        },
+        "bms_employee_first_name": {
+            "caption": "BMS Employee First Name",
+            "description": "The first name of the employee in BMS.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "ui_visibility": true,
+            "candidate_key": false,
+            "dashboard_identifier": {
+                "EI": {},
+                "Person": {}
+            },
+            "category": "BMS Attributes"
+        },
+        "bms_employee_middle_name": {
+            "caption": "BMS Employee Middle Name",
+            "description": "The employee middle name in BMS.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "ui_visibility": true,
+            "candidate_key": false,
+            "dashboard_identifier": {
+                "EI": {},
+                "Person": {}
+            },
+            "category": "BMS Attributes"
+        },
+        "bms_employee_last_name": {
+            "caption": "BMS Employee Last Name",
+            "description": "The last name of the employee in BMS.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "ui_visibility": true,
+            "candidate_key": false,
+            "dashboard_identifier": {
+                "EI": {},
+                "Person": {}
+            },
+            "category": "BMS Attributes"
+        },
+        "bms_translit_first_name": {
+            "caption": "BMS Translit First Name",
+            "description": "The translated first name of the employee in BMS.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "ui_visibility": true,
+            "candidate_key": false,
+            "dashboard_identifier": {
+                "EI": {},
+                "Person": {}
+            },
+            "category": "BMS Attributes"
+        },
+        "bms_translit_middle_name": {
+            "caption": "BMS Translit Middle Name",
+            "description": "The translated middle name of the employee in BMS.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "ui_visibility": true,
+            "candidate_key": false,
+            "dashboard_identifier": {
+                "EI": {},
+                "Person": {}
+            },
+            "category": "BMS Attributes"
+        },
+        "bms_translit_last_name": {
+            "caption": "BMS Translit Last Name",
+            "description": "The translated last name of the employee in BMS.",
+            "group": "source_specific",
+            "examples": "",
+            "type": "string",
+            "enable_hiding": true,
+            "ui_visibility": true,
+            "candidate_key": false,
+            "dashboard_identifier": {
+                "EI": {},
+                "Person": {}
+            },
+            "category": "BMS Attributes"
+        },
+        "client": {
+            "caption": "Client",
+            "description": "Clients to which the person belongs.",
+            "group": "common",
+            "examples": "",
+            "type": "string",
+            "dashboard_identifier": {
+                "EI": {},
+                "Person": {}
+            },
+            "data_structure": "list",
+            "category": "General Information"
+        },
+        "email_id": {
+            "data_structure": "list"
+        },
+        "origin": {
+            "data_structure": "list",
+            "finding_evidence_groupby_enabled": true
+        },
+        "business_unit": {
+            "finding_evidence_groupby_enabled": false
+        },
+        "location_country": {
+            "finding_evidence_groupby_enabled": false
+        }
+    }
+}

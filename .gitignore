@@ -6,6 +6,7 @@ ENV/
 
 # Configs under Client and Product folders
 Client/
+!Client/DD v2.1/
 Product/
 
 # Python cache
