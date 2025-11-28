@@ -366,6 +366,14 @@ def load_groupby_config(base_dir: Path) -> Dict[str, Any]:
     return {}
 
 
+def load_visibility_config(base_dir: Path) -> Dict[str, Any]:
+    """Load visiblity_attributes.json configuration file."""
+    visibility_file = base_dir / "visiblity_attributes.json"
+    if visibility_file.exists():
+        return load_json(visibility_file)
+    return {}
+
+
 def apply_groupby_settings(attributes: Dict[str, Any], 
                            entity_name: str, 
                            groupby_config: Dict[str, Any],
@@ -433,6 +441,103 @@ def apply_groupby_settings(attributes: Dict[str, Any],
                 write_log(log_file, f"SCRIPT: '{attr_name}' already has finding_evidence_groupby_enabled=false")
     
     write_log(log_file, f"SCRIPT: Groupby settings applied - Created: {created_count}, Updated: {updated_count}")
+    
+    return attributes
+
+
+def apply_visibility_settings(attributes: Dict[str, Any], 
+                             entity_name: str, 
+                             visibility_config: Dict[str, Any],
+                             log_file: Path) -> Dict[str, Any]:
+    """
+    Apply visibility settings from visiblity_attributes.json to attributes.
+    - invisible_attributes: set ui_visibility = false
+    - visible_attributes: set ui_visibility = true
+    Ensures ui_visibility appears only once per attribute.
+    """
+    # Convert entity_name to have first letter uppercase to match JSON keys (e.g., "host" -> "Host")
+    entity_name_capitalized = entity_name.capitalize()
+    
+    if entity_name_capitalized not in visibility_config:
+        write_log(log_file, f"SCRIPT: No visibility config found for entity '{entity_name_capitalized}'")
+        return attributes
+    
+    entity_config = visibility_config[entity_name_capitalized]
+    invisible_list = entity_config.get('invisible_attributes', [])
+    visible_list = entity_config.get('visible_attributes', [])
+    
+    if not invisible_list and not visible_list:
+        write_log(log_file, f"SCRIPT: No invisible/visible lists for entity '{entity_name_capitalized}'")
+        return attributes
+    
+    write_log(log_file, f"SCRIPT: Applying visibility settings for '{entity_name_capitalized}'")
+    write_log(log_file, f"SCRIPT: Invisible list ({len(invisible_list)}): {', '.join(invisible_list)}")
+    write_log(log_file, f"SCRIPT: Visible list ({len(visible_list)}): {', '.join(visible_list)}")
+    
+    updated_count = 0
+    created_count = 0
+    
+    # Process invisible_attributes (set ui_visibility = false)
+    for attr_name in invisible_list:
+        # Strip whitespace from attribute name (in case of typos like "has_identity_count ")
+        attr_name = attr_name.strip()
+        
+        if attr_name not in attributes:
+            # Create new attribute with only ui_visibility
+            attributes[attr_name] = {
+                "ui_visibility": False
+            }
+            created_count += 1
+            write_log(log_file, f"SCRIPT: Created attribute '{attr_name}' with ui_visibility=false")
+        else:
+            # Remove any existing ui_visibility keys (to ensure only one exists)
+            attr_data = attributes[attr_name]
+            if isinstance(attr_data, dict):
+                # Remove all ui_visibility keys if multiple exist
+                keys_to_remove = [k for k in attr_data.keys() if k == 'ui_visibility']
+                for key in keys_to_remove:
+                    del attr_data[key]
+                
+                # Set the single ui_visibility = false
+                current_value = attr_data.get('ui_visibility')
+                if current_value != False:
+                    attr_data['ui_visibility'] = False
+                    updated_count += 1
+                    write_log(log_file, f"SCRIPT: Updated '{attr_name}': ui_visibility=false (was {current_value})")
+                else:
+                    write_log(log_file, f"SCRIPT: '{attr_name}' already has ui_visibility=false")
+    
+    # Process visible_attributes (set ui_visibility = true)
+    for attr_name in visible_list:
+        # Strip whitespace from attribute name
+        attr_name = attr_name.strip()
+        
+        if attr_name not in attributes:
+            # Create new attribute with only ui_visibility
+            attributes[attr_name] = {
+                "ui_visibility": True
+            }
+            created_count += 1
+            write_log(log_file, f"SCRIPT: Created attribute '{attr_name}' with ui_visibility=true")
+        else:
+            # Remove any existing ui_visibility keys (to ensure only one exists)
+            attr_data = attributes[attr_name]
+            if isinstance(attr_data, dict):
+                # Remove all ui_visibility keys if multiple exist
+                keys_to_remove = [k for k in attr_data.keys() if k == 'ui_visibility']
+                for key in keys_to_remove:
+                    del attr_data[key]
+                
+                # Set the single ui_visibility = true
+                current_value = attr_data.get('ui_visibility')
+                if current_value != True:
+                    attr_data['ui_visibility'] = True
+                    updated_count += 1
+                    write_log(log_file, f"SCRIPT: Updated '{attr_name}': ui_visibility=true (was {current_value})")
+                else:
+                    write_log(log_file, f"SCRIPT: '{attr_name}' already has ui_visibility=true")
+    
+    write_log(log_file, f"SCRIPT: Visibility settings applied - Created: {created_count}, Updated: {updated_count}")
     
     return attributes
 
@@ -1314,6 +1419,24 @@ def convert_file(client_file: Path, product_file: Path, output_file: Path, file_
         else:
             print("OK (No fixes needed)")
         write_log(log_file, f"SCRIPT: Fixed Crowdstrike capitalization in {fixed_count} attribute(s)")
+        
+        # Apply visibility settings from visiblity_attributes.json
+        print("  Applying visibility settings...", end=" ", flush=True)
+        base_dir = Path(__file__).parent
+        visibility_config = load_visibility_config(base_dir)
+        entity_name = extract_entity_name(client_file.name)
+        
+        if visibility_config and entity_name.capitalize() in visibility_config:
+            output_data['attributes'] = apply_visibility_settings(
+                output_data['attributes'],
+                entity_name,
+                visibility_config,
+                log_file
+            )
+            print("OK")
+        else:
+            print("SKIPPED (No config found)")
+            write_log(log_file, f"SCRIPT: No visibility config for entity '{entity_name.capitalize()}'")
         
         # Add category to client-only attributes using AI (OpenAI or Gemini)
         if product_data and 'attributes' in product_data:

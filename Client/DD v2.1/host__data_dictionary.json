@@ -4592,6 +4592,30 @@
         },
         "environment": {
             "finding_evidence_groupby_enabled": false
+        },
+        "has_open_vulnerability_finding_count": {
+            "ui_visibility": false
+        },
+        "threat_count": {
+            "ui_visibility": false
+        },
+        "owned_person_count": {
+            "ui_visibility": false
+        },
+        "has_identity_count": {
+            "ui_visibility": false
+        },
+        "bitlocker_protection_status": {
+            "category": "Device Management"
+        },
+        "bitlocker_conversion_status": {
+            "category": "Device Management"
+        },
+        "file_vault_conversion_status": {
+            "category": "Device Management"
+        },
+        "file_vault_protection_status": {
+            "category": "Device Management"
         }
     }
 }
