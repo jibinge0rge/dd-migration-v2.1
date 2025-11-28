@@ -3712,6 +3712,7 @@
             "examples": "",
             "type": "string",
             "enable_hiding": true,
+            "ui_visibility": false,
             "dashboard_identifier": {
                 "EI": {},
                 "Host": {}
@@ -3725,6 +3726,7 @@
             "examples": "",
             "type": "string",
             "enable_hiding": true,
+            "ui_visibility": false,
             "dashboard_identifier": {
                 "EI": {},
                 "Host": {}
@@ -3738,6 +3740,7 @@
             "examples": "",
             "type": "string",
             "enable_hiding": true,
+            "ui_visibility": false,
             "dashboard_identifier": {
                 "EI": {},
                 "Host": {}
@@ -3751,6 +3754,7 @@
             "examples": "",
             "type": "string",
             "enable_hiding": true,
+            "ui_visibility": false,
             "dashboard_identifier": {
                 "EI": {},
                 "Host": {}
@@ -3764,6 +3768,7 @@
             "examples": "",
             "type": "string",
             "enable_hiding": true,
+            "ui_visibility": false,
             "dashboard_identifier": {
                 "EI": {},
                 "Host": {}
@@ -3777,6 +3782,7 @@
             "examples": "",
             "type": "string",
             "enable_hiding": true,
+            "ui_visibility": false,
             "dashboard_identifier": {
                 "EI": {},
                 "Host": {}
@@ -3933,6 +3939,7 @@
             "examples": "",
             "type": "string",
             "enable_hiding": true,
+            "ui_visibility": false,
             "dashboard_identifier": {
                 "EI": {},
                 "Host": {}
@@ -4011,6 +4018,7 @@
             "examples": "",
             "type": "string",
             "enable_hiding": true,
+            "ui_visibility": false,
             "dashboard_identifier": {
                 "EI": {},
                 "Host": {}
@@ -4024,6 +4032,7 @@
             "examples": "",
             "type": "string",
             "enable_hiding": true,
+            "ui_visibility": false,
             "dashboard_identifier": {
                 "EI": {},
                 "Host": {}
@@ -4037,6 +4046,7 @@
             "examples": "",
             "type": "string",
             "enable_hiding": true,
+            "ui_visibility": false,
             "dashboard_identifier": {
                 "EI": {},
                 "Host": {}
@@ -4050,6 +4060,7 @@
             "examples": "",
             "type": "string",
             "enable_hiding": true,
+            "ui_visibility": false,
             "dashboard_identifier": {
                 "EI": {},
                 "Host": {}
@@ -4063,6 +4074,7 @@
             "examples": "",
             "type": "string",
             "enable_hiding": true,
+            "ui_visibility": false,
             "dashboard_identifier": {
                 "EI": {},
                 "Host": {}
@@ -4076,6 +4088,7 @@
             "examples": "",
             "type": "string",
             "enable_hiding": true,
+            "ui_visibility": false,
             "dashboard_identifier": {
                 "EI": {},
                 "Host": {}
@@ -4089,6 +4102,7 @@
             "examples": "",
             "type": "string",
             "enable_hiding": true,
+            "ui_visibility": false,
             "dashboard_identifier": {
                 "EI": {},
                 "Host": {}
@@ -4102,6 +4116,7 @@
             "examples": "",
             "type": "string",
             "enable_hiding": true,
+            "ui_visibility": false,
             "dashboard_identifier": {
                 "EI": {},
                 "Host": {}
