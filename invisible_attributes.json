@@ -1,0 +1,8 @@
+{
+    "Host": [
+        "has_open_vulnerability_finding_count",
+        "threat_count",
+        "owned_person_count",
+        "has_identity_count "
+    ]
+}

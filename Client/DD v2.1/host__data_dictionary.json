@@ -2786,7 +2786,7 @@
         "intune_android_security_patch_level": {
             "caption": "Intune Android Security Patch Level",
             "description": "Android security patch level according to Intune.",
-            "group": "enrichment",
+            "group": "source_specific",
             "examples": "",
             "type": "string",
             "enable_hiding": true,
@@ -2794,7 +2794,7 @@
                 "EI": {},
                 "Host": {}
             },
-            "category": "Security and Compliance"
+            "category": "MS Intune Attributes"
         },
         "rapid7_site_country_code": {
             "caption": "Rapid7 Site Country Code",
