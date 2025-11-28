@@ -1690,8 +1690,8 @@
             "category": "General Information"
         },
         "wiz_is_kubernetes_node": {
-            "caption": "Is kubernetes Node as per Wiz",
-            "description": "Indicates whether the resource is a kubernetes node as per wiz",
+            "caption": "Is Kubernetes Node as per Wiz",
+            "description": "Indicates whether the resource is a Kubernetes node as per wiz",
             "group": "source_specific",
             "examples": "",
             "type": "string",
@@ -1704,7 +1704,7 @@
         },
         "wiz_kubernetes_flavor": {
             "caption": "Kubernetes Flavor as per Wiz",
-            "description": "The flavor of kubernetes used as per Wiz.",
+            "description": "The flavor of Kubernetes used as per Wiz.",
             "group": "source_specific",
             "examples": "",
             "type": "string",
@@ -1769,7 +1769,7 @@
         },
         "wiz_kubernetes_node_external_Id": {
             "caption": "Kubernetes Node External ID ",
-            "description": "It is a unique identifier assigned to each node in the kubernetes cluster.",
+            "description": "It is a unique identifier assigned to each node in the Kubernetes cluster.",
             "group": "source_specific",
             "examples": "",
             "type": "string",
